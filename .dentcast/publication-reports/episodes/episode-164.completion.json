@@ -1,0 +1,831 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "dentcast",
+      "content_id": "episodes/episode-164",
+      "context": {
+        "approvals": [
+          {
+            "decision": "Food Impaction in Dentistry: Revisited :part2",
+            "evidence": [
+              "agent proposal under standing acceptance (Hard Rule 14)"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0627\u062f\u0627\u0645\u0647 \u0645\u0633\u062a\u0642\u06cc\u0645 \u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f3 \u0647\u0633\u062a \u0648 \u0647\u0645\u0648\u0646 \u0645\u0642\u0627\u0644\u0647 \u0645\u0631\u0648\u0631\u06cc \u06f2\u06f0\u06f2\u06f3 \u062f\u0631\u0628\u0627\u0631\u0647 \u0641\u0648\u062f \u0627\u06cc\u0645\u067e\u06a9\u0634\u0646 \u0631\u0648 \u0627\u062f\u0627\u0645\u0647 \u0645\u06cc\u200c\u062f\u06cc\u0645.\n\n\u062a\u0648\u06cc \u0642\u0633\u0645\u062a \u0642\u0628\u0644 \u06af\u0641\u062a\u06cc\u0645 \u06a9\u0647 \u0641\u0648\u062f \u0627\u06cc\u0645\u067e\u06a9\u0634\u0646 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u06cc \u0628\u0627\u0632 \u0628\u0648\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0646\u06cc\u0633\u062a. \u062d\u0627\u0644\u0627 \u0645\u06cc\u200c\u0631\u06cc\u0645 \u0633\u0631\u0627\u063a \u0628\u0642\u06cc\u0647 \u0639\u0644\u062a\u200c\u0647\u0627\u06cc \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u06a9\u0647 \u0645\u0642\u0627\u0644\u0647 \u06a9\u0646\u0627\u0631 \u0628\u0627\u0632 \u0634\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0645\u0637\u0631\u062d \u0645\u06cc\u200c\u06a9\u0646\u0647: \u0646\u0627\u0647\u0645\u0627\u0647\u0646\u06af\u06cc \u0627\u06a9\u0644\u0648\u0632\u0627\u0644\u06cc\u060c \u0646\u0642\u0635 \u062f\u0631 \u0634\u06a9\u0644 \u062f\u0646\u062f\u0627\u0646 \u06cc\u0627 \u062a\u0631\u0645\u06cc\u0645\u060c \u0645\u0648\u0642\u0639\u06cc\u062a \u063a\u06cc\u0631\u0637\u0628\u06cc\u0639\u06cc \u062f\u0646\u062f\u0627\u0646 \u0648 \u0627\u0632 \u062f\u0633\u062a \u0631\u0641\u062a\u0646 \u067e\u0627\u067e\u06cc\u0644\u0627\u06cc \u0628\u06cc\u0646\u200c\u062f\u0646\u062f\u0627\u0646\u06cc.\n\n\u0627\u06cc\u0646 \u0628\u062d\u062b \u062f\u0631 \u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f5 \u0647\u0645 \u0627\u062f\u0627\u0645\u0647 \u067e\u06cc\u062f\u0627 \u0645\u06cc\u200c\u06a9\u0646\u0647.",
+            "evidence": [
+              "agent proposal under standing acceptance (Hard Rule 14)"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          },
+          {
+            "decision": "agent-authored lead kept",
+            "evidence": [
+              "agent proposal under standing acceptance (Hard Rule 14)"
+            ],
+            "scope": "authored-intro",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "attached_paper": "no",
+            "challenge": "no",
+            "kind": "intake_facts_v1"
+          },
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "decision": "founder approved all three drafted exam questions verbatim (\u00ab\u0647\u0631 \u0633\u0647 \u0633\u0648\u0627\u0644 \u062a\u0627\u06cc\u06cc\u062f\u0646\u062f\u00bb)",
+            "evidence": [
+              "chat M2 answer 2026-11-27"
+            ],
+            "kind": "m2_exam_questions_v1",
+            "status": "confirmed",
+            "step": "B.5"
+          },
+          {
+            "evidence": [
+              "first paragraph of episodes/episode-164.html"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "agent_authored",
+            "source_ref": "lead paragraph written by the agent (module 03)"
+          },
+          {
+            "english": {
+              "evidence": [
+                "episodes/en/episode-164.html on disk, toggles wired"
+              ],
+              "path": "episodes/en/episode-164.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "built by `close` from the ledger evidence of the steps through C.5.6-b"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "C.4.13: DES reused from episodes/episode-163 (same paper doi 10.3290/j.ohpd.b4172837, v3.7 FULL_TEXT, founder instruction), sources[] byte-identical, scored_at 2026-11-27, no fidelity key (audio episode); des_record_guard check ok"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.14 skipped: ordinary post, not a Challenge (Question 4.9)"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "C.2.4: pillar treatment-planning / subtopic comprehensive-diagnosis (same subject as ep163, food impaction etiology diagnosis)"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7: related_cap --glossary-room: no term on food impaction/contact/papilla/occlusion has a free slot or exists; 0 back-links",
+                  "C.4.8: caption: \u00ab\u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f3\u00bb linked to /episodes/episode-163.html (sibling part the body refers back to, ep162 inline markup); no glossary term qualifies; borderline: none",
+                  "C.4.9: \u0645\u062d\u062a\u0648\u0627\u06cc \u0645\u0631\u062a\u0628\u0637: pillar capsule + ep163 (sibling first) + insight-73, insight-69, meta-12 = 5/5 cap; skipped episode-159 (implant contact loss, part-1 topic) at cap"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.0: tags #\u062f\u0646\u062a\u06a9\u0633\u062a #\u06af\u06cc\u0631_\u063a\u0630\u0627\u06cc\u06cc #\u062a\u0634\u062e\u06cc\u0635_\u0627\u0641\u062a\u0631\u0627\u0642\u06cc #\u0627\u06a9\u0644\u0648\u0698\u0646 #\u06a9\u0627\u0646\u062a\u0648\u0631_\u062a\u0631\u0645\u06cc\u0645 #\u067e\u0627\u067e\u06cc\u0644\u0627 #\u06a9\u0627\u0646\u062a\u06a9\u062a_\u067e\u0631\u0648\u06af\u0632\u06cc\u0645\u0627\u0644 all reused canonical, no mint; --reach REACHABLE (#\u067e\u0627\u067e\u06cc\u0644\u0627 4/4); --sync, --check OK; build_cabinet_papers --check OK"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5: brain entry appended at end, key set equals ep163 dentcast entry; dentcast.json entry 164 appended"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.6: pathways: fixed-pros and treatment-planning after episodes/episode-163 (series sibling, STRONG); others not placed (third pathway cap / spurious series match); 4.12-\u0628: 3 approved questions written r-cd88dc0b r-135d1bdb r-4049cffb, validate_exam_questions 0 errors",
+                  "C.5.6-b: bundle-crown-prep (fixed-pros): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2: part 2 of a series whose part 1 is not in the bundle); treatment-planning: no bundle"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "first Pulse line of index.html links /episodes/episode-164.html"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "episodes/en/episode-164.html on disk"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "pending_questions empty; founder answers recorded as decisions"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/45948779821"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "episodes/episode-164",
+            "exit_code": 0,
+            "expected_caption": "\u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0627\u062f\u0627\u0645\u0647 \u0645\u0633\u062a\u0642\u06cc\u0645 \u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f3 \u0647\u0633\u062a \u0648 \u0647\u0645\u0648\u0646 \u0645\u0642\u0627\u0644\u0647 \u0645\u0631\u0648\u0631\u06cc \u06f2\u06f0\u06f2\u06f3 \u062f\u0631\u0628\u0627\u0631\u0647 \u0641\u0648\u062f \u0627\u06cc\u0645\u067e\u06a9\u0634\u0646 \u0631\u0648 \u0627\u062f\u0627\u0645\u0647 \u0645\u06cc\u200c\u062f\u06cc\u0645.\n\n\u062a\u0648\u06cc \u0642\u0633\u0645\u062a \u0642\u0628\u0644 \u06af\u0641\u062a\u06cc\u0645 \u06a9\u0647 \u0641\u0648\u062f \u0627\u06cc\u0645\u067e\u06a9\u0634\u0646 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u06cc \u0628\u0627\u0632 \u0628\u0648\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0646\u06cc\u0633\u062a. \u062d\u0627\u0644\u0627 \u0645\u06cc\u200c\u0631\u06cc\u0645 \u0633\u0631\u0627\u063a \u0628\u0642\u06cc\u0647 \u0639\u0644\u062a\u200c\u0647\u0627\u06cc \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u06a9\u0647 \u0645\u0642\u0627\u0644\u0647 \u06a9\u0646\u0627\u0631 \u0628\u0627\u0632 \u0634\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0645\u0637\u0631\u062d \u0645\u06cc\u200c\u06a9\u0646\u0647: \u0646\u0627\u0647\u0645\u0627\u0647\u0646\u06af\u06cc \u0627\u06a9\u0644\u0648\u0632\u0627\u0644\u06cc\u060c \u0646\u0642\u0635 \u062f\u0631 \u0634\u06a9\u0644 \u062f\u0646\u062f\u0627\u0646 \u06cc\u0627 \u062a\u0631\u0645\u06cc\u0645\u060c \u0645\u0648\u0642\u0639\u06cc\u062a \u063a\u06cc\u0631\u0637\u0628\u06cc\u0639\u06cc \u062f\u0646\u062f\u0627\u0646 \u0648 \u0627\u0632 \u062f\u0633\u062a \u0631\u0641\u062a\u0646 \u067e\u0627\u067e\u06cc\u0644\u0627\u06cc \u0628\u06cc\u0646\u200c\u062f\u0646\u062f\u0627\u0646\u06cc.\n\n\u0627\u06cc\u0646 \u0628\u062d\u062b \u062f\u0631 \u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f5 \u0647\u0645 \u0627\u062f\u0627\u0645\u0647 \u067e\u06cc\u062f\u0627 \u0645\u06cc\u200c\u06a9\u0646\u0647.",
+            "expected_title": "Food Impaction in Dentistry: Revisited :part2",
+            "kind": "phase_f",
+            "output_sha256": "768ffd705b046414706d72e37e85f4769b264bda9bb4065a2bced4c04913ddc8",
+            "recorded_at": "2026-11-27T05:58:20+00:00",
+            "summary": "104 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "readpack dentcast/no/no/research/isolated/one"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Phase0: no text from founder (caption agent-authored per founder request), no paper file attached; paper of ep163 reused"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "brain parsed: latest dentcast entry ep163 key set type,episode,title,caption,hashtags,keywords,audio_url,page_url,pillar; PILLARS read"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "type dentcast (core episode)"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "next number 164 (max 163 + 1), founder named 164"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no founder text; founder asked agent to write caption from ep163 (continuation, other causes of food impaction, continues in 165)"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no founder prose to de-AI; caption agent-authored"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "audio founder URL https://episodes.s3.ir-central1.arvanstorage.ir/dentcast164%20.mp3?versionId= ; duration 26:05 founder-supplied (host not reachable from sandbox, proxy 403)"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no paper file attached; founder: use the ep163 paper (doi 10.3290/j.ohpd.b4172837)"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "basket 2 RESEARCH: refs block with DOI 10.3290/j.ohpd.b4172837; founder: reuse ep163 DES"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc (episode), not a Challenge"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: agent draft in ep163 pattern \u00ab\u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f4 \u062f\u0646\u062a\u200c\u06a9\u0633\u062a \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u2026\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f.\u00bb; M2: 3 questions approved verbatim; no M1 facts"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "not LiteCast: LiteCast branch not applicable"
+          ],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "template episodes/episode-163.html; git diff --quiet held during clone (163 edited only later at C.4.6 nav slot)"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "episodes/episode-164.html cloned from ep163, caption/title/meta/JSON-LD/audio/duration PT26M5S/date/keywords/chips/related/nav swapped; domain .org kept; presentation_lint clean"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "pillar treatment-planning / subtopic comprehensive-diagnosis (same subject as ep163, food impaction etiology diagnosis)"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "episode branch: \u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc -> /pillar/treatment-planning/ in \u0645\u062d\u062a\u0648\u0627\u06cc \u0645\u0631\u062a\u0628\u0637"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "episodes.html is generated by tools/build_episodes.py (runner C.8) from dentcast.json entry 164 appended"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dates 2026-11-27 everywhere (JSON-LD, meta row Fri, 27 Nov 2026), duration 26:05 founder-supplied"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "git diff --quiet -- episodes/episode-163.html held at build; later edit only at 4.6 nav"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "NoteCast-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "NoteCast-only credit step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Promptologist-only step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "no attached paper (Question 4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "no attached paper (Question 4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "no attached paper (Question 4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "DES reused from episodes/episode-163 (same paper doi 10.3290/j.ohpd.b4172837, v3.7 FULL_TEXT, founder instruction), sources[] byte-identical, scored_at 2026-11-27, no fidelity key (audio episode); des_record_guard check ok"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "related_cap --glossary-room: no term on food impaction/contact/papilla/occlusion has a free slot or exists; 0 back-links"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "glossary-publish-only back-link step",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "caption: \u00ab\u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f3\u00bb linked to /episodes/episode-163.html (sibling part the body refers back to, ep162 inline markup); no glossary term qualifies; borderline: none"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0645\u062d\u062a\u0648\u0627\u06cc \u0645\u0631\u062a\u0628\u0637: pillar capsule + ep163 (sibling first) + insight-73, insight-69, meta-12 = 5/5 cap; skipped episode-159 (implant contact loss, part-1 topic) at cap"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "4 DefinedTerms in plus/faq-corpus.json episodes/episode-164 #flashcards-c1..c4 (3 faq, 1 authored); FAQ q4 list-shaped compressed to authored card c4"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "FAQPage 4 questions, 3 binary with opening \u0628\u0644\u0647 verdict, 1 open (list); no deixis"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "ordinary post, not a Challenge (Question 4.9)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "tags #\u062f\u0646\u062a\u06a9\u0633\u062a #\u06af\u06cc\u0631_\u063a\u0630\u0627\u06cc\u06cc #\u062a\u0634\u062e\u06cc\u0635_\u0627\u0641\u062a\u0631\u0627\u0642\u06cc #\u0627\u06a9\u0644\u0648\u0698\u0646 #\u06a9\u0627\u0646\u062a\u0648\u0631_\u062a\u0631\u0645\u06cc\u0645 #\u067e\u0627\u067e\u06cc\u0644\u0627 #\u06a9\u0627\u0646\u062a\u06a9\u062a_\u067e\u0631\u0648\u06af\u0632\u06cc\u0645\u0627\u0644 all reused canonical, no mint; --reach REACHABLE (#\u067e\u0627\u067e\u06cc\u0644\u0627 4/4); --sync, --check OK; build_cabinet_papers --check OK"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "brain entry appended at end, key set equals ep163 dentcast entry; dentcast.json entry 164 appended"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pillar treatment-planning/comprehensive-diagnosis live in PILLARS; capsule matches"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathways: fixed-pros and treatment-planning after episodes/episode-163 (series sibling, STRONG); others not placed (third pathway cap / spurious series match); 4.12-\u0628: 3 approved questions written r-cd88dc0b r-135d1bdb r-4049cffb, validate_exam_questions 0 errors"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "bundle-crown-prep (fixed-pros): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2: part 2 of a series whose part 1 is not in the bundle); treatment-planning: no bundle"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.6: Pulse line, English mirror and the ten-scope lock (built by close)"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:768ffd705b046414706d72e37e85f4769b264bda9bb4065a2bced4c04913ddc8"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/45948779821"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "dentcast.json",
+        "episodes.html",
+        "episodes/en/episode-164.html",
+        "episodes/episode-163.html",
+        "episodes/episode-164.html",
+        "index.html",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "pillar/treatment-planning/index.html",
+        "pillar/treatment-planning/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/cabinet-papers.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/episodes/episode-164.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "4b202f0e70ae0a43087bb497fa293d51574b39ad733922f555f8a6d94943a06a",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "001414da1b96ed2654e121f638a380aae0a73b199e914d4f8dfe4dc26f94fb5c",
+          "executable": false
+        },
+        "dentcast.json": {
+          "kind": "file",
+          "sha256": "655e0d29d6f961551fb89bc995b7e994b819cc33f1bf77f8591b2aa2b3ebb1c2",
+          "executable": false
+        },
+        "episodes.html": {
+          "kind": "file",
+          "sha256": "88ce2bb2418d29e2c86a8d74c6ac8743b0531e82c4bcc1235b20e26c5fbd6942",
+          "executable": false
+        },
+        "episodes/en/episode-164.html": {
+          "kind": "file",
+          "sha256": "cd040b13e54bab4f579311be8b2fb96a1d599b52adfe8ba33dbd39b0c5d1ddee",
+          "executable": false
+        },
+        "episodes/episode-163.html": {
+          "kind": "file",
+          "sha256": "71097d32d9b8b64b0984581651cb81ea639c85b11d7bc74f4d7c765e6bfcf434",
+          "executable": false
+        },
+        "episodes/episode-164.html": {
+          "kind": "file",
+          "sha256": "f3785ad0f084d6ef757e5b054edbffcc502e000ed4c6ba783583ace9d0a80e62",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "43a4b994c8be1e986e8bad118f8ae6da213af20565f1de3ba339d297c96534c2",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "abf2cf2af9c4907cd59bcf734cf9e1ffcf9d6da8f4b7bafa0b2225ca8789fc4c",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "af95a3958cdaae7a3de8e521331e160ef8d2b952e5acc1e0422caa6bc0f8af03",
+          "executable": false
+        },
+        "pillar/treatment-planning/index.html": {
+          "kind": "file",
+          "sha256": "186d34d6f381a35e906e297bd6aefa9c185c8316d5b3749b8eea0d0aa1a66dd6",
+          "executable": false
+        },
+        "pillar/treatment-planning/structure.json": {
+          "kind": "file",
+          "sha256": "d29d2a72a0e41dbc03f6d4f4a719e815fd4d67d4c3e7d3cfa64d7bd04df6b9a6",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "7a017f9b2a1f818bd244cdc564c0fa741451241426bf4a780e9b78c8e19fee9e",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "2b987a33d6e52a16644ad57982e2483bb04217dfd95f069e7fae9862dc5d5a3b",
+          "executable": false
+        },
+        "plus/cabinet-papers.json": {
+          "kind": "file",
+          "sha256": "42736dc80183290081a561467a6747e5fc40c916d5084c42e6da05e299e29b13",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "cb3274c1e67f7f68bb3eb8d621104255427306a80f6d7e3b4db56c84b62094c4",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "74e1f1cd2ec6aae8e2df6947f5260ee849c954a8715edbc2abb72a2ef0da7d8c",
+          "executable": false
+        },
+        "plus/des/episodes/episode-164.json": {
+          "kind": "file",
+          "sha256": "77b8e80d5d16a9cd165a6990833ef8004df95a5605e40386b0549654eef703e4",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "c9341c493d6186ef2ed79ca3aeff5fca2be8e75fea786e8e46e2557b252fd5ae",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "f43debee05009848250255bcbcd0e78102d548b068da5e620dfd8746eff4d335",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "d8e98f38bfc0b61ce1d56b9a327d8a534e31d9549b7fab444c1860e631bdad20",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "a322071272b03c45946ddafcbfd68bdbef1f4d76a60f23fcc46716b3433ad1bb",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "aa00352456d10f4fc8d8d0bff018056790a53465be311b05efe9c5a62a4fa344",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "cf5226f0962525a4630c90ea417d70e68482a8684a87dc5fb89229dea45f9f1a",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "7e22563393d8d73931ed2f3c35f0a98fc8df45b062420702d4048dde6a681ec0",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "2ab1bcbc091cb07c28ad96e3732f1112f87a443fdf83afec1f9b95b3c7c36ff8",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "345a818308ddeba5718ea86a0047d6e4806d70e0be5681a62bf664b3010330b2",
+        ".dentcast/workflows/agent-parity.md": "8d75e78cdde27168b3433464fc9749b60a43b652583928adf78bf9ec3f9eb814",
+        ".dentcast/workflows/publish-handoff.md": "3a273987d72105de9d1c7e8a3f8584294383f57c35a77c5f70c27df08ae4ac65",
+        ".dentcast/workflows/routing-details.md": "3010dffba389ab8006dacb938e0fc30436bb4d2939168321c8fb72a1bda2ed94",
+        ".dentcast/workflows/global/README.md": "aef11a104eb3694f9ca4152bbe5008fd34156ee8d64e6aa91bf6b0a5a8a0f85f",
+        ".dentcast/workflows/global/LOAD-MAP.json": "d9950ff79dca3c08bf560bd3af74bd2432d633f62540c3eeaf6e2a01bae0edd7",
+        "tools/dentcast_global_rules.py": "519ddf44d30c323474e2176b03df7bd3eb2c21da57a1ea5b8872426022b95265",
+        ".dentcast/workflows/global/repo-conventions.md": "89afa9b633d19b723435618abc547ea9576f5caf998256755c6b998e53a0211b",
+        ".dentcast/workflows/global/plus-premium.md": "d8cf5b30c9a1cddadd2290d2bf1e7f0ec2772faa8b3887fbcbe92794d9215ab5",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "32502736bbd288c4c585413d3c06e937294f6fb705e879f01b8472423365e900",
+        "tools/dentcast_publish_lifecycle.py": "ebaf476a80d4d8d59df218d7409d8b01cab962abe8cbe4d27fdc4f0d87114af6",
+        "tools/verify_publish.py": "c4654861744b3733c4fabc9ba340e6ea480cc1213d5ea1d2309e186eb0f2ac7e",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "ebcb9ad166852107e1eff46da040724dcaec7f5faafbcf4035b186060d7983fc",
+        ".github/workflows/post-cut2-mechanical.yml": "cf2d5430e5930988c9c3a338f9b52fbdb6b1c3059969f3bd651ef2903be8429c",
+        ".dentcast/workflows/publish-checkpoints.md": "150c75acb29c33841a186663a10953624d601a37aeb6f643be7fbffec4c63897",
+        ".dentcast/workflows/publish-after-push2.md": "a98ce097a8f7ab17a7084cfb739dedd40e74ab20218b2f06cd16079cb97e6d10",
+        ".dentcast/workflows/modules/01-hard-rules.md": "40668219c399f74e6a25fa9f9742fbe01bbfebac5ae9af07a8bcccb499d2d9d9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "9d0fd41f95e0c27e8d051631ebca05dad72e18b4484c5922fb2011967577af71",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "0439bc9adb7666cec91523a2af98aec2d49b430924001be5a3bf3f13b1e80406",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "8f2cfe5cf231c8a71858546fceb00614433186ceaad21d75f5f8d010aa7e6e7a",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "fc7dbe0ad525027a4790754d1ba1dc5fef9ad2e0ec5e1f7e39d9d712eed6a8f5",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "b03c934d614f0277705a87e95fe24d949bbcefe203edcb2074b5fccead2ba712",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "bf510df5f48d11ffb6b3f9dc13ad6a0fa0f66505bffc7e55481bfe5064815850",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "280c1e6ccb953fe7fbaa1bbaf50bbe174efdba311f9d95f5b630d484c38da7e9",
+        ".dentcast/workflows/modules/09-challenge.md": "298729a41f656516113c3ae1ab371ea22a3b04fd3a22620fa6305bdea2b60276",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "3887233f9151f80cf7d60cb218f1ca3310003842e13991292f37e2a8b733ebc0",
+        ".dentcast/workflows/modules/11-build-and-version.md": "b576d2f3c0b54413e0a9dea8dba04f34bcac3b38f81cf049bf5077a314520d3c",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "2b1b0ee12aa606a476cfa007773ff577b254b9e02fe95cf6fa6dd41a9b2f67c1"
+      }
+    }
+  },
+  "second_delivery_commit": "e981864a648031130430af2f142cb77f44674fdf",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "episodes/episode-164",
+    "expected_title": "Food Impaction in Dentistry: Revisited :part2",
+    "expected_caption": "\u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0627\u062f\u0627\u0645\u0647 \u0645\u0633\u062a\u0642\u06cc\u0645 \u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f3 \u0647\u0633\u062a \u0648 \u0647\u0645\u0648\u0646 \u0645\u0642\u0627\u0644\u0647 \u0645\u0631\u0648\u0631\u06cc \u06f2\u06f0\u06f2\u06f3 \u062f\u0631\u0628\u0627\u0631\u0647 \u0641\u0648\u062f \u0627\u06cc\u0645\u067e\u06a9\u0634\u0646 \u0631\u0648 \u0627\u062f\u0627\u0645\u0647 \u0645\u06cc\u200c\u062f\u06cc\u0645.\n\n\u062a\u0648\u06cc \u0642\u0633\u0645\u062a \u0642\u0628\u0644 \u06af\u0641\u062a\u06cc\u0645 \u06a9\u0647 \u0641\u0648\u062f \u0627\u06cc\u0645\u067e\u06a9\u0634\u0646 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u06cc \u0628\u0627\u0632 \u0628\u0648\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0646\u06cc\u0633\u062a. \u062d\u0627\u0644\u0627 \u0645\u06cc\u200c\u0631\u06cc\u0645 \u0633\u0631\u0627\u063a \u0628\u0642\u06cc\u0647 \u0639\u0644\u062a\u200c\u0647\u0627\u06cc \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u06a9\u0647 \u0645\u0642\u0627\u0644\u0647 \u06a9\u0646\u0627\u0631 \u0628\u0627\u0632 \u0634\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0645\u0637\u0631\u062d \u0645\u06cc\u200c\u06a9\u0646\u0647: \u0646\u0627\u0647\u0645\u0627\u0647\u0646\u06af\u06cc \u0627\u06a9\u0644\u0648\u0632\u0627\u0644\u06cc\u060c \u0646\u0642\u0635 \u062f\u0631 \u0634\u06a9\u0644 \u062f\u0646\u062f\u0627\u0646 \u06cc\u0627 \u062a\u0631\u0645\u06cc\u0645\u060c \u0645\u0648\u0642\u0639\u06cc\u062a \u063a\u06cc\u0631\u0637\u0628\u06cc\u0639\u06cc \u062f\u0646\u062f\u0627\u0646 \u0648 \u0627\u0632 \u062f\u0633\u062a \u0631\u0641\u062a\u0646 \u067e\u0627\u067e\u06cc\u0644\u0627\u06cc \u0628\u06cc\u0646\u200c\u062f\u0646\u062f\u0627\u0646\u06cc.\n\n\u0627\u06cc\u0646 \u0628\u062d\u062b \u062f\u0631 \u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f5 \u0647\u0645 \u0627\u062f\u0627\u0645\u0647 \u067e\u06cc\u062f\u0627 \u0645\u06cc\u200c\u06a9\u0646\u0647.",
+    "exit_code": 0,
+    "output_sha256": "768ffd705b046414706d72e37e85f4769b264bda9bb4065a2bced4c04913ddc8",
+    "summary": "104 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}

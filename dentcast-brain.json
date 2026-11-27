@@ -19643,5 +19643,34 @@
       "secondary": [],
       "subtopic": "llm-tools"
     }
+  },
+  {
+    "type": "dentcast",
+    "episode": "164",
+    "title": "Food Impaction in Dentistry: Revisited :part2",
+    "caption": "این قسمت ادامه مستقیم اپیزود ۱۶۳ هست و همون مقاله مروری ۲۰۲۳ درباره فود ایمپکشن رو ادامه می‌دیم.\n\nتوی قسمت قبل گفتیم که فود ایمپکشن همیشه به معنی باز بودن کانتکت نیست. حالا می‌ریم سراغ بقیه علت‌های گیر غذایی که مقاله کنار باز شدن کانتکت مطرح می‌کنه: ناهماهنگی اکلوزالی، نقص در شکل دندان یا ترمیم، موقعیت غیرطبیعی دندان و از دست رفتن پاپیلای بین‌دندانی.\n\nاین بحث در اپیزود ۱۶۵ هم ادامه پیدا می‌کنه.",
+    "hashtags": [
+      "#دنتکست",
+      "#گیر_غذایی",
+      "#تشخیص_افتراقی",
+      "#اکلوژن",
+      "#کانتور_ترمیم",
+      "#پاپیلا",
+      "#کانتکت_پروگزیمال"
+    ],
+    "keywords": [
+      "Food Impaction",
+      "Occlusal Disharmony",
+      "Morphological Deformity",
+      "Positional Abnormality",
+      "Interdental Papilla Loss"
+    ],
+    "audio_url": "https://episodes.s3.ir-central1.arvanstorage.ir/dentcast164%20.mp3?versionId=",
+    "page_url": "/episodes/episode-164.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]

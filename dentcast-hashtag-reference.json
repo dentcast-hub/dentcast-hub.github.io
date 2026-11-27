@@ -30,7 +30,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 212,
+   "count": 213,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -243,7 +243,8 @@
     "episodes/episode-160",
     "episodes/episode-161",
     "episodes/episode-162",
-    "episodes/episode-163"
+    "episodes/episode-163",
+    "episodes/episode-164"
    ]
   },
   {
@@ -605,6 +606,84 @@
    ]
   },
   {
+   "key": "اکلوژن",
+   "tag": "#اکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
+   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "occlusion",
+    "اکلوزیون",
+    "اکلوزن",
+    "اوکلوژن",
+    "آکلوژن",
+    "اکلوژیون",
+    "اکلوزون"
+   ],
+   "variants": [
+    "#Occlusion"
+   ],
+   "co_tags": [],
+   "count": 54,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-23",
+    "episodes/episode-35",
+    "episodes/episode-60",
+    "episodes/episode-123-2",
+    "episodes/episode-126",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-1",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-12",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "notecast/episode-14",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-21",
+    "episodes/episode-154",
+    "sharehub/share-5",
+    "insight/insight-24",
+    "episodes/episode-155",
+    "dentcast-plus/video-6",
+    "insight/insight-29",
+    "chairside/chairside-11",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-43",
+    "episodes/episode-160",
+    "chairside/chairside-23",
+    "insight/insight-56",
+    "chairside/chairside-31",
+    "insight/insight-65",
+    "chairside/chairside-36",
+    "sharehub/share-21",
+    "insight/insight-87",
+    "insight/insight-94",
+    "sharehub/share-36",
+    "insight/insight-96",
+    "chairside/chairside-44",
+    "insight/insight-103",
+    "insight/insight-104",
+    "sharehub/share-47",
+    "chairside/chairside-51",
+    "chairside/chairside-53",
+    "episodes/episode-163",
+    "dentcast-plus/video-17",
+    "episodes/episode-164"
+   ]
+  },
+  {
    "key": "بیومیمتیک",
    "tag": "#بیومیمتیک",
    "domain": "clinical",
@@ -751,83 +830,6 @@
     "chairside/chairside-55",
     "chairside/chairside-56",
     "chairside/chairside-57"
-   ]
-  },
-  {
-   "key": "اکلوژن",
-   "tag": "#اکلوژن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
-   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "occlusion",
-    "اکلوزیون",
-    "اکلوزن",
-    "اوکلوژن",
-    "آکلوژن",
-    "اکلوژیون",
-    "اکلوزون"
-   ],
-   "variants": [
-    "#Occlusion"
-   ],
-   "co_tags": [],
-   "count": 53,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-23",
-    "episodes/episode-35",
-    "episodes/episode-60",
-    "episodes/episode-123-2",
-    "episodes/episode-126",
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "episodes/episode-142",
-    "episodes/episode-143",
-    "episodes/episode-144",
-    "episodes/episode-145",
-    "insight/insight-1",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-12",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "notecast/episode-14",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "insight/insight-21",
-    "episodes/episode-154",
-    "sharehub/share-5",
-    "insight/insight-24",
-    "episodes/episode-155",
-    "dentcast-plus/video-6",
-    "insight/insight-29",
-    "chairside/chairside-11",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-43",
-    "episodes/episode-160",
-    "chairside/chairside-23",
-    "insight/insight-56",
-    "chairside/chairside-31",
-    "insight/insight-65",
-    "chairside/chairside-36",
-    "sharehub/share-21",
-    "insight/insight-87",
-    "insight/insight-94",
-    "sharehub/share-36",
-    "insight/insight-96",
-    "chairside/chairside-44",
-    "insight/insight-103",
-    "insight/insight-104",
-    "sharehub/share-47",
-    "chairside/chairside-51",
-    "chairside/chairside-53",
-    "episodes/episode-163",
-    "dentcast-plus/video-17"
    ]
   },
   {
@@ -2100,6 +2102,49 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [
+    "differential diagnosis",
+    "افتراق تشخیصی",
+    "ddx",
+    "دیفرنشیال دیاگنوز",
+    "تشخیص های افتراقی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 23,
+   "content_ids": [
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "dentai/dentai-1",
+    "insight/insight-9",
+    "insight/insight-11",
+    "photocast/episode-1",
+    "episodes/episode-152",
+    "insight/insight-23",
+    "insight/insight-25",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "chairside/chairside-7",
+    "insight/insight-43",
+    "chairside/chairside-18",
+    "insight/insight-45",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "sharehub/share-12",
+    "chairside/chairside-29",
+    "chairside/chairside-45",
+    "episodes/episode-163",
+    "chairside/chairside-57",
+    "episodes/episode-164"
+   ]
+  },
+  {
    "key": "سرامیک",
    "tag": "#سرامیک",
    "domain": "clinical",
@@ -2182,48 +2227,6 @@
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2",
     "dentai/promptologist/prompt-append2-1"
-   ]
-  },
-  {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
-   "aliases": [
-    "differential diagnosis",
-    "افتراق تشخیصی",
-    "ddx",
-    "دیفرنشیال دیاگنوز",
-    "تشخیص های افتراقی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 22,
-   "content_ids": [
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "dentai/dentai-1",
-    "insight/insight-9",
-    "insight/insight-11",
-    "photocast/episode-1",
-    "episodes/episode-152",
-    "insight/insight-23",
-    "insight/insight-25",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "chairside/chairside-7",
-    "insight/insight-43",
-    "chairside/chairside-18",
-    "insight/insight-45",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "sharehub/share-12",
-    "chairside/chairside-29",
-    "chairside/chairside-45",
-    "episodes/episode-163",
-    "chairside/chairside-57"
    ]
   },
   {
@@ -4730,6 +4733,43 @@
    ]
   },
   {
+   "key": "گیر_غذایی",
+   "tag": "#گیر_غذایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
+   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
+   "aliases": [
+    "food impaction",
+    "گیر کردن غذا",
+    "ایمپکشن غذا",
+    "فود ایمپکشن",
+    "ایمپکشن غذایی",
+    "گیر مواد غذایی",
+    "food trapping",
+    "فودایمپکشن"
+   ],
+   "variants": [
+    "#Food_Impaction"
+   ],
+   "co_tags": [
+    "#Food_Impaction"
+   ],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "insight/insight-7",
+    "episodes/episode-159",
+    "chairside/chairside-28",
+    "chairside/chairside-37",
+    "insight/insight-73",
+    "chairside/chairside-50",
+    "episodes/episode-163",
+    "chairside/chairside-55",
+    "episodes/episode-164"
+   ]
+  },
+  {
    "key": "tmd",
    "tag": "#TMD",
    "domain": "clinical",
@@ -5022,42 +5062,6 @@
     "episodes/episode-162",
     "chairside/chairside-52",
     "insight/insight-114"
-   ]
-  },
-  {
-   "key": "گیر_غذایی",
-   "tag": "#گیر_غذایی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
-   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
-   "aliases": [
-    "food impaction",
-    "گیر کردن غذا",
-    "ایمپکشن غذا",
-    "فود ایمپکشن",
-    "ایمپکشن غذایی",
-    "گیر مواد غذایی",
-    "food trapping",
-    "فودایمپکشن"
-   ],
-   "variants": [
-    "#Food_Impaction"
-   ],
-   "co_tags": [
-    "#Food_Impaction"
-   ],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "insight/insight-7",
-    "episodes/episode-159",
-    "chairside/chairside-28",
-    "chairside/chairside-37",
-    "insight/insight-73",
-    "chairside/chairside-50",
-    "episodes/episode-163",
-    "chairside/chairside-55"
    ]
   },
   {
@@ -7171,6 +7175,32 @@
    ]
   },
   {
+   "key": "کانتور_ترمیم",
+   "tag": "#کانتور_ترمیم",
+   "domain": null,
+   "words": 2,
+   "definition": "فرمِ بیرونیِ ترمیم و اثرش بر بافت اطراف.",
+   "use_when": "مقاله کانتور را عاملِ مشکل بداند.",
+   "aliases": [
+    "کانتور رستوریشن",
+    "restoration contour",
+    "crown contour",
+    "کانتور روکش",
+    "کانتور کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-16",
+    "insight/insight-25",
+    "chairside/chairside-7",
+    "insight/insight-32",
+    "episodes/episode-163",
+    "episodes/episode-164"
+   ]
+  },
+  {
    "key": "گایدلاین",
    "tag": "#گایدلاین",
    "domain": "clinical",
@@ -8124,28 +8154,32 @@
    ]
   },
   {
-   "key": "کانتور_ترمیم",
-   "tag": "#کانتور_ترمیم",
-   "domain": null,
+   "key": "کانتکت_پروگزیمال",
+   "tag": "#کانتکت_پروگزیمال",
+   "domain": "clinical",
    "words": 2,
-   "definition": "فرمِ بیرونیِ ترمیم و اثرش بر بافت اطراف.",
-   "use_when": "مقاله کانتور را عاملِ مشکل بداند.",
+   "definition": "خودِ تماس بین دو دندان مجاور، به‌عنوان یک ساختار.",
+   "use_when": "مقاله درباره‌ی شکل، محل یا شدتِ کانتکت پروگزیمال باشد.",
    "aliases": [
-    "کانتور رستوریشن",
-    "restoration contour",
-    "crown contour",
-    "کانتور روکش",
-    "کانتور کراون"
+    "تماس پروگزیمالی",
+    "کنتاکت مجاور",
+    "proximal contact",
+    "پروگزیمال کانتکت",
+    "interproximal contact",
+    "تماس بین دندانی",
+    "کانتکت اینترپروگزیمال",
+    "کانتکت بین دندانی",
+    "کنتاکت پروگزیمال"
    ],
    "variants": [],
    "co_tags": [],
    "count": 5,
    "content_ids": [
-    "insight/insight-16",
-    "insight/insight-25",
-    "chairside/chairside-7",
-    "insight/insight-32",
-    "episodes/episode-163"
+    "metanotes/meta-12",
+    "episodes/episode-159",
+    "insight/insight-73",
+    "episodes/episode-163",
+    "episodes/episode-164"
    ]
   },
   {
@@ -9917,6 +9951,31 @@
    ]
   },
   {
+   "key": "پاپیلا",
+   "tag": "#پاپیلا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پاپیلای بین‌دندانی و حفظ یا بازسازی‌اش.",
+   "use_when": "مقاله سرنوشتِ پاپیلا را تعیین کند.",
+   "aliases": [
+    "papilla",
+    "پاپیلای لثه",
+    "لثه بین دندانی",
+    "interdental papilla",
+    "پاپیلای بین دندانی",
+    "پاپیل بین دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "sharehub/share-3",
+    "notecast/episode-39",
+    "episodes/episode-163",
+    "episodes/episode-164"
+   ]
+  },
+  {
    "key": "پوزیشن_ایمپلنت",
    "tag": "#پوزیشن_ایمپلنت",
    "domain": "clinical",
@@ -10056,34 +10115,6 @@
     "insight/insight-29",
     "metanotes/meta-12",
     "notecast/episode-37"
-   ]
-  },
-  {
-   "key": "کانتکت_پروگزیمال",
-   "tag": "#کانتکت_پروگزیمال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خودِ تماس بین دو دندان مجاور، به‌عنوان یک ساختار.",
-   "use_when": "مقاله درباره‌ی شکل، محل یا شدتِ کانتکت پروگزیمال باشد.",
-   "aliases": [
-    "تماس پروگزیمالی",
-    "کنتاکت مجاور",
-    "proximal contact",
-    "پروگزیمال کانتکت",
-    "interproximal contact",
-    "تماس بین دندانی",
-    "کانتکت اینترپروگزیمال",
-    "کانتکت بین دندانی",
-    "کنتاکت پروگزیمال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "metanotes/meta-12",
-    "episodes/episode-159",
-    "insight/insight-73",
-    "episodes/episode-163"
    ]
   },
   {
@@ -12193,30 +12224,6 @@
     "sharehub/share-29",
     "insight/insight-91",
     "insight/insight-98"
-   ]
-  },
-  {
-   "key": "پاپیلا",
-   "tag": "#پاپیلا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "پاپیلای بین‌دندانی و حفظ یا بازسازی‌اش.",
-   "use_when": "مقاله سرنوشتِ پاپیلا را تعیین کند.",
-   "aliases": [
-    "papilla",
-    "پاپیلای لثه",
-    "لثه بین دندانی",
-    "interdental papilla",
-    "پاپیلای بین دندانی",
-    "پاپیل بین دندانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "sharehub/share-3",
-    "notecast/episode-39",
-    "episodes/episode-163"
    ]
   },
   {
