@@ -726,13 +726,12 @@ FLAGGED = ("ALTERED", "REVERSED")
 
 
 def founder_report(fidelity):
-    """Every sentence the founder must hear about in the Push-2 report (founder,
-    2026-11-27, after sharehub/share-62): a sentence one reference confirms is
-    accepted, but nothing a pooled fold or a vote settled may stay silent when
-      * no reference supports it (ALTERED, NOT_IN_SOURCE, NOT_ASSESSABLE), or
-      * a reference states the opposite (REVERSED, or a MATCHES whose note shows
-        another source REVERSED).
-    Information only: it never holds the publication. Returns [(id, quote, why)]."""
+    """Every sentence that keeps the page below a full match (founder, 2026-11-27,
+    after sharehub/share-62): the reference addresses it and the page says it
+    differently — ALTERED (firmer, broader, another number…) or REVERSED. A sentence
+    one reference confirms is a match; one no reference addresses is not reported.
+    Each one waits for the founder's answer (message M3b): the C.6 close refuses until it
+    is recorded as a fidelity_founder_decision_v1 decision. Returns [(id, quote, why)]."""
     if isinstance(fidelity, dict) and "claims" not in fidelity:
         fidelity = list(fidelity.values())  # {"src<k>": object}
     objs = fidelity if isinstance(fidelity, list) else [fidelity]
@@ -741,15 +740,11 @@ def founder_report(fidelity):
         if not isinstance(f, dict):
             continue
         for c in f.get("claims") or []:
-            v, note = c.get("verdict"), c.get("note") or ""
+            v = c.get("verdict")
             if v == "REVERSED":
                 why = "منبع برعکسش را می‌گوید"
             elif v == "ALTERED":
                 why = f"با منبع فرق دارد ({c.get('change_kind')})"
-            elif v in SILENT:
-                why = "در هیچ رفرنسی پیدا نشد"
-            elif v == "MATCHES" and "REVERSED" in note:
-                why = f"تأیید با {c.get('source_ref') or 'یک منبع'}، ولی منبع دیگری برعکسش را می‌گوید ({note})"
             else:
                 continue
             out.append((c.get("id"), c.get("claim_quote") or "", why))
@@ -758,7 +753,7 @@ def founder_report(fidelity):
 
 def print_founder_report(fidelity):
     rows = founder_report(fidelity)
-    print(f"FOUNDER REPORT — copy into the Push-2 report ({len(rows)} sentence(s)):", file=sys.stderr)
+    print(f"FOUNDER REPORT — message M3b, the publication waits for his answer ({len(rows)} sentence(s)):", file=sys.stderr)
     for uid, quote, why in rows:
         print(f"  {uid}: «{quote}» — {why}", file=sys.stderr)
 

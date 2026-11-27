@@ -48,17 +48,17 @@ English mirror. Each is built per its module, recorded with evidence in the hand
 **agent's Push-2 report** (below). The founder may change any of them; the change follows the
 invalidation rules below.
 
-**At most two founder messages** (M1, M2), each sent only when it has content:
+**At most two founder messages** (M1, M2; plus M3b only below a full Fidelity match), each sent only when it has content:
 
 1. **M1, open facts** — at the first step that needs a fact no real source answered (normally
    C.4.10.1, the paper branch: DOI, first author, which Drive file, catalog counters; a NoteCast credit
    target at C.4.5-b; Hard Rule 13). One message gathers every open fact known at that point; the
    dependent step waits, independent work continues. A rare later fact (an abstract the tool cannot
    fetch, module 08 Part 1) is asked where it arises. A page with no paper and no open fact has no M1.
-   **Flagged Fidelity sentences have no message.** A sentence measured `ALTERED`/`REVERSED` never holds the
-   publication (module 08, «Scored once» rule 5): each one goes into the agent's Push-2 report with
-   the source's sentence and a proposed rewrite, and the founder fixes it afterwards if he wants
-   («تطابق X رو کامل کن»). C.4.13 completes when the record is stored.
+   **M3b, below a full Fidelity match**: after C.4.13 every sentence measured
+   `ALTERED`/`REVERSED` goes to the founder with the source's sentence, why it cannot match and a
+   proposed rewrite (module 08, «Scored once» rule 5). The publication waits: C.6 refuses until each
+   unit has his «اصلاح کن» / «خودم می‌نویسم» / «ادامه بده», recorded as `fidelity_founder_decision_v1`.
 2. **M2, exam questions** — at intake (module 02, Question 6), with M1 in one message: drafted from
    the text, approved one by one, written at 5.6 (module 07). His answer is final, «بدون سؤال» included.
 

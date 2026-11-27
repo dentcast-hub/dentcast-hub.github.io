@@ -31,7 +31,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': 'b6366cddd2989ef18aa542d7b9ae22b76fd9b639',
     '05-semantic-linking.md': '5069cc0e1dff5858258f875258fdf23ddaf39c40',
     '06-paper-ingestion.md': 'ce9ff376c0a10d83be94ce18fa8d1d72c999d612',
-    '08-des-fidelity.md': 'cbaf72f8223e410384d42004172493a1e8e0ffc4',
+    '08-des-fidelity.md': 'a1d43d64419afd9d9532da628c6eb48390c88a74',
     '09-challenge.md': 'b1faa96b9e0d71dd1fd70ff2fe0075dc5ad4c2cc',
     '11-build-and-version.md': 'd2d35ca0fba390eac9a21619290c9cbf6af143ab',
     '12-english-notify-verify.md': 'b429fab3438ca187b86897d56914e6a277573e4a',
@@ -247,7 +247,7 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
         part2 = boundary(lines, '#### Part 2 — Run the prompt file')
         fid = boundary(lines, '#### Part 2b — Run the FIDELITY call')
         checks = boundary(lines, '#### Part 3 — Validate the output mechanically')
-        fixes = boundary(lines, '#### Part 3b — Report every differing sentence')
+        fixes = boundary(lines, '#### Part 3b — Every differing sentence goes to the founder')
         store = boundary(lines, '#### Part 4 — Store the record')
         if not (supplied < once_a < once_b <= part1 < guard < part2 < fid < checks < fixes < store):
             raise UnsafeSelection('INVALID_MODULE_08_ORDER')

@@ -94,6 +94,21 @@ def brain_entry(root, content_id):
     raise h.Blocked("CLOSE_NEEDS_THE_BRAIN_ENTRY: no dentcast-brain.json entry with url " + url + " (step 5)")
 
 
+def fidelity_gate(decisions, fidelity):
+    """Founder, 2026-11-27: below a full Fidelity match the publication waits (M3b) until
+    every sentence founder_report() lists has his answer, recorded as a decision
+    {"kind": "fidelity_founder_decision_v1", "units": [...], "answer": "..."}."""
+    import des_fidelity_units as fu  # noqa: PLC0415
+    flagged = fu.founder_report(fidelity)
+    answered = {u for d in decisions if d.get("kind") == "fidelity_founder_decision_v1"
+                for u in d.get("units") or []}
+    missing = [f"{u} «{q[:60]}» ({w})" for u, q, w in flagged if u not in answered]
+    h.require(not missing, "FIDELITY_FOUNDER_DECISION_REQUIRED: send message M3b and record his answer as "
+              'note --decision \'{"kind":"fidelity_founder_decision_v1","units":[…],"answer":"…"}\' for: '
+              + "; ".join(missing))
+    return flagged
+
+
 def close(root, expected, lead, lead_ref=None, title_from="founder", caption_from="agent"):
     state, digest = h.load_state(root)
     p = copy.deepcopy(state["publication"])
@@ -101,6 +116,8 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
     h.require(h.next_step(p) == "C.6", "CLOSE_ONLY_AT_C6: finish the steps before C.6 first (next: " + str(h.next_step(p)) + ")")
     h.require(not p["context"]["pending_questions"], "DELIVERY_PENDING_QUESTIONS")
     cid = p["content_id"]
+    import des_fidelity_units as fu  # noqa: PLC0415
+    flagged = fidelity_gate(p["context"]["decisions"], fu.stored_fidelity(cid))
     entry = brain_entry(root, cid)
     litecast = h.publication_category(p) == "litecast"
     challenge = rows.get("C.4.14", {}).get("status") == "completed"
@@ -169,14 +186,7 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
     done = lifecycle.advance(root, saved["sha256"], "C.6", ["C.6: Pulse line, English mirror and the ten-scope lock (built by close)"],
                              (), False, "C.6 closed by the tool")
     done["next_action"] = "stage-delivery --path <each scoped path>, then one commit and one push (Push 2); then stop"
-    # founder, 2026-11-27: every sentence no reference supports, or one a reference
-    # contradicts, goes into the Push-2 report — even when a pooled fold accepted it
-    try:
-        import des_fidelity_units as fu  # noqa: PLC0415
-        rows = fu.founder_report(fu.stored_fidelity(cid))
-    except Exception as exc:  # noqa: BLE001  (a page with no record has nothing to report)
-        rows = [("-", "", f"fidelity report unavailable: {exc}")]
-    done["fidelity_report"] = [f"{u}: «{q}» — {w}" for u, q, w in rows]
-    if rows:
-        done["next_action"] += "; the Push-2 report must list every fidelity_report line, each with the source's sentence"
+    done["fidelity_report"] = [f"{u}: «{q}» — {w}" for u, q, w in flagged]
+    if flagged:
+        done["next_action"] += "; the Push-2 report repeats each fidelity_report line with the founder's answer"
     return done
