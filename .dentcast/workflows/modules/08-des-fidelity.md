@@ -134,11 +134,11 @@ process, sub-agent, relay).
    carries the SOURCE call and the Fidelity sweep of that paper together; `ingest`
    splits the reply and refuses only another paper's answer. A page with five papers
    is five trips. On this route SOURCE and FIDELITY share one context.
-5. **Flagged sentences never hold the publication.** `ALTERED`/`REVERSED` units are
-   listed in the agent's Push-2 report, each with the source's sentence and one
-   proposed rewrite (Part 3b's block). The page ships with the author's text and the
-   record says what was measured. The founder fixes them afterwards, when he wants,
-   with «تطابق X رو کامل کن». C.4.13 completes when the record is stored.
+5. **Below a full match the publication waits for the founder (M3b).** Every sentence
+   `des_fidelity_units.founder_report()` lists (ALTERED, REVERSED, a pooled MATCHES another
+   source contradicts, a claim no reference supports) goes to him after Part 4, with Part 3b's
+   block and why it cannot be a full match. C.6 refuses until each unit has his answer, recorded
+   as a `fidelity_founder_decision_v1` decision: «اصلاح کن», «خودم می‌نویسم» or «ادامه بده».
 <!-- /des-scored-once:v1 -->
 
 **Order matters: this runs after 4.10 on purpose.** When a paper file was attached,
@@ -726,14 +726,14 @@ right score was.
    is a regex approximation of spec 3b-ii and is only reported.
 <!-- /des-rating-rule:v1 -->
 
-#### Part 3b — Report every differing sentence with a proposed fix (never a stop, never automatic)
+#### Part 3b — Every differing sentence goes to the founder with a proposed fix (a stop, never automatic)
 
 **The fidelity grade exists to make the writing better, and the goal is
 «کاملاً مطابق»**. So when a validated FIDELITY result
-carries any `ALTERED` or `REVERSED` unit, **the publication goes on**: Part 4 stores
-the result as measured, and the agent's Push-2 report carries one block per such
-sentence («Scored once», rule 5). The founder answers when he wants; an answer that
-changes the text is applied by the published-page route at the end of this Part.
+carries any unit `founder_report()` lists, **the publication waits** (message M3b): Part 4
+stores the result as measured, and the founder gets one block per such sentence
+(«Scored once», rule 5). C.6 refuses until each is answered; an answer that changes the
+text is applied as below, before the English mirror and the brain entry are written.
 Doubtful units of an optional judge run (Part 2c step 4) are listed in the same report.
 
 For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
@@ -749,15 +749,15 @@ For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
    or, for a `REVERSED`, state the source's direction or drop the claim. Keep
    the founder's wording, rhythm and terms everywhere else in the sentence;
    change nothing a `MATCHES` sentence says; a ZWNJ stays a ZWNJ;
-5. the three named answers the founder may give afterwards: **«اصلاح کن»** (apply the
+5. why it cannot be a full match, and the three named answers: **«اصلاح کن»** (apply the
    proposal as shown), **«خودم می‌نویسم»** (the founder types the sentence; it
-   is copied verbatim), **«همین بماند»** (no change — the author's right; the
-   sentence stays flagged in the record).
+   is copied verbatim), **«ادامه بده»** (no change — the author's right; the
+   sentence stays flagged in the record and the publication goes on).
 
-Sentences the sources do not address (`NOT_IN_SOURCE`) are **not** offered:
-they are not faults and do not lower the grade (spec v2.8 F4). Never edit a
-sentence without its own «اصلاح کن» / «خودم می‌نویسم»; a «بله» to one is
-never a «بله» to the others.
+Sentences no reference addresses (`NOT_IN_SOURCE`, `NOT_ASSESSABLE`) do not lower the
+grade (spec v2.8 F4) but are offered too: «ادامه بده» for the
+author's own reasoning. Never edit a sentence without its own «اصلاح کن» /
+«خودم می‌نویسم»; a «بله» to one is never a «بله» to the others.
 
 **After any accepted edit:**
 

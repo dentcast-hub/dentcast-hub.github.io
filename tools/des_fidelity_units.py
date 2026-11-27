@@ -732,7 +732,8 @@ def founder_report(fidelity):
       * no reference supports it (ALTERED, NOT_IN_SOURCE, NOT_ASSESSABLE), or
       * a reference states the opposite (REVERSED, or a MATCHES whose note shows
         another source REVERSED).
-    Information only: it never holds the publication. Returns [(id, quote, why)]."""
+    Each one waits for the founder's answer (message M3b): the C.6 close refuses until it
+    is recorded as a fidelity_founder_decision_v1 decision. Returns [(id, quote, why)]."""
     if isinstance(fidelity, dict) and "claims" not in fidelity:
         fidelity = list(fidelity.values())  # {"src<k>": object}
     objs = fidelity if isinstance(fidelity, list) else [fidelity]
@@ -758,7 +759,7 @@ def founder_report(fidelity):
 
 def print_founder_report(fidelity):
     rows = founder_report(fidelity)
-    print(f"FOUNDER REPORT — copy into the Push-2 report ({len(rows)} sentence(s)):", file=sys.stderr)
+    print(f"FOUNDER REPORT — message M3b, the publication waits for his answer ({len(rows)} sentence(s)):", file=sys.stderr)
     for uid, quote, why in rows:
         print(f"  {uid}: «{quote}» — {why}", file=sys.stderr)
 

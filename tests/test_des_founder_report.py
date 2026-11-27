@@ -29,5 +29,21 @@ class FounderReport(unittest.TestCase):
         self.assertEqual(units.founder_report(None), [])
 
 
+class FidelityGate(unittest.TestCase):
+    """C.6 close refuses until every flagged sentence has the founder's answer (M3b)."""
+    def test_unanswered_flag_stops_c6_and_an_answer_releases_it(self):
+        import dentcast_publish_shortcuts as sc
+        rec = {'scope': 'POOLED', 'claims': [c(1, 'MATCHES'), c(2, 'ALTERED', kind='HEDGE_REMOVED')]}
+        with self.assertRaises(Exception) as e:
+            sc.fidelity_gate([], rec)
+        self.assertIn('FIDELITY_FOUNDER_DECISION_REQUIRED', str(e.exception))
+        ok = [{'kind': 'fidelity_founder_decision_v1', 'units': ['u2'], 'answer': 'ادامه بده'}]
+        self.assertEqual([r[0] for r in sc.fidelity_gate(ok, rec)], ['u2'])
+
+    def test_full_match_passes(self):
+        import dentcast_publish_shortcuts as sc
+        self.assertEqual(sc.fidelity_gate([], {'claims': [c(1, 'MATCHES')]}), [])
+
+
 if __name__ == '__main__':
     unittest.main()
