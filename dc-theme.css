@@ -1177,6 +1177,10 @@ body:has(.dc-topbar) .back:hover {
      empty second line. No commentary section (insight, chairside,
      metanotes, plak-sefr, taraz) has a fidelity record. */
   :root:has(link[rel="canonical"][href*=".org/sharehub/"]) { --dc-ar-des: 92px; }
+  /* NoteCast reads a paper too: its scored pages carry both chips (episode
+     44 on), and every new one will. The older pages keep the two lines empty
+     (founder: an empty line is better than a jump). */
+  :root:has(link[rel="canonical"][href*=".org/notecast/"]) { --dc-ar-des: 92px; }
 }
 /* Wider than a phone the DES chip arrives late too, and with it the aux group
    no longer fits beside the main group (368px + 356px in a 730px row), so the
