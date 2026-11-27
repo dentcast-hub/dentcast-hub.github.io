@@ -1183,6 +1183,11 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
     body_md, tail = split_tail(src)
     linker = Linker(m["links_48"]) if lang == "fa" else None
     body = render_chairside(body_md, imgs, img_url, linker, lang)
+    # A hand-published template may lack the blank line after the toggle or indent
+    # the disclaimer differently (chairside-56/57); the built page is always the
+    # canonical form: toggle, blank line, body, blank line, disclaimer.
+    doc = re.sub(r'(<a class="lang-btn".*?\n  </a>)\n(?!\n)', r"\1\n\n", doc, count=1, flags=re.S)
+    doc = re.sub(r'\n\n[ \t]*(<p class="dc-disclaimer">)', r"\n\n  \1", doc, count=1)
     doc = swap_region(doc, r'<a class="lang-btn".*?\n  </a>\n\n', r'\n\n  <p class="dc-disclaimer">', body, "body")
     explore = []
     if lang == "fa":
