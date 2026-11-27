@@ -121,6 +121,9 @@ def verify_manifest(item):
             sv = qm.single_value(qm.section_any(l02, head))
             if sv and m.get(key) is not None and m[key] != sv[1]:
                 problems.append(f"{key}: 12-انتشار.json differs from 02-عنوان-کپشن.md:{sv[0]}")
+    if qm.has_english(item) == qm.english_off(d):
+        problems.append("06-انگلیسی.md and the manifest's English fields disagree: an item either has the file "
+                        "and its English fields, or neither (Hard Rule 12)")
     return {"source": d["_source"]["value"], "checked": len(sums["checked"]), "missing": miss, "problems": problems}
 
 

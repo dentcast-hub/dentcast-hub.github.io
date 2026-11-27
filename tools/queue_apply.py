@@ -1068,7 +1068,7 @@ def build_insight_page(n, prev, m, date, item, lang="fa"):
     doc = doc.replace(f'"articleSection": "{old_sec}"', '"articleSection": ' + json.dumps(
         m.get("article_section") or article_section(m["pillar"]["primary"]), ensure_ascii=False))
     doc = re.sub(r'("healthCondition": \{[^}]*"name": )"[^"]*"', lambda mm: mm.group(1) + json.dumps(
-        m.get("topic_en") or m["title_en"], ensure_ascii=False), doc, flags=re.S)
+        m.get("topic_en") or m.get("title_en") or m["title_fa"], ensure_ascii=False), doc, flags=re.S)
     for k in ("datePublished", "dateModified", "lastReviewed"):
         doc = re.sub(r'("%s": ")\d{4}-\d\d-\d\d(")' % k, r"\g<1>" + date + r"\2", doc)
     doc = re.sub(r'<time datetime="\d{4}-\d\d-\d\d">\d{4}-\d\d-\d\d</time>', f'<time datetime="{date}">{date}</time>', doc)
@@ -1962,6 +1962,10 @@ def assemble(a):
     builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page,
                "metanote": build_metanote_page}.get(cat) or (lambda *x: build_page(cat, *x))
     english = not qm.english_off(d)
+    if english != qm.has_english(item):
+        refuse("ENGLISH_STATE", "06-انگلیسی.md and the manifest's English fields disagree (the file is "
+               + ("absent but the manifest holds English text" if english else "present but the manifest's English is null")
+               + "); the item goes back to «در حال آماده‌سازی» (Hard Rule 12)")
     m["_english"] = english
     page, img_files, page_info = builder(n, prev, m, date, item, "fa")
     if not english:
