@@ -67949,12 +67949,12 @@
         },
         {
           "id": "u18",
-          "claim_quote": "سیستم عصبی نیز خودش را با شرایط جدید تطبیق می‌دهد [6].",
+          "claim_quote": "به نظر می‌رسد سیستم عصبی نیز خودش را با شرایط جدید تطبیق می‌دهد [6].",
           "verdict": "MATCHES",
           "change_kind": null,
           "source_quote": "The neurophysiological evidence from three studies indicated cortical plasticity following dental implant placement, measured via trigeminal nerve evoked potentials and functional magnetic resonance imaging.",
           "source_ref": "S4",
-          "note": "other sources: S6: ALTERED"
+          "note": "hedged generalization of a stated finding (F2-ii rule 1): cortical plasticity after implant placement stated as a possibility that the nervous system adapts; «به نظر می‌رسد» keeps the wider wording faithful; other sources: S6: MATCHES"
         },
         {
           "id": "u19",
@@ -68046,12 +68046,12 @@
         },
         {
           "id": "u29",
-          "claim_quote": "مطالعات نشان داده‌اند بیمارانی که در هر دو فک بریج ثابت متکی بر دندان دارند نیز ممکن است در کنترل لقمه و تنظیم نیرو با مشکل مواجه شوند [2, 3].",
+          "claim_quote": "مطالعات نشان داده‌اند بیمارانی که در هر دو فک بریج ثابت متکی بر دندان دارند نیز در کنترل لقمه و تنظیم نیرو با مشکل مواجه می‌شوند [2, 3].",
           "verdict": "MATCHES",
           "change_kind": null,
-          "source_quote": "However, only 30% of the subjects in the natural dentate group, but 82% of those in the TSP and 70% in the ISP group exhibited slippage of the hazelnut during jaw closure in at least one of five trials.",
-          "source_ref": "S3",
-          "note": "a hedged generalization from the hazelnut finding (F2-ii item 1); the abstract does not address force regulation; other sources: S2: ALTERED"
+          "source_quote": "These findings demonstrate that individuals with bimaxillary tooth- or implant-supported bridges (in whom sensory information provided by the periodontal mechanoreceptors is impaired or missing) are unable to apply low-hold forces at the levels of individuals with natural teeth or to adapt the rate of the split force to the hardness of the food.",
+          "source_ref": "S2",
+          "note": "«مطالعات نشان داده‌اند» states a finding, not a relation between sources. The claim is judged on that finding, and its direction, scope and hedge level agree with the source.; other sources: S3: MATCHES"
         },
         {
           "id": "u30",
