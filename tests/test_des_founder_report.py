@@ -45,5 +45,28 @@ class FidelityGate(unittest.TestCase):
         self.assertEqual(sc.fidelity_gate([], {'claims': [c(1, 'MATCHES')]}), [])
 
 
+class QueueGate(unittest.TestCase):
+    """queue_stamp P6 / queue_publish: a queue item below a full match needs the founder's answer per unit."""
+    def run_gate(self, claims, decisions=None):
+        import json, tempfile
+        import queue_stamp as qs
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / '05-DES-Fidelity'
+            f.mkdir()
+            (f / 'fidelity.json').write_text(json.dumps({'scope': 'POOLED', 'claims': claims}), encoding='utf-8')
+            if decisions is not None:
+                (f / 'تصمیم‌های-3b.md').write_text(decisions, encoding='utf-8')
+            problems = []
+            qs.check_fidelity_gate(Path(d), problems)
+            return problems
+
+    def test_unanswered_unit_refuses(self):
+        self.assertEqual(len(self.run_gate([c(1, 'MATCHES'), c(2, 'REVERSED')])), 1)
+
+    def test_answered_unit_passes_and_full_match_needs_nothing(self):
+        self.assertEqual(self.run_gate([c(2, 'REVERSED')], '- u2: «ادامه بده» — تأیید #4\n'), [])
+        self.assertEqual(self.run_gate([c(1, 'MATCHES'), c(3, 'NOT_ASSESSABLE')]), [])
+
+
 if __name__ == '__main__':
     unittest.main()
