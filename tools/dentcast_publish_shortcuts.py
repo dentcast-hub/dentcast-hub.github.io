@@ -169,4 +169,14 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
     done = lifecycle.advance(root, saved["sha256"], "C.6", ["C.6: Pulse line, English mirror and the ten-scope lock (built by close)"],
                              (), False, "C.6 closed by the tool")
     done["next_action"] = "stage-delivery --path <each scoped path>, then one commit and one push (Push 2); then stop"
+    # founder, 2026-11-27: every sentence no reference supports, or one a reference
+    # contradicts, goes into the Push-2 report — even when a pooled fold accepted it
+    try:
+        import des_fidelity_units as fu  # noqa: PLC0415
+        rows = fu.founder_report(fu.stored_fidelity(cid))
+    except Exception as exc:  # noqa: BLE001  (a page with no record has nothing to report)
+        rows = [("-", "", f"fidelity report unavailable: {exc}")]
+    done["fidelity_report"] = [f"{u}: «{q}» — {w}" for u, q, w in rows]
+    if rows:
+        done["next_action"] += "; the Push-2 report must list every fidelity_report line, each with the source's sentence"
     return done
