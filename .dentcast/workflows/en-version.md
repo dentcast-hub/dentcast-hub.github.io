@@ -8,14 +8,7 @@ already published.
 **Trigger (registered in `CLAUDE.md`):** **«… رو انگلیسی کن»** — e.g.
 «پرامپتولوژیست ۱ رو انگلیسی کن» or «نسخه‌ی انگلیسیِ متانوت ۳». Any input of
 the form *«<صفحه> رو انگلیسی کن»* / *«نسخه‌ی انگلیسیِ <صفحه>»* enters THIS
-workflow, not the publishing router. (Rename freely — it is a single string
-in `CLAUDE.md`.)
-
-**On request only (Hard Rule 12 of the publishing router, founder 2026-11-27).**
-A new publication no longer runs this workflow: new pages ship Persian-only. It
-runs only when the founder asks for the English version of a named page. A page
-published Persian-only carries `<!-- dc-lang-toggle:off -->` where its toggle
-would stand: step 4 replaces that marker with the fa toggle (exactly once).
+workflow, not the publishing router (which never runs it: Hard Rule 12).
 
 ---
 
@@ -198,8 +191,9 @@ computed from the current document's own filename — never hardcoded:
 
 - **On the new en page:** target `../{file}.html` (the fa original), label
   «فارسی». (Same relative form as `metanotes/en/meta-1.html` → `../meta-1.html`.)
-- **On the source fa page:** add the toggle (if absent) pointing to
-  `en/{file}.html` (the en version), label «English». Match the fa-side
+- **On the source fa page:** add the toggle (in place of a
+  `<!-- dc-lang-toggle:off -->`) pointing to
+  `en/{file}.html`, label «English». Match the fa-side
   `.lang-btn` placement/markup precedent from `metanotes/meta-1.html`.
 
 Each toggle must land on **this** document's true counterpart. Verify the two

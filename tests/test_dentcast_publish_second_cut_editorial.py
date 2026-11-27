@@ -136,9 +136,12 @@ class EditorialSecondCutTests(unittest.TestCase):
         self.assert_blocked("SECOND_CUT_ENGLISH_MIRROR_MISSING",
                             lc.require_fixed_cut_readiness, p)
         p["target_paths"].append("insight/en/insight100.html")
+        # Hard Rule 12: a new page is Persian-only, so an ordinary page may be exempt
         item["english"]["status"] = "exempt"
         item["english"]["path"] = None
-        self.assert_blocked("SECOND_CUT_ENGLISH_MIRROR_MISSING",
+        lc.require_fixed_cut_readiness(p)
+        item["english"]["path"] = "insight/en/insight100.html"
+        self.assert_blocked("SECOND_CUT_ENGLISH_EXCEPTION_REQUIRED",
                             lc.require_fixed_cut_readiness, p)
 
     def test_litecast_english_exception_ignores_category_spelling(self):
