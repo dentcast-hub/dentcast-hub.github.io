@@ -833,6 +833,80 @@
    ]
   },
   {
+   "key": "مرور_منابع",
+   "tag": "#مرور_منابع",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
+   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "share hub",
+    "share_hub",
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [
+    "#Share_Hub"
+   ],
+   "co_tags": [],
+   "count": 53,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-46",
+    "sharehub/share-47",
+    "sharehub/share-51",
+    "sharehub/share-52",
+    "sharehub/share-55",
+    "sharehub/share-58",
+    "sharehub/share-59",
+    "sharehub/share-60",
+    "sharehub/share-62"
+   ]
+  },
+  {
    "key": "curated_content",
    "tag": "#Curated_Content",
    "domain": "brand",
@@ -900,79 +974,6 @@
     "sharehub/share-56",
     "sharehub/share-57",
     "sharehub/share-61"
-   ]
-  },
-  {
-   "key": "مرور_منابع",
-   "tag": "#مرور_منابع",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
-   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "share hub",
-    "share_hub",
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [
-    "#Share_Hub"
-   ],
-   "co_tags": [],
-   "count": 52,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-46",
-    "sharehub/share-47",
-    "sharehub/share-51",
-    "sharehub/share-52",
-    "sharehub/share-55",
-    "sharehub/share-58",
-    "sharehub/share-59",
-    "sharehub/share-60"
    ]
   },
   {
@@ -2609,6 +2610,46 @@
    ]
   },
   {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-95",
+    "chairside/chairside-47",
+    "chairside/chairside-52",
+    "sharehub/share-49",
+    "chairside/chairside-54",
+    "chairside/chairside-55",
+    "sharehub/share-62"
+   ]
+  },
+  {
    "key": "درمان_محافظه_کارانه",
    "tag": "#درمان_محافظه‌کارانه",
    "domain": "clinical",
@@ -2687,45 +2728,6 @@
     "insight/insight-95",
     "sharehub/share-47",
     "sharehub/share-59"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-95",
-    "chairside/chairside-47",
-    "chairside/chairside-52",
-    "sharehub/share-49",
-    "chairside/chairside-54",
-    "chairside/chairside-55"
    ]
   },
   {
@@ -2946,6 +2948,42 @@
    ]
   },
   {
+   "key": "حفظ_دندان",
+   "tag": "#حفظ_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
+   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
+   "aliases": [
+    "tooth preservation",
+    "نگه داشتن دندان",
+    "tooth retention"
+   ],
+   "variants": [
+    "#نگهداری_دندان"
+   ],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "metanotes/meta-6",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-13",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-76",
+    "insight/insight-93",
+    "chairside/chairside-44",
+    "sharehub/share-43",
+    "sharehub/share-50",
+    "sharehub/share-62"
+   ]
+  },
+  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -3098,41 +3136,6 @@
     "insight/insight-72",
     "sharehub/share-28",
     "chairside/chairside-55"
-   ]
-  },
-  {
-   "key": "حفظ_دندان",
-   "tag": "#حفظ_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
-   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
-   "aliases": [
-    "tooth preservation",
-    "نگه داشتن دندان",
-    "tooth retention"
-   ],
-   "variants": [
-    "#نگهداری_دندان"
-   ],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "metanotes/meta-6",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-13",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-76",
-    "insight/insight-93",
-    "chairside/chairside-44",
-    "sharehub/share-43",
-    "sharehub/share-50"
    ]
   },
   {
@@ -5035,6 +5038,41 @@
    ]
   },
   {
+   "key": "کانتکت_باز",
+   "tag": "#کانتکت_باز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
+   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
+   "aliases": [
+    "open contact",
+    "تماس باز پروگزیمال",
+    "باز بودن تماس",
+    "اپن کانتکت",
+    "loose contact",
+    "کانتکت لوز",
+    "open proximal contact"
+   ],
+   "variants": [
+    "#تماس_باز"
+   ],
+   "co_tags": [
+    "#تماس_باز"
+   ],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "photocast/episode-1",
+    "insight/insight-29",
+    "metanotes/meta-12",
+    "insight/insight-69",
+    "insight/insight-80",
+    "episodes/episode-163",
+    "insight/insight-115",
+    "sharehub/share-62"
+   ]
+  },
+  {
    "key": "کانتی_لیور",
    "tag": "#کانتی_لیور",
    "domain": "clinical",
@@ -5611,40 +5649,6 @@
     "metanotes/meta-23",
     "sharehub/share-55",
     "sharehub/share-57"
-   ]
-  },
-  {
-   "key": "کانتکت_باز",
-   "tag": "#کانتکت_باز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
-   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
-   "aliases": [
-    "open contact",
-    "تماس باز پروگزیمال",
-    "باز بودن تماس",
-    "اپن کانتکت",
-    "loose contact",
-    "کانتکت لوز",
-    "open proximal contact"
-   ],
-   "variants": [
-    "#تماس_باز"
-   ],
-   "co_tags": [
-    "#تماس_باز"
-   ],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "photocast/episode-1",
-    "insight/insight-29",
-    "metanotes/meta-12",
-    "insight/insight-69",
-    "insight/insight-80",
-    "episodes/episode-163",
-    "insight/insight-115"
    ]
   },
   {
@@ -7143,6 +7147,39 @@
    ]
   },
   {
+   "key": "پلنینگ_ایمپلنت",
+   "tag": "#پلنینگ_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مرحله‌ی طراحی درمان ایمپلنت پیش از جراحی.",
+   "use_when": "مقاله تصمیمی از جنس پلنینگ بگیرد.",
+   "aliases": [
+    "طراحی درمان ایمپلنت",
+    "پلن ایمپلنت",
+    "برنامه ریزی ایمپلنت",
+    "Implant Planning",
+    "implant treatment planning",
+    "طرح درمان ایمپلنت",
+    "ایمپلنت پلنینگ"
+   ],
+   "variants": [
+    "#ImplantPlanning",
+    "#Implant_Planning"
+   ],
+   "co_tags": [
+    "#Implant_Planning"
+   ],
+   "count": 6,
+   "content_ids": [
+    "metanotes/meta-5",
+    "episodes/episode-156",
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "chairside/chairside-24",
+    "sharehub/share-62"
+   ]
+  },
+  {
    "key": "پوسیدگی_ثانویه",
    "tag": "#پوسیدگی_ثانویه",
    "domain": null,
@@ -7224,6 +7261,33 @@
     "episodes/episode-127",
     "episodes/episode-134",
     "episodes/episode-135"
+   ]
+  },
+  {
+   "key": "pdl",
+   "tag": "#PDL",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "لیگامان پریودنتال — تفاوتِ بنیادیِ دندان و ایمپلنت در جذب نیرو.",
+   "use_when": "مقاله PDL را عاملِ تفاوت رفتار بداند.",
+   "aliases": [
+    "periodontal ligament",
+    "لیگامان پریودنتال",
+    "پی دی ال",
+    "لیگامنت پریودنتال",
+    "پریودنتال لیگامنت",
+    "رباط پریودنتال",
+    "لیگامان پریودونتال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-24",
+    "metanotes/meta-17",
+    "metanotes/meta-18",
+    "insight/insight-100",
+    "sharehub/share-62"
    ]
   },
   {
@@ -8096,38 +8160,6 @@
    ]
   },
   {
-   "key": "پلنینگ_ایمپلنت",
-   "tag": "#پلنینگ_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مرحله‌ی طراحی درمان ایمپلنت پیش از جراحی.",
-   "use_when": "مقاله تصمیمی از جنس پلنینگ بگیرد.",
-   "aliases": [
-    "طراحی درمان ایمپلنت",
-    "پلن ایمپلنت",
-    "برنامه ریزی ایمپلنت",
-    "Implant Planning",
-    "implant treatment planning",
-    "طرح درمان ایمپلنت",
-    "ایمپلنت پلنینگ"
-   ],
-   "variants": [
-    "#ImplantPlanning",
-    "#Implant_Planning"
-   ],
-   "co_tags": [
-    "#Implant_Planning"
-   ],
-   "count": 5,
-   "content_ids": [
-    "metanotes/meta-5",
-    "episodes/episode-156",
-    "episodes/episode-157",
-    "episodes/episode-158",
-    "chairside/chairside-24"
-   ]
-  },
-  {
    "key": "پوسیدگی_عمیق",
    "tag": "#پوسیدگی_عمیق",
    "domain": null,
@@ -8443,32 +8475,6 @@
     "episodes/episode-126",
     "episodes/episode-127",
     "dentai/dentai-5"
-   ]
-  },
-  {
-   "key": "pdl",
-   "tag": "#PDL",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "لیگامان پریودنتال — تفاوتِ بنیادیِ دندان و ایمپلنت در جذب نیرو.",
-   "use_when": "مقاله PDL را عاملِ تفاوت رفتار بداند.",
-   "aliases": [
-    "periodontal ligament",
-    "لیگامان پریودنتال",
-    "پی دی ال",
-    "لیگامنت پریودنتال",
-    "پریودنتال لیگامنت",
-    "رباط پریودنتال",
-    "لیگامان پریودونتال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-24",
-    "metanotes/meta-17",
-    "metanotes/meta-18",
-    "insight/insight-100"
    ]
   },
   {
@@ -9973,6 +9979,31 @@
     "notecast/episode-39",
     "episodes/episode-163",
     "episodes/episode-164"
+   ]
+  },
+  {
+   "key": "پروپریوسپشن",
+   "tag": "#پروپریوسپشن",
+   "domain": null,
+   "words": 1,
+   "definition": "حسِ وضعیتیِ دندان — همان که ضخامتِ زیادِ کاغذ مختلش می‌کند.",
+   "use_when": "مقاله این حس را عاملِ رفتار یا خطا بداند.",
+   "aliases": [
+    "proprioception",
+    "حس عمقی",
+    "پروپریوسپسیون",
+    "proprioceptive",
+    "پروپریوسپتیو",
+    "حس وضعیتی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-1",
+    "chairside/chairside-15",
+    "sharehub/share-50",
+    "sharehub/share-62"
    ]
   },
   {
@@ -12297,30 +12328,6 @@
    ]
   },
   {
-   "key": "پروپریوسپشن",
-   "tag": "#پروپریوسپشن",
-   "domain": null,
-   "words": 1,
-   "definition": "حسِ وضعیتیِ دندان — همان که ضخامتِ زیادِ کاغذ مختلش می‌کند.",
-   "use_when": "مقاله این حس را عاملِ رفتار یا خطا بداند.",
-   "aliases": [
-    "proprioception",
-    "حس عمقی",
-    "پروپریوسپسیون",
-    "proprioceptive",
-    "پروپریوسپتیو",
-    "حس وضعیتی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-1",
-    "chairside/chairside-15",
-    "sharehub/share-50"
-   ]
-  },
-  {
    "key": "پرینت_سه_بعدی",
    "tag": "#پرینت_سه_بعدی",
    "domain": "clinical",
@@ -13339,6 +13346,35 @@
    "content_ids": [
     "plak-sefr/plak1-1",
     "plak-sefr/plak1-6"
+   ]
+  },
+  {
+   "key": "اینفرااکلوژن",
+   "tag": "#اینفرااکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "قرار گرفتنِ سطحِ اکلوزالِ یک ترمیم یا دندان پایین‌تر از پلنِ اکلوزال، به‌طوری که در حالتِ بستنِ فک تماسِ مؤثری برقرار نمی‌کند و آن ناحیه عملاً از سیکلِ جویدن خارج می‌شود.",
+   "use_when": "مقاله دربارهٔ ترمیم یا دندانی باشد که کوتاه‌تر از پلنِ اکلوزال ساخته/واقع شده و پیامدهای فانکشنالِ آن بررسی شود.",
+   "aliases": [
+    "infraocclusion",
+    "infra occlusion",
+    "اینفرا اکلوژن",
+    "اینفرا-اکلوژن",
+    "زیر اکلوژن",
+    "روکش کوتاه اکلوزالی",
+    "infraclusion",
+    "infraposition",
+    "out of occlusion",
+    "اینفراکلوژن",
+    "اینفرااکلوزن",
+    "خارج از اکلوژن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-31",
+    "sharehub/share-62"
    ]
   },
   {
@@ -17872,34 +17908,6 @@
    "count": 1,
    "content_ids": [
     "dentcast-plus/video-6"
-   ]
-  },
-  {
-   "key": "اینفرااکلوژن",
-   "tag": "#اینفرااکلوژن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "قرار گرفتنِ سطحِ اکلوزالِ یک ترمیم یا دندان پایین‌تر از پلنِ اکلوزال، به‌طوری که در حالتِ بستنِ فک تماسِ مؤثری برقرار نمی‌کند و آن ناحیه عملاً از سیکلِ جویدن خارج می‌شود.",
-   "use_when": "مقاله دربارهٔ ترمیم یا دندانی باشد که کوتاه‌تر از پلنِ اکلوزال ساخته/واقع شده و پیامدهای فانکشنالِ آن بررسی شود.",
-   "aliases": [
-    "infraocclusion",
-    "infra occlusion",
-    "اینفرا اکلوژن",
-    "اینفرا-اکلوژن",
-    "زیر اکلوژن",
-    "روکش کوتاه اکلوزالی",
-    "infraclusion",
-    "infraposition",
-    "out of occlusion",
-    "اینفراکلوژن",
-    "اینفرااکلوزن",
-    "خارج از اکلوژن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-31"
    ]
   },
   {
