@@ -33,7 +33,7 @@ Report the full candidate list, which terms were linked (with the link text), wh
 
 **Runs only when the locked category is `glossary`.** Every other type records the documented skip ("4.7-ب: skipped — not a glossary publish"): only a glossary publish publishes a *term*.
 
-A new term starts with **zero** inbound in-body links and no other step gives it one. **Run `.dentcast/workflows/cross-link.md` scoped to the slug just published**, as Phase D hands the page to `en-version.md`:
+A new term starts with **zero** inbound in-body links and no other step gives it one. **Run `.dentcast/workflows/cross-link.md` scoped to the slug just published**:
 
 ```bash
 python3 tools/cross_link_candidates.py --slug <the new slug> --json /tmp/cross-link.json > /tmp/cross-link.md

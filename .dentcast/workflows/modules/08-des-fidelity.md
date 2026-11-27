@@ -733,7 +733,7 @@ right score was.
 carries any `ALTERED` or `REVERSED` unit, **the publication waits** (message M3b): Part 4
 stores the result as measured, and the founder gets one block per such sentence
 («Scored once», rule 5). C.6 refuses until each is answered; an answer that changes the
-text is applied as below, before the English mirror and the brain entry are written.
+text is applied as below, before the brain entry is written.
 Doubtful units of an optional judge run (Part 2c step 4) are listed in the same report.
 
 For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
@@ -765,7 +765,7 @@ never a «بله» to the others.
   lives on a surface **already written** — the lead used for the description;
   and, only when they exist already, the en mirror (translated, nothing else
   touched), the brain `summary`, the Pulse line — that is a **sweep** (Hard Rule
-  17): every such surface in the same commit. In a direct run the mirror, brain
+  17): every such surface in the same commit. In a direct run the brain
   entry and Pulse line are written after C.4.13 from the locked text, so they
   start from the fixed sentence.
 - **The founder's answer ends the loop.** An accepted edit is copied into the page and
@@ -782,7 +782,7 @@ never a «بله» to the others.
   id by its exact text, carries its verdict, and builds blocks for the caption
   units alone; run those by Part 2c (the sweeper over them, then `--judge` and the
   judge), then `--vote <dir2> --base <dir1>`, which
-  applies the same mapping. The language toggle's label («English», `<a
+  applies the same mapping. On a page with a toggle, its label («English», `<a
   class="lang-btn">` after the h1) is carried the same way: a result made on a
   preview without it (for example an outside client's draft) is one
   id off on the final page; `--carry` re-keys the result and writes the toggle
