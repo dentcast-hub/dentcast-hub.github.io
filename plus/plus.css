@@ -130,6 +130,18 @@
   border-inline-start: 1px solid var(--dcp-line); /* a quiet seam between "what you do" and "what this page says about itself" */
 }
 
+/* Wider than a phone, on the sections whose pages carry a DES score, the main
+   group keeps the first line to itself, so the aux group is on the second
+   line before the chip arrives and not only after (dc-theme.css reserves the
+   two lines, «ARTICLE ACTION ROW», same canonical test). The aux group keeps
+   its far-edge place and its seam exactly as when it wrapped by itself. */
+@media (min-width: 560px) {
+  :root:has(link[rel="canonical"]:is([href*=".org/insight/"], [href*=".org/chairside/"], [href*=".org/sharehub/"],
+    [href*=".org/metanotes/"], [href*=".org/plak-sefr/"], [href*=".org/dentai/promptologist/"],
+    [href*=".org/notecast/"]))
+    #dcActionRow > .dc-actions-main { flex-basis: 100%; }
+}
+
 /* One button vocabulary for the whole row. Every control is the same height and
    the same shape; only weight and colour say which one matters more. That is
    what «متناسب» has to mean here — three different pill sizes in one row is

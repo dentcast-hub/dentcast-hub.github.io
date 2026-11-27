@@ -7,6 +7,30 @@
 (function () {
   'use strict';
 
+  /* The prose box is not painted until this script has built the row, the ToC
+     and the glance card (dc-theme.css, «dc-nav-built»). The class is set right
+     after they are built; this listener is the same promise kept if anything
+     above that line throws. */
+  var dcBuiltDone = false;
+  function dcNavBuilt() {
+    if (dcBuiltDone) return;
+    dcBuiltDone = true;
+    var show = function () { document.documentElement.classList.add('dc-nav-built'); };
+    /* On a first visit Vazirmatn lands a moment after first paint and re-wraps
+       every line (font-display: swap). The prose waits for it, 300ms at most;
+       with the font in cache this resolves at once. */
+    var fs = document.fonts, face = '1em Vazirmatn';
+    try {
+      if (fs && fs.load && !fs.check(face)) {
+        var t = setTimeout(show, 300);
+        fs.load(face).then(function () { clearTimeout(t); show(); }, show);
+        return;
+      }
+    } catch (e) {}
+    show();
+  }
+  document.addEventListener('DOMContentLoaded', dcNavBuilt);
+
   function dcSvgIcon(name) {
     var icons = {
       menu: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
@@ -1022,6 +1046,7 @@
       dcBuildGlance(dcBoxes, document);
     }
   })();
+  dcNavBuilt();
 
   /* ── THEME (centralized) ──────────────────────────
      Single source of truth for theme behavior. The control lives in the
@@ -2993,7 +3018,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '327';
+  var V = '328';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
