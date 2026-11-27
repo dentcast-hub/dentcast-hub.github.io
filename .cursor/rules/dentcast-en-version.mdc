@@ -1,5 +1,5 @@
 ---
-description: Producing the English (en) mirror of an existing DentCast page plus the fa↔en language toggle. Use when the user says «… رو انگلیسی کن» / «نسخهٔ انگلیسیِ …», or when Phase D of a publish needs the English counterpart.
+description: Producing the English (en) mirror of an existing DentCast page plus the fa↔en language toggle. Use when the user says «… رو انگلیسی کن» / «نسخهٔ انگلیسیِ …». Never part of a publication (Hard Rule 12).
 alwaysApply: false
 ---
 
@@ -14,9 +14,7 @@ alwaysApply: false
 ## دو مسیر ورود
 
 1. تریگر مستقیم کاربر («… رو انگلیسی کن») — برای صفحه‌های قدیمی که آینهٔ en ندارند.
-2. **فاز D** ورکفلوی انتشار — خودکار در هر publish روی `.org`. در انتشارهای v2، نوشتن
-   و تأیید صفحهٔ en و تاگل دوطرفه پیش از C.6 (Push دوم) انجام می‌شود؛ بعد از Push دوم
-   فاز D فقط کنترل فنی است. همان ماشین، همان قواعد.
+2. انتشار عادی این ورکفلو را اجرا نمی‌کند: صفحهٔ جدید فقط فارسی است (Hard Rule 12).
 
 ## نکات که بیشترین اشتباه سرشان رخ می‌دهد
 

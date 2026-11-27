@@ -385,20 +385,21 @@ class QueuePrepTests(unittest.TestCase):
     def test_selects_exactly_the_listed_sections_in_order(self):
         text, m = self.pack()
         for kept in ('HARD_RULES_ALL', 'Q5', 'DES_ALL', 'DES_REST', 'HASHTAGS', 'BRAIN_ENTRY',
-                     'FLASHCARDS', 'FAQ', 'EXAM', 'EN_HARD', 'EN_TRANSLATION', 'PHASE_D', 'OPENING',
+                     'FLASHCARDS', 'FAQ', 'EXAM', 'PHASE_D', 'OPENING',
                      'OPENING_APPROVAL', 'OPENING_CHECK', 'PILLAR', 'PULSE',
                      'GLOSSARY_LINK', 'IN_ARTICLE', 'RELATED'):
             self.assertIn(kept, text)
         for dropped in ('BRAIN_INTRO', 'BRAIN_VERIFY', 'FLASH_INTRO', 'EN_INTRO', 'PHASE_E',
                         'PAGE_INTRO', 'SEAL', 'TAX_INTRO', 'CAPSULE', 'BUILD_INTRO', 'BUMP',
                         'LINK_INTRO', 'GLOSSARY_ONLY', 'QUEUE_FILE_ITSELF', 'BANNER_01',
-                        'BANNER_02', 'BANNER_08', 'EN_TITLE', 'EN_PHASE_A', 'EN_SEO'):
+                        'BANNER_02', 'BANNER_08', 'EN_TITLE', 'EN_PHASE_A', 'EN_SEO',
+                        'EN_HARD', 'EN_TRANSLATION'):  # Hard Rule 12: preparation writes no English
             self.assertNotIn(dropped, text)
         order = [s['path'].rsplit('/', 1)[-1] for s in m['segments']]
         self.assertEqual(order, ['01-hard-rules.md', '02-routing-intake.md',
                                  '06-paper-ingestion.md', '08-des-fidelity.md',
                                  '10-brain-and-pathways.md', '07-flashcards-and-quiz.md',
-                                 'en-version.md', 'en-version.md', '12-english-notify-verify.md',
+                                 '12-english-notify-verify.md',
                                  '03-litecast-and-page.md', '04-taxonomy-and-navigation.md',
                                  '11-build-and-version.md', '05-semantic-linking.md',
                                  '05-semantic-linking.md'])

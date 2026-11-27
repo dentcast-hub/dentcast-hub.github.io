@@ -347,13 +347,20 @@ def editorial_cut_receipt(publication, root=None):
               "SECOND_CUT_ENGLISH_INVALID")
     challenge = next((x for x in publication["steps"] if x["id"] == "C.4.14"), None)
     exempt = h.publication_category(publication) == "litecast" or (challenge or {}).get("status") == "completed"
+    parts = publication["content_id"].rsplit("/", 1)
+    path = parts[0] + "/en/" + parts[1] + ".html" if len(parts) == 2 else None
     if exempt:
         h.require(eng["status"] == "exempt" and eng["path"] is None,
                   "SECOND_CUT_ENGLISH_EXCEPTION_REQUIRED")
+    elif eng["status"] == "exempt":
+        # Hard Rule 12 (founder, 2026-11-27): a new publication ships Persian-only.
+        # An English page on disk that the lock does not declare is refused.
+        h.require(eng["path"] is None, "SECOND_CUT_ENGLISH_EXCEPTION_REQUIRED")
+        if root is not None and path is not None:
+            h.require(h.file_info(root, path)["kind"] != "file",
+                      "SECOND_CUT_ENGLISH_FILE_UNDECLARED")
     else:
-        parts = publication["content_id"].rsplit("/", 1)
         h.require(len(parts) == 2, "SECOND_CUT_ENGLISH_ID_INVALID")
-        path = parts[0] + "/en/" + parts[1] + ".html"
         h.require(eng["status"] == "ready" and eng["path"] == path
                   and path in publication["target_paths"],
                   "SECOND_CUT_ENGLISH_MIRROR_MISSING")

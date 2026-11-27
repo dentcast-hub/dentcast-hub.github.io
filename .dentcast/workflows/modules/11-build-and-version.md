@@ -3,7 +3,7 @@
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger steps in this module: `C.6` (agent: Pulse, then the second-cut editorial lock — every founder, scientific and semantic choice closed and the authored English mirror + toggle on disk, or the documented LiteCast/چالش exemption; then delivery 2), `C.8` and `C.7` (the post-Push-2 runner's, `tools/dentcast_post_cut2_runner.py` via `.github/workflows/post-cut2-mechanical.yml`).
+Ledger steps in this module: `C.6` (agent: Pulse, then the second-cut editorial lock — every founder, scientific and semantic choice closed and the language state settled (Persian-only, the toggle marker in place: Hard Rule 12); then delivery 2), `C.8` and `C.7` (the post-Push-2 runner's, `tools/dentcast_post_cut2_runner.py` via `.github/workflows/post-cut2-mechanical.yml`).
 
 ### 6. Pulse update
 

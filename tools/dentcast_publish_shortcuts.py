@@ -121,9 +121,16 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
     entry = brain_entry(root, cid)
     litecast = h.publication_category(p) == "litecast"
     challenge = rows.get("C.4.14", {}).get("status") == "completed"
+    # Hard Rule 12 (founder, 2026-11-27): a new publication ships Persian-only.
+    # An English page exists only when one was authored on purpose; then it is locked as before.
     en_path = None if (litecast or challenge) else cid.rsplit("/", 1)[0] + "/en/" + cid.rsplit("/", 1)[1] + ".html"
+    if en_path and not (root / en_path).is_file():
+        en_path = None
+        fa_page = (root / (cid + ".html")).read_text(encoding="utf-8")
+        h.require('class="lang-btn"' not in fa_page,
+                  "CLOSE_LANG_TOGGLE_WITHOUT_ENGLISH: " + cid + ".html carries a .lang-btn toggle but no English "
+                  "page exists; replace the toggle with <!-- dc-lang-toggle:off --> (Hard Rule 12)")
     if en_path:
-        h.require((root / en_path).is_file(), "SECOND_CUT_ENGLISH_FILE_NOT_ON_DISK: " + en_path)
         p["target_paths"] = sorted(set(p["target_paths"]) | {en_path})
     index = (root / "index.html").read_text(encoding="utf-8")
     a = index.find('<ul class="dc-pulse-list">')
@@ -141,7 +148,7 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
                                  else "LiteCast follows its own Pulse convention"]}
         if name == "english":
             return {"scope": name, "status": "resolved" if en_path else "not_applicable",
-                    "evidence": [en_path + " on disk" if en_path else "LiteCast/Challenge: no English mirror (Hard Rule 12)"]}
+                    "evidence": [en_path + " on disk" if en_path else "no English page (Hard Rule 12)"]}
         if name == "author_approvals":
             return {"scope": name, "status": "resolved", "evidence": ["pending_questions empty; founder answers recorded as decisions"]}
         ev, skipped = [], []
@@ -177,13 +184,13 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
              "english", "author_approvals")
     c["decisions"].append({"kind": "second_cut_editorial_lock_v1", "scopes": [scope(n) for n in order],
                            "english": {"status": "ready" if en_path else "exempt", "path": en_path,
-                                       "evidence": [en_path + " on disk, toggles wired" if en_path else "LiteCast/Challenge exemption"]},
+                                       "evidence": [en_path + " on disk, toggles wired" if en_path else "no English page (Hard Rule 12)"]},
                            "evidence": ["built by `close` from the ledger evidence of the steps through C.5.6-b"]})
     saved = h.save(root, p, expected=expected or digest, note="C.6 close: approvals, lead provenance and editorial lock built from the ledger")
     c6 = rows["C.6"]
     if c6["status"] == "pending":
         saved = lifecycle.step(root, saved["sha256"], "C.6", "started", [], None, "C.6 opened by close")
-    done = lifecycle.advance(root, saved["sha256"], "C.6", ["C.6: Pulse line, English mirror and the ten-scope lock (built by close)"],
+    done = lifecycle.advance(root, saved["sha256"], "C.6", ["C.6: Pulse line and the ten-scope lock (built by close)"],
                              (), False, "C.6 closed by the tool")
     done["next_action"] = "stage-delivery --path <each scoped path>, then one commit and one push (Push 2); then stop"
     done["fidelity_report"] = [f"{u}: «{q}» — {w}" for u, q, w in flagged]

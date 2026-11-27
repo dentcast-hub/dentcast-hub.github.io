@@ -1168,7 +1168,8 @@ body:has(.dc-topbar) .back:hover {
      still grows by one line; a page in these sections without a record
      keeps an empty one. */
   :root:has(link[rel="canonical"]:is([href*=".org/insight/"], [href*=".org/chairside/"], [href*=".org/sharehub/"],
-    [href*=".org/metanotes/"], [href*=".org/plak-sefr/"], [href*=".org/taraz/"])) { --dc-ar-des: 46px; }
+    [href*=".org/metanotes/"], [href*=".org/plak-sefr/"], [href*=".org/taraz/"],
+    [href*=".org/dentai/promptologist/"])) { --dc-ar-des: 46px; }
   /* Share Hub reads papers, and a paper page also gets the fidelity chip
      («تطابق با منابع», step 4.13 FIDELITY), which cannot share the band
      chip's line on a phone: two chip lines. 27 of 47 had it on 2026-11-11 —
@@ -1176,6 +1177,25 @@ body:has(.dc-topbar) .back:hover {
      empty second line. No commentary section (insight, chairside,
      metanotes, plak-sefr, taraz) has a fidelity record. */
   :root:has(link[rel="canonical"][href*=".org/sharehub/"]) { --dc-ar-des: 92px; }
+  /* NoteCast reads a paper too: its scored pages carry both chips (episode
+     44 on), and every new one will. The older pages keep the two lines empty
+     (founder: an empty line is better than a jump). */
+  :root:has(link[rel="canonical"][href*=".org/notecast/"]) { --dc-ar-des: 92px; }
+}
+/* Wider than a phone the DES chip arrives late too, and with it the aux group
+   no longer fits beside the main group (368px + 356px in a 730px row), so the
+   row grew from one line to two (64px to 112px) under the reader. On the
+   sections whose pages carry a score the aux group takes the second line from
+   the start (plus.css, same canonical test) and the two lines are reserved
+   here. Measured at 1366px: insight 117/121, chairside 57/57, sharehub 59/62,
+   metanotes 24/24, plak-sefr 14/14, promptologist 28/28 already had two lines;
+   taraz's shorter chip fits one line and stays out. NoteCast joins although
+   only its scored pages (12/43, and every new one) wrapped: two lines cost an
+   unscored page no empty space, only the aux group's place. */
+@media (min-width: 560px) {
+  :root:has(link[rel="canonical"]:is([href*=".org/insight/"], [href*=".org/chairside/"], [href*=".org/sharehub/"],
+    [href*=".org/metanotes/"], [href*=".org/plak-sefr/"], [href*=".org/dentai/promptologist/"],
+    [href*=".org/notecast/"])) { --dc-ar-h: 112px; }
 }
 :root:not(.dc-actrow-seated) #dcActionRow { display: none; }
 :root:not(.dc-actrow-seated) :is(
@@ -1183,7 +1203,24 @@ body:has(.dc-topbar) .back:hover {
   main.article-content-wrap.ep-page:not(:has(.text-box, .glass-box, .content-box)) .ep-box:not(.ep-box ~ *, .ep-box *, #dcActionRow ~ *),
   #dcActionRow + *
 ) {
-  margin-top: calc(var(--dc-ar-h) + var(--dc-ar-k));
+  margin-top: calc(var(--dc-ar-h) + var(--dc-ar-k) + var(--dc-ar-toc, 0px));
+}
+/* The فهرست مطالب card (dc-nav.js 7c) lands between the row and the prose and
+   pushed the prose down by its own height when the deferred script ran after
+   first paint. Before the row exists, the box that will get a ToC reserves it
+   too: 61px collapsed card + its 20px bottom margin (plus.css .dc-toc). The
+   test is a subset of the script's own (4 headings in the boxes, 3 on the
+   ep-page layout; here: that many sibling headings inside the first box), so
+   a box never reserves a ToC the script does not build. Once the row is in
+   the DOM the box no longer matches and the real card takes the space. */
+:root:not(.dc-actrow-seated):has(link[href^="/dc-article.css"]) main.article-content-wrap
+  :is(.text-box, .glass-box, .content-box):not(:is(.text-box, .glass-box, .content-box) ~ *, :is(.text-box, .glass-box, .content-box) *, #dcActionRow ~ *):has(
+    :is(h2:not(.dc-related-label), h3, h4) ~ :is(h2:not(.dc-related-label), h3, h4) ~ :is(h2:not(.dc-related-label), h3, h4) ~ :is(h2:not(.dc-related-label), h3, h4)),
+:root:not(.dc-actrow-seated) main.article-content-wrap.ep-page:not(:has(.text-box, .glass-box, .content-box, #ep-audio))
+  .ep-box:not(.ep-box ~ *, .ep-box *, #dcActionRow ~ *):is(
+    :has(.ep-caption :is(h2:not(.dc-related-label), h3, h4) ~ :is(h2:not(.dc-related-label), h3, h4) ~ :is(h2:not(.dc-related-label), h3, h4)),
+    :not(:has(.ep-caption)):has(:is(h2:not(.dc-related-label), h3, h4) ~ :is(h2:not(.dc-related-label), h3, h4) ~ :is(h2:not(.dc-related-label), h3, h4))) {
+  --dc-ar-toc: 81px;
 }
 /* K by the element in front of the row — or of the box, before the row exists.
    :where() keeps them all at zero specificity, so the later, narrower one wins. */
@@ -1198,6 +1235,36 @@ body:has(.dc-topbar) .back:hover {
 :where(h2 + h1 + *, h2 + h1 + #dcActionRow + *) { --dc-ar-k: 42px; }
 :where(.yt-container + *, .yt-container + #dcActionRow + *,
     .yt-container + script + *, .yt-container + script + #dcActionRow + *) { --dc-ar-k: 50px; }
+
+/* The فهرست مطالب card has its final box the moment dc-nav.js inserts it.
+   plus.css (and dc-article.css on the pages that link it) carry these same
+   declarations, but plus.css arrives later: on the ep-page layout and the en
+   mirrors the card was a bare 25px <details> first and grew to its real
+   height when that sheet landed, moving the prose twice. */
+.dc-toc {
+  margin: 0 0 1.25rem;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border, rgba(2,35,96,.09));
+  border-radius: var(--r-lg, 1.125rem);
+  box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  padding: 0.25rem 1.25rem;
+}
+.dc-toc summary { cursor: pointer; font-size: .9rem; font-weight: 700; color: var(--txt2, #4a5f85); padding: 0.75rem 0; }
+.dc-toc ol { margin: 0 0 0.875rem; padding-inline-start: 1.25rem; }
+.dc-toc li { margin: 0.4375rem 0; font-size: .88rem; }
+
+/* dc-nav.js is deferred, so the browser may paint the page a few
+   milliseconds before it runs, and what it builds inside the reading area
+   (the row, the ToC, the «در یک نگاه» card after the lead paragraph) then
+   moved text the reader had already seen. Until the script has built them
+   (<html class="dc-nav-built">) the prose box is laid out but not painted;
+   the title and everything above it paint at once. Only on a page that
+   loads dc-nav.js itself, and never longer than one second. */
+:root:not(.dc-nav-built):has(script[src^="/dc-nav.js"]) main.article-content-wrap :is(.text-box, .glass-box, .content-box, .ep-box, article) {
+  visibility: hidden;
+  animation: dc-nav-reveal 0s linear 1s forwards;
+}
+@keyframes dc-nav-reveal { to { visibility: visible; } }
 
 #dcActionRow { box-sizing: border-box; min-height: 64px; }
 #dcActionRow > .dc-actions-main,

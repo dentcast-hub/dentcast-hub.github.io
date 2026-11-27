@@ -7,7 +7,7 @@ Plus/Premium تبدیل می‌کند. همهٔ این‌ها گام‌های خ
 | سطح | چه چیزی | کجا | چه زمانی به‌روز می‌شود |
 |---|---|---|---|
 | عادی | صفحهٔ محتوا + brain + پالس + پیلار | `/{type}/`، `dentcast-brain.json`، `index.html` | هر publish |
-| عادی | آینهٔ انگلیسی + تاگل | `/{type}/en/` | فاز D — هر publish روی `.org` (جز LiteCast) |
+| عادی | آینهٔ انگلیسی + تاگل | `/{type}/en/` | فقط با درخواست صریح (Hard Rule 12) |
 | Plus | درخت ناوبریِ «میز کار» | `plus/content-index.json` | `node tools/build_plus_index.mjs` — هر publish که brain را تغییر داده |
 | Plus/Premium | فلش‌کارت (Leitner) | `DefinedTermSet` در `plus/faq-corpus.json` (نه روی خودِ صفحه) → `plus/flashcards-index.json` | گام ۴.۱۱ + `node tools/build_flashcards_index.mjs` |
 | Plus/Premium | کوییز نمره‌دار | `FAQPage` در `plus/faq-corpus.json` (نه روی خودِ صفحه) → `plus/quiz-index.json` | گام ۴.۱۲ + `node tools/build_quiz_index.mjs` |
