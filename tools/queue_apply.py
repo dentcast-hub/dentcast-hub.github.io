@@ -466,13 +466,17 @@ class Linker:
             self.pending.remove(ln)
             self.done.append(ln)
         segs.sort()
-        out, pos = [], 0
+        # The text is formatted whole, with each link held by a placeholder: a
+        # phrase inside a bold run (`**۳. … اوردنچر …:**`) used to cut the run
+        # in two, and each half kept a literal `**` (queue item 35).
+        out, pos, anchors = [], 0, []
         for s, e, href in segs:
-            out.append(inline(raw_text[pos:s]))
-            out.append(f'<a href="{attr(href)}">{inline(raw_text[s:e])}</a>')
+            out.append(raw_text[pos:s])
+            out.append(f"\x01{len(anchors)}\x01")
+            anchors.append(f'<a href="{attr(href)}">{inline(raw_text[s:e])}</a>')
             pos = e
-        out.append(inline(raw_text[pos:]))
-        return "".join(out)
+        out.append(raw_text[pos:])
+        return re.sub("\x01(\\d+)\x01", lambda mm: anchors[int(mm.group(1))], inline("".join(out)))
 
 
 def inside_presentation(t, k, e):

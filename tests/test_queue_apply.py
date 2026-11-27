@@ -478,6 +478,34 @@ class RenderFixesTests(unittest.TestCase):
         self.assertEqual(e.exception.code, "FAQ_PLACEHOLDER")
 
 
+class LinkerAndTemplateTests(unittest.TestCase):
+    def test_link_inside_a_bold_run_keeps_the_bold(self):
+        """queue item 35: `**۳. … اوردنچر …:**` with a 4.8 link on «اوردنچر» left a literal `**` on the page."""
+        ln = qa.Linker([{"phrase": "اوردنچر", "href": "/glossary/overdenture.html"}])
+        html_ = ln.apply("**۳. کانین به عنوان اباتمنت اوردنچر:** کشیدن پرمولر")
+        self.assertNotIn("**", html_)
+        self.assertEqual(html_, '<strong>۳. کانین به عنوان اباتمنت <a href="/glossary/overdenture.html">اوردنچر</a>:</strong> کشیدن پرمولر')
+        self.assertEqual(qa.Linker([{"phrase": "b", "href": "/x.html"}]).apply("a b c"), 'a <a href="/x.html">b</a> c')
+
+    def test_chairside_builds_from_a_hand_published_template(self):
+        """chairside-56/57 have no blank line after the toggle (and en-57 an indented
+        disclaimer); the builder refused every chairside item with TEMPLATE_REGION."""
+        prev = qa.next_number("chairside")[1]
+        item = Path(tempfile.mkdtemp()) / "90-chairside-test"
+        item.mkdir()
+        (item / "01-متن.md").write_text("پاراگراف آغازین این ویزیت آزمایشی است.\n\nپاراگراف دوم.\n", encoding="utf-8")
+        m = {"category": "chairside", "title_fa": "عنوان آزمایشی ویزیت", "caption_fa": "کپشن آزمایشی ویزیت",
+             "title_en": "A test visit title", "caption_en": "A test visit caption", "body_en": "First paragraph.\n\nSecond.",
+             "keywords": ["کلیدواژه"], "credit": {"mode": "none"}, "images": [], "links_48": [],
+             "pillar": {"primary": "treatment-planning", "subtopic": None, "secondary": []}, "explore_49": []}
+        for lang in ("fa", "en"):
+            page, _, _ = qa.build_chairside_page(prev + 1, prev, m, "2026-11-27", item, lang)
+            page = page.replace("\r\n", "\n")
+            self.assertTrue(re.search(r'(?s)<a class="lang-btn".*?\n  </a>\n\n<p>', page), lang)
+            self.assertTrue('\n\n  <p class="dc-disclaimer">' in page, lang)
+            self.assertFalse(f"chairside-{prev}.html" in page, lang)
+
+
 class SwapTextTests(unittest.TestCase):
     """Title/caption swap is context-aware: JSON-LD gets JSON escaping, markup
     gets HTML escaping (insight/insight-104 shipped a raw newline in JSON-LD)."""
