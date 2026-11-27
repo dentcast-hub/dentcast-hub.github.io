@@ -516,7 +516,8 @@ def run(item, agent, supplement=None):
         raise
     # 3. the one delivery before the Action
     section, slug = cid.split("/")
-    paths = sorted({f["path"] for f in rec["files"]} | {f"{section}/en/{slug}.html"})
+    paths = sorted({f["path"] for f in rec["files"]}
+                   | ({f"{section}/en/{slug}.html"} if (ROOT / section / "en" / f"{slug}.html").is_file() else set()))
     out = handoff("stage-delivery", "--expected-sha256", digest(), *sum((["--path", p] for p in paths), []))
     if out.get("status") in ("blocked", "error", "refused"):
         raise Stop("STAGE_DELIVERY", "stage-delivery refused", output=out)

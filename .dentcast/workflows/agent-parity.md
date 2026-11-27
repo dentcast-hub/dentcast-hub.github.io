@@ -4,7 +4,7 @@
 
 A publication reads one reading pack (`.dentcast/workflows/README.md`). Any other content change reads `.dentcast/workflows/global/README.md`, the sections its selector picks for the edited paths, and this file. All clients use these same rules.
 
-New publication → `.dentcast/workflows/README.md`. Preserve every founder decision, category exception, builder, English and final Phase F. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
+New publication → `.dentcast/workflows/README.md`. Preserve every founder decision, category exception, builder, the Persian-only language state (Hard Rule 12) and final Phase F. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
 
 **Interrupted publication** («انتشار ناقص داشتم»), the run state `.dentcast/PUBLISH-HANDOFF.md` and recovery through `.dentcast/workflows/publish-handoff.md`: `publish-checkpoints.md`, «Interrupted publication».
 
@@ -191,7 +191,7 @@ python3 -m json.tool litecast/lite-glossary.json > /dev/null
 | C.5.5 | تأیید پیلار | مقدار ثبت‌شده = مقدار گام ۲.۴ |
 | C.5.6 | مسیر یادگیری | `plus/pathways.json` به‌روز شد (مگر LiteCast/چالش)؛ سپس سؤال‌های تأییدشدهٔ M2 (در intake) برای صفحهٔ مسیرِ کامل نوشته شد، یا «بدون سؤال»/بی‌مسیر در شواهدِ C.5.6 ثبت شد |
 | C.5.6-ب | گیتِ باندل | هر باندلِ کاندید دقیقاً یک حکم گرفت — «وارد شد (بعد از کدام قدم)» / «رد شد (گیت N)» — یا «بدون کاندید»؛ ورودِ خودکار فقط با پنجِ «بله»ی قاطع، مورد نامطمئن با پیش‌فرض محافظه‌کار و دلیل، درج فقط وسطِ لیست (نه `--at-end`)، و جاروی شمارهٔ قدمِ `plus/js/home-bundles.js` + `asset_version.py --bump` در همان کامیت |
-| C.6 | پالس؛ گیت قطعی‌شدن همهٔ تصمیم‌های تحریریه و نسخهٔ انگلیسی پیش از Push 2 | خط جدید بالاترین، خط پایینی حذف شد؛ خط فقط **اعلام** می‌کند — متنِ لینک عنوان است و تصمیم/مکانیسم/یافتهٔ مطلب لو نمی‌رود؛ آینهٔ en و تاگل نوشته شد (مگر LiteCast/چالش)؛ قفل ده‌بخشی ثبت شد؛ **تحویل ۲** |
+| C.6 | پالس؛ گیت قطعی‌شدن همهٔ تصمیم‌های تحریریه و وضعیت زبان پیش از Push 2 | خط جدید بالاترین، خط پایینی حذف شد؛ خط فقط **اعلام** می‌کند — متنِ لینک عنوان است و تصمیم/مکانیسم/یافتهٔ مطلب لو نمی‌رود؛ صفحه فقط فارسی است و جای تاگل نشانگر `<!-- dc-lang-toggle:off -->` دارد (Hard Rule 12)؛ قفل ده‌بخشی ثبت شد؛ **تحویل ۲** |
 | C.8, C.7, D, E, F, G | runner | `post-cut2-mechanical.yml`: بیلدرها، stamp آخرِ زمانی، کنترل فنی en، مارکر `dc-notify`، فاز F با خروجی **صفر**، گزارش G، تحویل ۳ و PR؛ ایجنت پایش و گزارش می‌کند |
 
 **قاعدهٔ گزارش نهایی:** تمام بندهای فنی و دلایل اسکیپِ «Final output summary»

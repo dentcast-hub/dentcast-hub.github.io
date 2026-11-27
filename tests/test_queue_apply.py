@@ -197,8 +197,17 @@ class ManifestTests(unittest.TestCase):
     def test_missing_fields_are_named_never_inferred(self):
         d = qm.draft(self.make_item())
         miss = qm.missing(d)
-        for k in ("title_en", "credit", "hashtags", "pillar"):
+        for k in ("credit", "hashtags", "pillar"):
             self.assertIn(k, miss)
+        # Hard Rule 12: an item without 06-انگلیسی.md is Persian-only, its English fields are not owed
+        self.assertTrue(qm.english_off(d))
+        for k in ("title_en", "caption_en", "body_en"):
+            self.assertNotIn(k, miss)
+        # a 06 that is present but incomplete still owes every English field
+        d = qm.draft(self.make_item(extra={"06-انگلیسی.md": "## Caption\nA caption\n"}))
+        self.assertFalse(qm.english_off(d))
+        for k in ("title_en", "body_en"):
+            self.assertIn(k, qm.missing(d))
         self.assertEqual(d["title_fa"]["value"], "عنوان یک")
         # unfrozen 4.7/4.9 and the catalog fall to a recorded mechanical default, never to a guess
         defaults = {x["field"] for x in qm.defaults_of(d)}
@@ -861,6 +870,43 @@ class MetaNoteGoldenReplayTests(unittest.TestCase):
     def test_en_page_is_byte_identical(self):
         page, _, _ = qa.build_metanote_page(22, 21, self.m, "2026-10-08", self.item, "en")
         self.assertEqual(page.encode("utf-8"), (ROOT / "metanotes/en/meta-22.html").read_bytes())
+
+    def test_persian_only_template_then_english_item(self):
+        """Hard Rule 12: the page before this one was published Persian-only (its
+        toggle is the TOGGLE_OFF marker and it has no English page). An item that
+        still has its English builds the same Persian page, byte for byte, and
+        clones its English page from the newest English sibling."""
+        import shutil
+        tmp = Path(tempfile.mkdtemp())
+        (tmp / "metanotes/en").mkdir(parents=True)
+        for rel in ("dentcast-brain.json", "metanotes/meta-20.html", "metanotes/meta-21.html",
+                    "metanotes/en/meta-20.html"):
+            shutil.copy(ROOT / rel, tmp / rel)
+        for x in self.m["explore_49"]:  # the builder keeps a capsule only when its page is on disk
+            (tmp / x["href"].lstrip("/")).parent.mkdir(parents=True, exist_ok=True)
+            (tmp / x["href"].lstrip("/")).touch()
+        live21 = (ROOT / "metanotes/meta-21.html").read_bytes().decode("utf-8")
+        off21 = qa.toggle_off(live21)
+        self.assertNotIn('class="lang-btn"', off21)
+        self.assertEqual(off21.count(qa.TOGGLE_OFF), 1)
+        (tmp / "metanotes/meta-21.html").write_bytes(off21.encode("utf-8"))
+        old_root, qa.ROOT = qa.ROOT, tmp
+        try:
+            self.assertEqual(qa.read_template("metanotes/meta-21.html"), live21)
+            page, _, _ = qa.build_metanote_page(22, 21, self.m, "2026-10-08", self.item, "fa")
+            self.assertEqual(page.encode("utf-8"), (ROOT / "metanotes/meta-22.html").read_bytes())
+            self.assertEqual(qa.english_template_number("metanote", 22), 20)
+            en, _, _ = qa.build_metanote_page(22, 20, self.m, "2026-10-08", self.item, "en")
+            self.assertIn('href="../meta-22.html"', en)
+            self.assertNotIn("meta-20", en)
+            # and the Persian-only page of an item without English
+            fa_only, _, _ = qa.build_metanote_page(22, 21, {**self.m, "_english": False, "alt_headline_en": None,
+                                                            "keywords_en": None}, "2026-10-08", self.item, "fa")
+            fa_only = qa.toggle_off(fa_only)
+            self.assertEqual(fa_only, page.replace(qa.TOGGLE_RE.search(page).group(0), qa.TOGGLE_OFF))
+        finally:
+            qa.ROOT = old_root
+            shutil.rmtree(tmp)
 
     def test_landing_row_and_itemlist(self):
         w = qa.Writes()

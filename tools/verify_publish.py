@@ -2181,7 +2181,15 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                   "no hreflang on a چالش page (RULE 16 — no en mirror to alternate with)",
                   "a چالش page carries hreflang tags")
     else:
-        if rep.check(exists(en_rel), "D en-mirror", f"{en_rel} exists",
+        if not exists(en_rel):
+            # Hard Rule 12 (founder, 2026-11-27): new publications ship Persian-only.
+            # A page with no English page must not offer a toggle to one.
+            rep.skip("D en-mirror", "no English page: Persian-only publication (Hard Rule 12)")
+            rep.check('class="lang-btn"' not in doc, "D en-mirror",
+                      "no fa↔en toggle on a page without an English page",
+                      f"the page carries a .lang-btn toggle but {en_rel} does not exist (phantom pair)",
+                      "Hard Rule 12: replace the toggle with <!-- dc-lang-toggle:off -->")
+        elif rep.check(exists(en_rel), "D en-mirror", f"{en_rel} exists",
                      f"{en_rel} missing — the fa page's toggle would be a phantom pair",
                      "Hard Rule 12 / Phase D — run .dentcast/workflows/en-version.md"):
             en = read(en_rel)

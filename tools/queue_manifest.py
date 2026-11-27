@@ -34,6 +34,13 @@ from pathlib import Path
 SCHEMA = "dentcast-queue-manifest/1"
 CATEGORIES = ("sharehub", "notecast", "insight", "chairside", "metanote")
 MANIFEST_FILE = "12-انتشار.json"
+ENGLISH_FILE = "06-انگلیسی.md"
+ENGLISH_MISSING = ENGLISH_FILE + " missing"
+# Hard Rule 12 (founder, 2026-11-27): new publications ship Persian-only. An item
+# prepared without 06-انگلیسی.md has no English page and no fa↔en toggle; an item
+# frozen with its 06 still publishes both, exactly as it was prepared.
+ENGLISH_KEYS = ("title_en", "caption_en", "body_en")
+ENGLISH_EXTRA = ("alt_headline_en", "keywords_en")
 STATUS_FILE = "00-وضعیت.md"
 
 
@@ -245,7 +252,7 @@ def draft(item, from_files=False):
     l06 = lines_of(item, "06-انگلیسی.md")
     if l06 is None:
         for k in ("title_en", "caption_en", "body_en"):
-            d[k] = V(None, "06-انگلیسی.md missing")
+            d[k] = V(None, ENGLISH_MISSING)
     else:
         for key, head in (("title_en", "Title"), ("caption_en", "Caption")):
             sv = single_value(section_any(l06, head))
@@ -677,7 +684,8 @@ def draft_credit(item, l07=()):
             kh = next((k for k, h in enumerate(header) if h.strip() == "لینک"), None)
         items = [{"label_fa": cell(r, kfa), "label_en": cell(r, ken), "href": cell(r, kh), "from": f"{rel}:{n}"}
                  for n, r in rows]
-        if items and all(i["label_fa"] and i["label_en"] and (i["href"] or "").startswith("http") for i in items):
+        eng = has_english(item)
+        if items and all(i["label_fa"] and (i["label_en"] or not eng) and (i["href"] or "").startswith("http") for i in items):
             return V({"mode": "references", "items": items}, f"{rel}:{sec_start + 1}")
         return V(None, f"{rel}: «نمایش منابع روی صفحه» table incomplete")
     first = next((l.strip() for l in lines if l.strip() and not l.startswith("#")), "")
@@ -953,11 +961,28 @@ def defaults_of(d):
             for k, v in d.items() if isinstance(v, dict) and is_default(v)]
 
 
+def has_english(item):
+    """The item was prepared with an English text (06-انگلیسی.md is in its folder)."""
+    return (Path(item) / ENGLISH_FILE).is_file()
+
+
+def english_off(d):
+    """A manifest read from an item without 06-انگلیسی.md: Persian-only (Hard
+    Rule 12). True only when all three English texts are null AND say the file
+    is missing; a 06 that is present but incomplete stays a missing field."""
+    return all((d.get(k) or {}).get("value") is None and (d.get(k) or {}).get("from") == ENGLISH_MISSING
+               for k in ENGLISH_KEYS)
+
+
 def missing(d):
     cat = (d.get("category") or {}).get("value")
-    out = [k for k in REQUIRED + REQUIRED_BY_CATEGORY.get(cat, ()) if (d.get(k) or {}).get("value") is None]
+    off = english_off(d)
+    skip = set(ENGLISH_KEYS + ENGLISH_EXTRA) if off else set()
+    out = [k for k in REQUIRED + REQUIRED_BY_CATEGORY.get(cat, ())
+           if k not in skip and (d.get(k) or {}).get("value") is None]
+    img_fields = ("file", "alt_fa", "caption_fa") if off else ("file", "alt_fa", "alt_en", "caption_fa", "caption_en")
     for img in d.get("images", {}).get("value") or []:
-        out += [f"images.{img['n']}.{f}" for f in ("file", "alt_fa", "alt_en", "caption_fa", "caption_en")
+        out += [f"images.{img['n']}.{f}" for f in img_fields
                 if img.get(f, {}).get("value") is None]
     return out
 

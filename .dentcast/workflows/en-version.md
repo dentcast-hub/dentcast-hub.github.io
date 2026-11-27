@@ -11,6 +11,12 @@ the form *«<صفحه> رو انگلیسی کن»* / *«نسخه‌ی انگلی
 workflow, not the publishing router. (Rename freely — it is a single string
 in `CLAUDE.md`.)
 
+**On request only (Hard Rule 12 of the publishing router, founder 2026-11-27).**
+A new publication no longer runs this workflow: new pages ship Persian-only. It
+runs only when the founder asks for the English version of a named page. A page
+published Persian-only carries `<!-- dc-lang-toggle:off -->` where its toggle
+would stand: step 4 replaces that marker with the fa toggle (exactly once).
+
 ---
 
 ## Hard rules

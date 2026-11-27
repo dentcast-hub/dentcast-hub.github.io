@@ -33,8 +33,8 @@ PINNED_BLOBS = {
     '06-paper-ingestion.md': 'ce9ff376c0a10d83be94ce18fa8d1d72c999d612',
     '08-des-fidelity.md': 'a1d43d64419afd9d9532da628c6eb48390c88a74',
     '09-challenge.md': 'b1faa96b9e0d71dd1fd70ff2fe0075dc5ad4c2cc',
-    '11-build-and-version.md': 'd2d35ca0fba390eac9a21619290c9cbf6af143ab',
-    '12-english-notify-verify.md': 'b429fab3438ca187b86897d56914e6a277573e4a',
+    '11-build-and-version.md': 'c8114eda18556f6ba59d4fbcf2a1970b0bd23f2a',
+    '12-english-notify-verify.md': '0304758d81d619373b73e9918df7ad4934d6e150',
 }
 
 REQUIRED = [
@@ -423,9 +423,7 @@ QUEUE_PREP = (
      [('### 5.0. Hashtag standardization', '### 5.5.', None)], False),
     # 4.11, 4.12 and 4.12-ب run to the end of the module.
     (MODULES + '07-flashcards-and-quiz.md', [('### 4.11.', None, None)], False),
-    # The queue writes the English text only: the hard rules and the translation step.
-    (WORKFLOW + 'en-version.md', [('## Hard rules', '## Phase A', None),
-                                  ('### 5. Translation', '### 6. SEO head', None)], False),
+    # Hard Rule 12: preparation writes no English text; Phase D states the Persian-only rule.
     (MODULES + '12-english-notify-verify.md', [('## Phase D', '## Phase E', None)], False),
     # The «Opening paragraph before any list» block has several paragraphs,
     # including the bold-lead «This lead paragraph is authored text» standing-acceptance

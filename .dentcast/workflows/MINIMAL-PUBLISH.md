@@ -199,8 +199,10 @@ python3 tools/verify_publish.py <content_id>
 Expected **FAIL** rows on a page built by this minimal path (for a normal,
 non-LiteCast, non-چالش type):
 
-- **`D en-mirror`** — the English mirror at `{type}/en/{file}.html` doesn't
-  exist. This is a **hard FAIL**, not a warn, for every type except LiteCast
+- **`D en-mirror`** — (since Hard Rule 12 of 2026-11-27 a page without an
+  English page is a `SKIP`; only a leftover `.lang-btn` toggle on it fails.
+  Before that date:) the English mirror at `{type}/en/{file}.html` doesn't
+  exist. This was a **hard FAIL**, not a warn, for every type except LiteCast
   and چالش — confirmed in the script (`rep.check(exists(en_rel), ...)` with
   no fallback branch).
 - **`4.12 quiz`** — no FAQ entry for this `content_id` in
