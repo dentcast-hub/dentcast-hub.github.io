@@ -19,7 +19,8 @@ and this tool does them in that order:
   4. **Mechanical cross-file checks** (`checks`, also in --dry-run). Problems:
      05-DES-Fidelity/des.json in its one shape {"scored_at", "sources"} and a
      plan.json the units tool would accept (P3, P4); every RESEARCH source passes the spec-3b
-     rating rule, des_record_guard.py (P5; W6 on an item prepared before 2026-11-07);
+     rating rule, des_record_guard.py (P5; W6 on an item prepared before 2026-11-07); every
+     ALTERED/REVERSED unit of fidelity.json has the founder's answer in تصمیم‌های-3b.md (P6);
      author order per DOI equal in 04-منبع/کاتالوگ.json, 05-DES-Fidelity/des.json
      and 04-منبع/منابع.md; every catalogue and DES DOI present in منابع.md.
      Warnings: a keyword of 09 with no token in 01/02/06; a flashcard
@@ -460,6 +461,28 @@ def check_json_shapes(item, problems):
             problems.append(f"P7 {rel}: write {shape}")
 
 
+FID_DIR = "05-DES-Fidelity"
+FID_ANSWER = re.compile(r"«?(اصلاح کن|خودم می‌نویسم|ادامه بده)»?.*تأیید\s*#\s*\d+")
+
+
+def check_fidelity_gate(item, problems):
+    """P6 (module 08 «Scored once» rule 5): every unit that keeps fidelity.json below a full
+    match (ALTERED, REVERSED) has the founder's answer on its own line of
+    05-DES-Fidelity/تصمیم‌های-3b.md: the unit id, «اصلاح کن» / «خودم می‌نویسم» /
+    «ادامه بده», and «تأیید #k» of 00's table."""
+    f = item / FID_DIR / "fidelity.json"
+    if not f.is_file():
+        return
+    import des_fidelity_units as fu  # noqa: PLC0415
+    flagged = fu.founder_report(json.loads(f.read_text(encoding="utf-8")))
+    dec = item / FID_DIR / "تصمیم‌های-3b.md"
+    lines = dec.read_text(encoding="utf-8").splitlines() if dec.is_file() else []
+    for uid, _, why in flagged:
+        if not any(re.search(rf"(?<![\w]){re.escape(uid)}(?!\d)", ln) and FID_ANSWER.search(ln) for ln in lines):
+            problems.append(f"P6 {uid}: {why} — below a full Fidelity match with no founder answer in "
+                            f"{FID_DIR}/تصمیم‌های-3b.md («اصلاح کن» / «خودم می‌نویسم» / «ادامه بده», تأیید #k)")
+
+
 def checks(item):
     """{problems, warnings}: mechanical cross-file errors a human review would otherwise have to catch."""
     problems, warnings, notes = [], [], []
@@ -470,6 +493,7 @@ def checks(item):
     check_cards(item, warnings, notes)
     check_leftovers(item, warnings)
     check_pillar(item, problems)
+    check_fidelity_gate(item, problems)
     return {"problems": problems, "warnings": warnings + notes}
 
 
