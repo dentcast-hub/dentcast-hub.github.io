@@ -7,8 +7,7 @@ alwaysApply: false
 
 **Not the queue.** A request that mentions «صف انتشار» (branch `queue`: prepare an item, publish from the queue, report its status) does not use this rule: `dentcast-router.mdc` names its route document, and that document is read alone.
 
-**LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/README.md`, `.dentcast/workflows/agent-parity.md` and the complete active sections selected for the current edit scope by `.dentcast/workflows/global/README.md`.
-Load complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then every applicable rule in the ledger order of `publish-checkpoints.md`: full modules by default, or the verified readpack (README). Never summarize or omit an unverified rule. Preserve source-based DES/Fidelity, category exceptions, notification and Phase F. Staging utilities cannot replace real steps. Legacy files are backup only; do not read them for execution.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** Read one file, exactly as `dentcast-router.mdc` («New publication: read one file») says: the pack `tools/dentcast_publish_readpack.py` builds from the four intake facts, once, top to bottom. It is the whole rule set, copied byte for byte: the router (`.dentcast/workflows/README.md`), the global rules, `.dentcast/workflows/agent-parity.md`, the checkpoints and the applicable modules; open no other rule file. Any other content change reads `.dentcast/workflows/global/README.md` and its selected sections instead. Preserve source-based DES/Fidelity, category exceptions, the Persian-only language state (Hard Rule 12) and Phase F.
 
 **Interrupted publication** («انتشار ناقص داشتم»), the run state `.dentcast/PUBLISH-HANDOFF.md` and recovery through `.dentcast/workflows/publish-handoff.md`: `.dentcast/workflows/publish-checkpoints.md`, «Interrupted publication».
 
