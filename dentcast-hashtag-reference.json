@@ -2450,6 +2450,47 @@
    ]
   },
   {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-95",
+    "chairside/chairside-47",
+    "chairside/chairside-52",
+    "sharehub/share-49",
+    "chairside/chairside-54",
+    "chairside/chairside-55",
+    "sharehub/share-62",
+    "chairside/chairside-58"
+   ]
+  },
+  {
    "key": "ترمیم_غیرمستقیم",
    "tag": "#ترمیم_غیرمستقیم",
    "domain": "clinical",
@@ -2607,46 +2648,6 @@
     "insight/insight-94",
     "sharehub/share-37",
     "chairside/chairside-45"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-95",
-    "chairside/chairside-47",
-    "chairside/chairside-52",
-    "sharehub/share-49",
-    "chairside/chairside-54",
-    "chairside/chairside-55",
-    "sharehub/share-62"
    ]
   },
   {
@@ -5944,6 +5945,38 @@
    ]
   },
   {
+   "key": "توالی_درمان",
+   "tag": "#توالی_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
+   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
+   "aliases": [
+    "treatment sequencing",
+    "sequence of treatment",
+    "ترتیب درمان",
+    "فازبندی درمان",
+    "فازهای درمان",
+    "توالی فازها",
+    "treatment sequence",
+    "سکانس درمان",
+    "ترتیب مراحل درمان",
+    "treatment phasing"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "sharehub/share-19",
+    "insight/insight-77",
+    "chairside/chairside-39",
+    "insight/insight-95",
+    "chairside/chairside-52",
+    "chairside/chairside-56",
+    "chairside/chairside-58"
+   ]
+  },
+  {
    "key": "حفظ_مینا",
    "tag": "#حفظ_مینا",
    "domain": "clinical",
@@ -6600,37 +6633,6 @@
     "chairside/chairside-39",
     "chairside/chairside-41",
     "chairside/chairside-53"
-   ]
-  },
-  {
-   "key": "توالی_درمان",
-   "tag": "#توالی_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
-   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
-   "aliases": [
-    "treatment sequencing",
-    "sequence of treatment",
-    "ترتیب درمان",
-    "فازبندی درمان",
-    "فازهای درمان",
-    "توالی فازها",
-    "treatment sequence",
-    "سکانس درمان",
-    "ترتیب مراحل درمان",
-    "treatment phasing"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "sharehub/share-19",
-    "insight/insight-77",
-    "chairside/chairside-39",
-    "insight/insight-95",
-    "chairside/chairside-52",
-    "chairside/chairside-56"
    ]
   },
   {
@@ -7598,6 +7600,31 @@
     "litecast/lite-CAST13",
     "litecast/lite-CAST15",
     "episodes/episode-157"
+   ]
+  },
+  {
+   "key": "برداشت_ترمیم",
+   "tag": "#برداشت_ترمیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "باز کردنِ کارِ موجود، چون ارزیابیِ واقعی فقط بعد از آن ممکن است.",
+   "use_when": "مقاله برداشتنِ ترمیم را گامِ تشخیصیِ لازم بداند.",
+   "aliases": [
+    "برداشتن ترمیم",
+    "باز کردن ترمیم",
+    "restoration removal",
+    "برداشتن رستوریشن",
+    "برداشت رستوریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-14",
+    "chairside/chairside-7",
+    "insight/insight-58",
+    "insight/insight-105",
+    "chairside/chairside-58"
    ]
   },
   {
@@ -8860,30 +8887,6 @@
     "notecast/episode-4",
     "notecast/episode-5",
     "sharehub/share-23"
-   ]
-  },
-  {
-   "key": "برداشت_ترمیم",
-   "tag": "#برداشت_ترمیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "باز کردنِ کارِ موجود، چون ارزیابیِ واقعی فقط بعد از آن ممکن است.",
-   "use_when": "مقاله برداشتنِ ترمیم را گامِ تشخیصیِ لازم بداند.",
-   "aliases": [
-    "برداشتن ترمیم",
-    "باز کردن ترمیم",
-    "restoration removal",
-    "برداشتن رستوریشن",
-    "برداشت رستوریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-14",
-    "chairside/chairside-7",
-    "insight/insight-58",
-    "insight/insight-105"
    ]
   },
   {
@@ -14887,6 +14890,27 @@
    "content_ids": [
     "insight/insight-89",
     "sharehub/share-25"
+   ]
+  },
+  {
+   "key": "مدیریت_دسترسی",
+   "tag": "#مدیریت_دسترسی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "به دست آوردنِ دید و فضای حرکت پیش از ادامه‌ی کار.",
+   "use_when": "مقاله دسترسی را عاملِ انتخابِ روش بداند.",
+   "aliases": [
+    "access management",
+    "مدیریت دسترسی",
+    "دید مستقیم",
+    "clinical access"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-41",
+    "chairside/chairside-58"
    ]
   },
   {
@@ -21928,26 +21952,6 @@
    "count": 1,
    "content_ids": [
     "dentai/dentai-28"
-   ]
-  },
-  {
-   "key": "مدیریت_دسترسی",
-   "tag": "#مدیریت_دسترسی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "به دست آوردنِ دید و فضای حرکت پیش از ادامه‌ی کار.",
-   "use_when": "مقاله دسترسی را عاملِ انتخابِ روش بداند.",
-   "aliases": [
-    "access management",
-    "مدیریت دسترسی",
-    "دید مستقیم",
-    "clinical access"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-41"
    ]
   },
   {

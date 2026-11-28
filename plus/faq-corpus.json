@@ -46109,6 +46109,41 @@
           ]
         }
       ]
+    },
+    "chairside/chairside-58": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-58.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا برداشتن روکش قدیمی می‌تواند به ارزیابی پیش‌آگهی دندان کمک کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله. وقتی وضعیت دیواره‌های باقی‌مانده زیر روکش روشن نیست، برداشتن روکش امکان بررسی مستقیم آن‌ها را فراهم می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-58.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-58.html#flashcards-c1",
+              "name": "مزیت برداشتن روکش برای دسترسی پروگزیمال دندان مجاور",
+              "description": "با کنار رفتن روکش، فضای دسترسی به سطح پروگزیمال دندان کناری بیشتر می‌شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

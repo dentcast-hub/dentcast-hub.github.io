@@ -19708,5 +19708,31 @@
       "secondary": [],
       "subtopic": "surgical-planning"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-58",
+    "title": "وقتی برداشتن روکش، قدم اول درمان است",
+    "caption": "بیمار با شکایت گیر غذایی و بوی بد دهان ارجاع شده بود. دندان ۶ روکش داشت و دندان‌های دو طرفش هم به ترمیم نیاز داشتند. در چنین شرایطی، درمان را از کجا شروع کنیم؟",
+    "hashtags": [
+      "#برداشت_ترمیم",
+      "#پروگنوز_دندان",
+      "#توالی_درمان",
+      "#مدیریت_دسترسی"
+    ],
+    "keywords": [
+      "crown removal",
+      "tooth prognosis",
+      "proximal access",
+      "treatment sequence",
+      "root canal treatment",
+      "definitive restoration"
+    ],
+    "page_url": "/chairside/chairside-58.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
