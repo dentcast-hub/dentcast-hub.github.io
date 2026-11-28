@@ -15,7 +15,7 @@ Use the Pulse sentence from Question 5 (the founder's, copied; or the agent's dr
 - Insert the new sentence at the **absolute top** — it becomes the first line, above every existing line.
 - Remove the **bottom-most** (oldest) line entirely — no empty container left behind; the rule is positional.
 - The chosen word links to the new page's URL; match the exact HTML/classes of the other Pulse items.
-- Keep exactly **7** Pulse lines. Phase F checks the count, first position, and preservation of the previous first six lines when a new URL is added against main.
+- Keep exactly **7** Pulse lines. Pulse is not shown on the site: Phase F reports these rows as warnings, never a gate.
 
 Glossary terms are not announced (documented skip); LiteCast follows its own convention.
 

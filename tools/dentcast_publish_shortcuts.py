@@ -147,16 +147,31 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
     a = index.find('<ul class="dc-pulse-list">')
     first = index[a:index.find("</li>", a)] if a >= 0 else ""
     pulse_ok = ("/" + cid + ".html") in first
+    # Founder 2026-11-26: a page in no learning pathway needs the founder's own
+    # «بدون مسیر» (module 10, 5.6). Checked here, before Push 2, because Phase F
+    # fails it after Push 2 where only a reconciliation commit can repair it.
+    if not (litecast or challenge or h.publication_category(p) == "glossary"):
+        pathways = (root / "plus/pathways.json").read_text(encoding="utf-8")
+        if ('"' + cid + '"') not in pathways:
+            try:
+                ex = json.loads((root / ".dentcast/pathway-exclusions.json").read_text(encoding="utf-8")).get(cid) or {}
+            except (OSError, ValueError, AttributeError):
+                ex = {}
+            approval = ex.get("approval") or {} if isinstance(ex, dict) else {}
+            h.require(approval.get("status") == "confirmed" and approval.get("decision") and approval.get("evidence"),
+                      "CLOSE_NO_PATHWAY: " + cid + " is in no learning pathway and .dentcast/pathway-exclusions.json "
+                      "holds no founder «بدون مسیر» for it (module 10, 5.6: ask the founder)")
 
     def scope(name):
         if name == "pulse":
             if h.publication_category(p) == "glossary":
                 return {"scope": name, "status": "not_applicable", "evidence": ["glossary terms are not announced in Pulse"]}
-            h.require(pulse_ok or litecast, "CLOSE_PULSE_LINE_MISSING: the first Pulse line of index.html does not link "
-                      "/" + cid + ".html (module 11, step 6)")
+            # Founder 2026-11-26: Pulse is not shown on the site; a missing line
+            # is recorded, never a blocker.
             return {"scope": name, "status": "resolved" if pulse_ok else "not_applicable",
                     "evidence": ["first Pulse line of index.html links /" + cid + ".html" if pulse_ok
-                                 else "LiteCast follows its own Pulse convention"]}
+                                 else "LiteCast follows its own Pulse convention" if litecast
+                                 else "no Pulse line: Pulse is not shown on the site (founder 2026-11-26), not a gate"]}
         if name == "english":
             return {"scope": name, "status": "resolved" if en_path else "not_applicable",
                     "evidence": [en_path + " on disk" if en_path else "no English page (Hard Rule 12)"]}

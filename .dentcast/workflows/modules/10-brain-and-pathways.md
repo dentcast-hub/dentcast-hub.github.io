@@ -103,6 +103,7 @@ The catalog and doctrine live in `plus/pathways.json` and `reports/pathways-cata
    - **STRONG / unmistakable homes** (a new adhesion/bonding piece into every bonded-restoration pathway, a new screw-loosening piece into the implant-prosthetic and failure pathways): **place them** and record pathway + anchor + milestone flag.
    - **Borderline / cross-cutting** (a plausible but not obvious fit, a theme with no clear home, uncertainty about the position) and **any third full pathway**: **not placed** — the default is conservative, because pathways are live UI for real subscribers. Record each candidate with its reason in the agent's Push-2 report; the founder may ask for the placement afterwards. Use the tool's suggested anchor; never `--confirmed` on your own.
    - An item routinely belongs to **several** pathways; place it in each strong one.
+   - **No strong home at all → a founder decision, asked when it arises.** Phase F fails a page that is in no pathway, so «not placed» is never the agent's call. Ask once, with named options: the top one or two candidates of `pathway_place.py` with their suggested anchors, and «بدون مسیر». A pathway he names is placed with `--insert`; «بدون مسیر» is written as his confirmed decision in `.dentcast/pathway-exclusions.json` (`{"<content_id>": {"content_id": …, "reason": "founder_no_pathway", "approval": {"status": "confirmed", "decision": "<his words>", "evidence": ["…"]}}}`, added to `target_paths`), which Phase F accepts. A founder instruction given before the step that covers this choice («همه چی تایید» does not; «بدون مسیر» or a named pathway does) is the answer. `close` (C.6) refuses a page with neither (`CLOSE_NO_PATHWAY`), so the gap surfaces before Push 2. A queue item freezes the answer at preparation: a `- بدون مسیر` bullet under the pathway heading of `07-ورودی‌ها.md`.
 3. Apply each placement mechanically (the only writer of `plus/pathways.json`; it refuses duplicates, LiteCast, a third full pathway and an anchor inside a series — the last two only without `--confirmed`):
    ```bash
    python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor_id> [--milestone] [--confirmed]
@@ -115,7 +116,7 @@ The catalog and doctrine live in `plus/pathways.json` and `reports/pathways-cata
    ```bash
    python3 tools/pathway_place.py --coverage
    ```
-   The new `content_id` is in **≥1** pathway, or the report says explicitly why not (a meta/equipment/orphan piece, or only borderline candidates). Report every pathway joined and where, and the `full pathways: … per item` line — the curated baseline is **1.38**; say so if it moves.
+   The new `content_id` is in **≥1** pathway, or `.dentcast/pathway-exclusions.json` holds the founder's «بدون مسیر» for it (step 2). Report every pathway joined and where, and the `full pathways: … per item` line — the curated baseline is **1.38**; say so if it moves.
 
 **Scope.** This step edits **only** `plus/pathways.json` — no builder, no version stamp, no brain field (Hard Rule 5), no page or link change.
 

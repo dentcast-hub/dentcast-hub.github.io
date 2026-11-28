@@ -234,7 +234,7 @@ def rollback(backup, extra=()):
 
 
 TOOL_OUTPUTS = ("plus/des-scores.json", "dentcast-brain.json", ".dentcast/queue-frozen-des.json", ".dentcast/des-source-markers.json",
-                "plus/pathways.json", "dentcast-hashtag-reference.json", "plus/assistant-tags.json",
+                "plus/pathways.json", ".dentcast/pathway-exclusions.json", "dentcast-hashtag-reference.json", "plus/assistant-tags.json",
                 "plus/content-index.json", "plus/cabinet-papers.json", "plus/cabinet-search.json")
 
 
@@ -1719,6 +1719,8 @@ def pathway(cid, m, cat):
     4. otherwise its top candidate."""
     import pathway_place as pp
     pw = json.loads((ROOT / "plus/pathways.json").read_text(encoding="utf-8"))
+    if m.get("pathway") == "none":
+        return []
     if m.get("pathway"):
         choice = m["pathway"] if isinstance(m["pathway"], list) else [m["pathway"]]
         return [(x["id"], x.get("after"), "frozen choice") for x in choice]
@@ -2055,6 +2057,15 @@ def finish_writes(a, w, base, item, cid, m, cat, date, report, entry, pre):
         des += ["--founder-text-change", a.founder_text_change]
     des_r = json.loads(run(des).stdout)
     placed = pathway(cid, m, cat)
+    if m.get("pathway") == "none":
+        # The founder's «بدون مسیر», frozen at preparation (module 10, 5.6).
+        ex_path = ROOT / ".dentcast/pathway-exclusions.json"
+        doc = tio.read_raw(str(ex_path)) if ex_path.exists() else "{}\n"
+        tio.write_raw(str(ex_path), tio.json_append(doc, [], {
+            "content_id": cid, "reason": "founder_no_pathway",
+            "approval": {"status": "confirmed", "decision": "بدون مسیر: no learning pathway fits this page",
+                         "evidence": ["queue item 07-ورودی‌ها.md, pathway section: «بدون مسیر»"]}},
+            key=cid))
     for pid, after, why in placed:
         cmd = [sys.executable, "tools/pathway_place.py", "--insert", cid, "--pathway", pid]
         cmd += ["--after", after] if after else ["--at-end"]
