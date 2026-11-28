@@ -526,6 +526,9 @@ def main(argv=None):
             (item / "SHA256SUMS").write_text(sums, encoding="utf-8")
         manifest = verify_manifest(item) if not a.dry_run else None
         chk = checks(item)
+        if a.dry_run and (item / qm.MANIFEST_FILE).exists() and qm.has_english(item) == qm.english_off(qm.draft(item)):
+            # the one manifest check that needs no SHA256SUMS: a dry run reports it too
+            chk["problems"].append("06-انگلیسی.md and the manifest's English fields disagree (Hard Rule 12)")
     except QueueRefusal as e:
         print(json.dumps({"status": "refused", **e.detail}, ensure_ascii=False, indent=1))
         return 2
