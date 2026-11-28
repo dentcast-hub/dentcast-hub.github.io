@@ -1,0 +1,224 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "فیکسچر شکسته؛ بخش باقی‌مانده را خارج کنیم یا زیر پونتیک نگه داریم؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "وقتی فیکسچر ایمپلنت می‌شکند، بخش اپیکالی را خارج کنیم یا زیر پونتیک دفن کنیم؟ مرور شواهد درباره‌ی حفظ استخوان، نگرانی میکروبی و سرنوشت نامعلوم قطعه‌ی ساب‌مرج‌شده.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": null,
+  "from": "06-انگلیسی.md missing"
+ },
+ "caption_en": {
+  "value": null,
+  "from": "06-انگلیسی.md missing"
+ },
+ "body_en": {
+  "value": null,
+  "from": "06-انگلیسی.md missing"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-fractured-implant-radiograph.webp",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "alt_fa": {
+     "value": "رادیوگرافی فیکسچر شکسته (عین alt سند)",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_en": {
+     "value": null,
+     "from": "03-تصاویر/تصاویر.md"
+    },
+    "caption_fa": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_en": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:8 (no caption)"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "Kochar و همکاران، Cureus، ۲۰۲۲",
+     "label_en": "",
+     "href": "https://doi.org/10.7759/cureus.30455",
+     "from": "04-منبع/منابع.md:22"
+    },
+    {
+     "label_fa": "Oh و Barnes، J Prosthet Dent، ۲۰۱۶ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.1016/j.prosdent.2015.08.027",
+     "from": "04-منبع/منابع.md:23"
+    },
+    {
+     "label_fa": "Naert و همکاران، Clin Oral Implants Res، ۱۹۹۹ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.1034/j.1600-0501.1999.100209.x",
+     "from": "04-منبع/منابع.md:24"
+    },
+    {
+     "label_fa": "Marcelis و همکاران، Clin Oral Implants Res، ۲۰۱۲ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.1111/j.1600-0501.2011.02263.x",
+     "from": "04-منبع/منابع.md:25"
+    },
+    {
+     "label_fa": "Choi و همکاران، J Periodontal Implant Sci، ۲۰۱۵ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.5051/jpis.2015.45.4.152",
+     "from": "04-منبع/منابع.md:26"
+    },
+    {
+     "label_fa": "Raghoebar و همکاران، Int J Oral Maxillofac Surg، ۲۰۲۴ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.1016/j.ijom.2023.11.007",
+     "from": "04-منبع/منابع.md:27"
+    },
+    {
+     "label_fa": "Espinoza Espinoza و همکاران، J Osseointegr، ۲۰۱۹",
+     "label_en": "",
+     "href": "https://www.journalofosseointegration.eu/jo/article/download/285/222/1517",
+     "from": "04-منبع/منابع.md:28"
+    },
+    {
+     "label_fa": "Tagger Green و همکاران، Implant Dent، ۲۰۰۲ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.1097/00008505-200204000-00014",
+     "from": "04-منبع/منابع.md:29"
+    },
+    {
+     "label_fa": "Persson و همکاران، J Clin Periodontol، ۲۰۰۱ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.1034/j.1600-051x.2001.028003258.x",
+     "from": "04-منبع/منابع.md:30"
+    },
+    {
+     "label_fa": "D'Ercole و همکاران، Int J Immunopathol Pharmacol، ۲۰۰۹ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.1177/039463200902200417",
+     "from": "04-منبع/منابع.md:31"
+    },
+    {
+     "label_fa": "Implant Dent، گزارش موردی (عنوان: Removal and Replacement of a Fractured Dental Implant)",
+     "label_en": "",
+     "href": "https://doi.org/10.1097/01.ID.0000084168.57434.F1",
+     "from": "04-منبع/منابع.md:32"
+    },
+    {
+     "label_fa": "Podhorsky و همکاران، Int J Oral Maxillofac Implants، ۲۰۱۶ (ابسترکت)",
+     "label_en": "",
+     "href": "https://doi.org/10.11607/jomi.4408",
+     "from": "04-منبع/منابع.md:33"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:18"
+ },
+ "catalog": {
+  "value": [
+   {
+    "skip": "catalog Part 2 fields are not frozen in the item; nothing is written to the catalog (a follow-up for the founder, never a publish-day guess)"
+   }
+  ],
+  "from": "default: 04-منبع/منابع.md holds no frozen catalog entry"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#اکسپلنت_ایمپلنت",
+   "#عوارض_ایمپلنت",
+   "#حفظ_ریج",
+   "#استئواینتگریشن",
+   "#ایمپلنت"
+  ],
+  "from": "07-ورودی‌ها.md:16"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "implantology",
+   "subtopic": "surgical-planning",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:12"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "فیکسچر شکسته؛ بخش باقی‌مانده را خارج کنیم یا زیر پونتیک نگه داریم؟"
+  },
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "keywords": {
+  "value": [
+   "فیکسچر شکسته",
+   "شکستگی فیکسچر ایمپلنت",
+   "بخش اپیکالی فیکسچر شکسته",
+   "خارج کردن فیکسچر شکسته و پیوند فوری استخوان",
+   "دفن قطعه زیر پونتیک",
+   "Submergence قطعه‌ی ایمپلنت",
+   "ایمپلنت دفن‌شده‌ی بدون بار و حفظ استخوان",
+   "حفظ ریج زیر پونتیک",
+   "مخزن باکتریایی فضای داخلی ایمپلنت",
+   "کلرهگزیدین فضای داخلی ایمپلنت",
+   "کاور اسکرو"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/dentcast-plus/video-16.html",
+    "label": "شکستگی فیکسچر ایمپلنت",
+    "from": "11-لینک‌های-گلاسری.md:34"
+   },
+   {
+    "href": "/episodes/episode-123-5.html",
+    "label": "ایمپلنت‌های خواب",
+    "from": "11-لینک‌های-گلاسری.md:35"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:30"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
