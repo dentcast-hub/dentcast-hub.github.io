@@ -703,5 +703,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "chairside/chairside-58": {
+    "queue_ref": "queue/30-chairside-crown-removal-first-step",
+    "record_sha256": "ed2e1cbb0982644312ec316d4e7526aff3ab4beee6bd5f6a9d960a5c91675add",
+    "installed_at": "2026-11-28",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
