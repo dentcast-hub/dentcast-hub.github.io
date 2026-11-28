@@ -43,22 +43,22 @@ order and the only delivery model: `init` writes both markers, any other plan is
 **Standing acceptance.** Agent proposals are not sent for confirmation: title/caption the agent
 proposed, lead paragraph, page structure (headings, sub-labels, chips, callout boxes), Q3.5 rewrites, hashtags and mint, keywords, pillar/subtopic, borderline
 links at 4.7/4.8/4.9 (conservative default: skip), flashcard/FAQ choices, catalog tags and the Drive
-subfolder among existing ones, the Pulse line, pathway borderline and third pathway, uncertain bundle,
-English mirror. Each is built per its module, recorded with evidence in the handoff and listed in the
+subfolder among existing ones, the Pulse line, pathway borderline and third pathway, uncertain bundle.
+Each is built per its module, recorded with evidence in the handoff and listed in the
 **agent's Push-2 report** (below). The founder may change any of them; the change follows the
 invalidation rules below.
 
-**At most two founder messages** (M1, M2), each sent only when it has content:
+**At most two founder messages** (M1, M2; plus M3b only below a full Fidelity match), each sent only when it has content:
 
 1. **M1, open facts** — at the first step that needs a fact no real source answered (normally
    C.4.10.1, the paper branch: DOI, first author, which Drive file, catalog counters; a NoteCast credit
    target at C.4.5-b; Hard Rule 13). One message gathers every open fact known at that point; the
    dependent step waits, independent work continues. A rare later fact (an abstract the tool cannot
    fetch, module 08 Part 1) is asked where it arises. A page with no paper and no open fact has no M1.
-   **Flagged Fidelity sentences have no message.** A sentence measured `ALTERED`/`REVERSED` never holds the
-   publication (module 08, «Scored once» rule 5): each one goes into the agent's Push-2 report with
-   the source's sentence and a proposed rewrite, and the founder fixes it afterwards if he wants
-   («تطابق X رو کامل کن»). C.4.13 completes when the record is stored.
+   **M3b, below a full Fidelity match**: after C.4.13 every sentence measured
+   `ALTERED`/`REVERSED` goes to the founder with the source's sentence, why it cannot match and a
+   proposed rewrite (module 08, «Scored once» rule 5). The publication waits: C.6 refuses until each
+   unit has his «اصلاح کن» / «خودم می‌نویسم» / «ادامه بده», recorded as `fidelity_founder_decision_v1`.
 2. **M2, exam questions** — at intake (module 02, Question 6), with M1 in one message: drafted from
    the text, approved one by one, written at 5.6 (module 07). His answer is final, «بدون سؤال» included.
 
@@ -84,7 +84,7 @@ their only home:
 | Push | When | Contents | Who |
 |---|---|---|---|
 | Save point | when `C.4.13` has stored the record, and again whenever a turn ends before Push 2 | scoped work + latest handoff | agent |
-| Push 2 (delivery 2) | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, English mirror and every founder message closed | scoped work + latest handoff | agent |
+| Push 2 (delivery 2) | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, language state (Hard Rule 12) and every founder message closed | scoped work + latest handoff | agent |
 | Delivery 3 | after C.8, C.7, D, E, real Phase F, G | final work + completion receipt + handoff deletion, one commit | `post-cut2-mechanical.yml` |
 
 The save point exists only so DES/Fidelity is not lost with a session. It is not a delivery cut:
@@ -213,7 +213,7 @@ evidence is the standing-acceptance record); `not_applicable` (reviewed exceptio
 author_original|agent_authored|not_applicable [--title-from founder|agent] [--caption-from
 founder|agent]`. It reads the title and caption from the brain entry, records both approvals and the
 lead provenance, builds the ten-scope lock from the evidence already on the ledger, checks the Pulse
-line and the English mirror on disk, and completes C.6. Then `stage-delivery`, one commit, one push.
+line and the language state (Hard Rule 12), and completes C.6. Then `stage-delivery`, one commit, one push.
 Never hand-write the records below; this is what the tool writes and what the cut validates: one
 `second_cut_editorial_lock_v1` decision with all ten scopes, each `resolved` or `not_applicable`:
 
@@ -223,13 +223,13 @@ Never hand-write the records below; this is what the tool writes and what the cu
             {"scope": "challenge"}, {"scope": "taxonomy"}, {"scope": "links"}, {"scope": "hashtags"},
             {"scope": "content_record"}, {"scope": "pathways"}, {"scope": "pulse"},
             {"scope": "english"}, {"scope": "author_approvals"}],
- "english": {"status": "ready", "path": "insight/en/insight-NN.html", "evidence": ["…"]},
+ "english": {"status": "exempt", "path": null, "evidence": ["…"]},
  "evidence": ["…"]}
 ```
 
-Schema only; every scope carries its own `status` and `evidence`. English: LiteCast or Challenge →
-`exempt`, path `null`, evidence; every other page → `ready`, mirror path in `target_paths`, file on
-disk. `C.4.14` `completed` only with real `data-dc-challenge-question` markup; an ordinary post
+Schema only; every scope carries its own `status` and `evidence`. English (Hard Rule 12): a new page →
+`exempt`, path `null`, evidence; a page that has an English page (a queue item frozen with its `06`) →
+`ready`, mirror path in `target_paths`, file on disk. `C.4.14` `completed` only with real `data-dc-challenge-question` markup; an ordinary post
 records it `skipped`. Both `title` and `caption` are in `context.approvals`: `confirmed` with the
 exact text in `decision` and its evidence (founder data, or standing acceptance for an agent
 proposal), or `not_required` with a decision and evidence; at least one is `confirmed` so Phase F has

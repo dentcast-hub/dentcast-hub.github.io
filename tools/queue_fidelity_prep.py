@@ -28,7 +28,7 @@ blocks, the checker outputs) is a full copy of the site, so it is not left
 behind: a new run for the same item replaces that item's older work directories
 (a rerun means a fresh draft), and `--cleanup` removes the named work
 directories, or with `--all` every one under the temp dir, once the FIDELITY
-record is stored in 05-DES-Fidelity/ (publish-queue.md, step 5). Removal is
+record is stored in 05-DES-Fidelity/ (publish-queue.md, step 3). Removal is
 Python's shutil.rmtree on a directory that passes is_work_dir(): the
 `dentcast-fidelity-prep-` prefix, this tool's prep.json, the throwaway marker
 in checkout/, no `.git`, no symlink. No shell `rm` is run, and `--cleanup`
@@ -163,6 +163,9 @@ def main(argv=None):
     ap.add_argument("--texts", help="texts.json for --build (DOI or S<n> → source_text, text_basis)")
     ap.add_argument("--checkout", help="an existing throwaway copy (marker, no .git) instead of a new one")
     ap.add_argument("--build", help="where the input blocks go (default: <work>/blocks)")
+    ap.add_argument("--commentary-block", metavar="OUT",
+                    help="COMMENTARY basket (no cited source): build the draft page and write its DES Step 0 "
+                         "block (des_commentary_block.py) to OUT; no des.json is needed and no FIDELITY follows")
     ap.add_argument("--sweep-first", action="store_true",
                     help="run the orphan sweep even when every sentence already reaches a source (module 08 Part 2c); "
                          "when a body sentence reaches none it runs without this flag")
@@ -201,6 +204,22 @@ def main(argv=None):
     if r.returncode != 0 or not draft or draft.get("status") != "draft":
         return fail("DRAFT_FAILED", "queue_apply.py --draft refused or failed", output=draft or r.stdout[-2000:],
                     stderr=r.stderr[-2000:], checkout=str(copy))
+    if a.commentary_block:
+        # The page's own text is the source (module 08 Part 1, COMMENTARY): the block is built on
+        # the draft page, before any DES record exists, and FIDELITY never runs on this basket.
+        out = Path(a.commentary_block).resolve()
+        r = subprocess.run([py, str(copy / "tools/des_commentary_block.py"), cid, "-o", str(out)],
+                           cwd=copy, capture_output=True, text=True)
+        if r.returncode != 0 or not out.is_file():
+            return fail("BLOCK_FAILED", "des_commentary_block.py failed", stderr=r.stderr[-2000:], checkout=str(copy))
+        print(json.dumps({"status": "commentary_block", "not_for_publish": True, "block": str(out),
+                          "content_id": cid, "checkout": str(copy), "work": str(work),
+                          "next": "isolated SOURCE call (spec as system prompt, this block as the only user turn); "
+                                  f"des_repair.py ANSWER --block {out} -o <tmp>; store "
+                                  '{"scored_at": "<YYYY-MM-DD>", "sources": [<that object>]} as '
+                                  "05-DES-Fidelity/des.json; then --cleanup " + str(work)},
+                         ensure_ascii=False, indent=1))
+        return 0
     if not draft.get("des_record"):
         return fail("DES_PACKAGE_MISSING", "05-DES-Fidelity/des.json is missing: the SOURCE records come first "
                     "(module 08 Part 2), then the FIDELITY units", checkout=str(copy), page=f"{copy / cid}.html")
@@ -247,8 +266,8 @@ def main(argv=None):
         receipt["build_dir"] = str(out)
         receipt["next"] = (f"module 08 Part 2c: the sweeper (strong model, fresh context) answers each "
                            f"{out}/input-src<k>.json as {out}/out-src<k>-1.json; then, in the checkout, units_tool {cid} "
-                           f"--judge {out}; the judge (strong model, another fresh context) answers each "
-                           f"judge-input-src<k>.json as judge-src<k>.json; then units_tool {cid} --vote {out}")
+                           f"--vote {out} (optional judge first: units_tool {cid} --judge {out}, a strong model in "
+                           f"another fresh context answers each judge-input-src<k>.json as judge-src<k>.json)")
     print(json.dumps(receipt, ensure_ascii=False, indent=1))
     return 0
 

@@ -108,7 +108,7 @@ class ManifestDraftTests(unittest.TestCase):
 
     def test_a_paper_item_can_draft_its_manifest_before_it_is_frozen(self):
         # 2026-11-06: the catalog freeze was asserted in draft(), but SHA256SUMS is written by
-        # queue_stamp AFTER 12-انتشار.json is drafted (publish-queue.md step 7), so every paper
+        # queue_stamp AFTER 12-انتشار.json is drafted (publish-queue.md step 5), so every paper
         # item's own draft was refused CATALOG_NOT_FROZEN. The freeze binds a frozen item only.
         with tempfile.TemporaryDirectory() as t:
             item = make_item(t, extra={"04-منبع/کاتالوگ.json": json.dumps([{"title": "x"}])})
@@ -475,11 +475,7 @@ class StampCheckTests(unittest.TestCase):
                 self.assertEqual(qs.main([str(item), "--dry-run", "--strict"]), 4)
             self.assertEqual(len(json.loads(buf.getvalue())["checks"]["problems"]), 4)
 
-    def test_skip_object_and_absent_files_are_notes(self):
-        with tempfile.TemporaryDirectory() as t:
-            out = qs.checks(self.item(t, **{"10-فلش‌کارت-FAQ.json": {"skip": "no glossary terms"}}))
-            self.assertEqual(out["problems"], [])
-            self.assertEqual(out["warnings"], ["skipped: 10-فلش‌کارت-FAQ.json is a skip object"])
+    def test_absent_files_are_notes(self):
         with tempfile.TemporaryDirectory() as t:
             out = qs.checks(make_item(t))   # the minimal item: no 04, 09, 10
             self.assertEqual(out["problems"], [])
@@ -657,3 +653,56 @@ class ExamDraftCheckTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StampShapeTests(unittest.TestCase):
+    """queue_stamp refuses at the freeze what publish day would otherwise crash on."""
+
+    def test_missing_des_and_bad_json_shapes_are_problems(self):
+        with tempfile.TemporaryDirectory() as d:
+            item = Path(d) / "99-metanote-x"
+            (item / "04-منبع").mkdir(parents=True)
+            (item / "04-منبع" / "کاتالوگ.json").write_text("ندارد: بی پیپر\n", encoding="utf-8")
+            (item / "08-سؤال‌های-آزمون.json").write_text("[]\n", encoding="utf-8")
+            (item / "10-فلش‌کارت-FAQ.json").write_text('{"skip": "x"}\n', encoding="utf-8")
+            problems = []
+            qs.check_des_package(item, problems)
+            qs.check_json_shapes(item, problems)
+            self.assertTrue(any(p.startswith("P3 05-DES-Fidelity/des.json: missing") for p in problems), problems)
+            self.assertTrue(any(p.startswith("P7 04-منبع/کاتالوگ.json") for p in problems), problems)
+            self.assertTrue(any(p.startswith("P7 08-") for p in problems), problems)
+            # module 07: the FAQ and the flashcards are never skipped
+            self.assertTrue(any(p.startswith("P7 10-") for p in problems), problems)
+
+    def test_draft_write_derives_again_and_keeps_hand_fields(self):
+        with tempfile.TemporaryDirectory() as d:
+            item = Path(d) / "99-sharehub-x"
+            item.mkdir()
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nیک\n\n## کپشن\nک\n", encoding="utf-8")
+            argv = ["queue_manifest.py", "draft", str(item), "--write"]
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            m = json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))
+            m["alt_headline_fa"] = {"value": "دستی", "from": "پذیرش ایستا #1"}
+            (item / qm.MANIFEST_FILE).write_text(json.dumps(m, ensure_ascii=False), encoding="utf-8")
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nدو\n\n## کپشن\nک\n", encoding="utf-8")
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            m = json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))
+            self.assertEqual(m["title_fa"]["value"], "دو")
+            self.assertEqual(m["alt_headline_fa"]["value"], "دستی")
+
+    def test_draft_write_drops_a_file_value_the_file_no_longer_gives(self):
+        with tempfile.TemporaryDirectory() as d:
+            item = Path(d) / "99-metanote-x"
+            item.mkdir()
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nیک\n\n## کپشن\nک\n", encoding="utf-8")
+            (item / "07-ورودی‌ها.md").write_text("## پالس\n- جمله: «ایدهٔ تازه: «یک» منتشر شد»\n", encoding="utf-8")
+            argv = ["queue_manifest.py", "draft", str(item), "--write"]
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            self.assertIsNotNone(json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))["pulse"]["value"])
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nدو\n\n## کپشن\nک\n", encoding="utf-8")
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            self.assertIsNone(json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))["pulse"]["value"])

@@ -3,25 +3,20 @@
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger steps in this module: `D`, `E`, `F`, `G` — the post-Push-2 runner's. The agent's part of Phase D (authoring the mirror and both toggles) happens **before C.6**, after the C.4.13 text lock so it mirrors locked text, and is recorded in the C.6 second-cut editorial lock (standing acceptance; never sent for confirmation). After Push 2, row `D` is the runner's technical check only; substantive drift blocks there and means invalidation, never a silent fix.
+Ledger steps in this module: `D`, `E`, `F`, `G` — the post-Push-2 runner's. The agent's part of Phase D (the toggle marker on the Persian page) happens **before C.6** and is recorded in the C.6 second-cut editorial lock. After Push 2, row `D` is the runner's technical check only; substantive drift blocks there and means invalidation, never a silent fix.
 
-## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)
+## Phase D — Language state: Persian-only (Hard Rule 12)
 
-**Part of every `.org` publish** (Hard Rule 12): the en page and the toggle are produced together.
-
-**Two documented skips, and no others** (Hard Rule 12 gives the reasons): **LiteCast** — "Phase D: skipped — LiteCast (Hard Rule 10)"; **چالش** — "Phase D: skipped — چالش (Hard Rule 12, RULE 16)". Every other publish runs it.
+**A new publication writes no English mirror and no fa↔en toggle** (Hard Rule 12 gives the reason and the cases that keep an English page). No translation is authored, `tools/en_mirror_head.py` is not run and `.dentcast/workflows/en-version.md` is not read.
 
 **Steps:**
 
-0. **Start the mirror with the tool, finish it with its check.** `python3 tools/en_mirror_head.py <content_id> --title "…" --description "…"` clones the newest English page of the section with the slug, title, description, dates and JSON-LD already swapped; translate the Persian body over the template's; then `python3 tools/en_mirror_head.py <content_id> --check` must pass (nothing of the template left) before C.6. Steps 1–4 say what the finished page is.
-1. **What the mirror is** (the standalone «… رو انگلیسی کن» route, `.dentcast/workflows/en-version.md`, makes the same page; a publication follows the steps here):
-   - en page at `/{type}/en/{file}.html`; **English chrome cloned from `metanotes/en/meta-1.html`** (`<html lang="en" dir="ltr" data-dc-no-header>`, English topbar/toolbar labels, the `.lang-btn` CSS + markup), GA4 exactly once.
-   - **Body, box/section CSS classes and JSON-LD `@type`/shape from THIS page's own type** (e.g. insight `.glass-box`), LTR and **translated** structure-faithfully (same headings, same number of `<li>`, nothing added or dropped), the module-03 lead included.
-   - **Scripts/analytics follow this type's conventions, not meta-1's extras.**
-   - No specialist «کاوش بیشتر» capsules, glossary back-links or brain links on the en page (en-version Hard Rule 8): no brain entry, no Pulse line, no 4.7/4.8/4.9 for it.
-2. **Wire the toggle on BOTH sides (en-version step 4).** En page: `.lang-btn` → `../{file}.html` («فارسی»). Fa page: `.lang-btn` → `en/{file}.html` («English»), placed/styled per `metanotes/meta-1.html`, with the `.lang-btn` CSS in its inline `<style>` (a clone may lack it; a button without its CSS is no toggle). Exact inverses; neither points at meta-1.
-3. **noindex + hreflang (en-version step 7).** Author the en page with `<meta name="robots" content="noindex, follow">` and no hreflang block; the fa page keeps its standard 3-line hreflang block with **no** `en` alternate. After Push 2 the runner's `D` runs `python3 .github/scripts/inject_hreflang.py`, `python3 tools/noindex_en_mirrors.py --check`, `python3 .github/scripts/gen_sitemap.py` (it drops noindexed pages) and the restamp (module 11, §7).
-4. **Verify (en-version step 9).** `metanotes/en/meta-1.html` is untouched (`git diff --quiet -- metanotes/en/meta-1.html`). Phase F row `D en-mirror` checks the rest (lang/dir, self-canonical `.org`, `noindex, follow`, zero hreflang, `inLanguage`/`og:locale`, the type's `@type`, GA4 once, inverse toggles). Record the two paths (new en page, fa toggle edit) in the C.6 lock.
+1. **Take the toggle out of the cloned Persian page.** The template's `<a class="lang-btn" href="en/…">…</a>` is replaced, in place and exactly once, by `<!-- dc-lang-toggle:off -->`; a template that already carries the marker has nothing to replace. The `.lang-btn` CSS rule and a neighbouring comment may stay. After the patch: `grep -c 'class="lang-btn"' <page>` is `0` and `grep -c 'dc-lang-toggle:off' <page>` is `1`.
+2. **Nothing under `/{type}/en/`.** No file is created there and none is touched; `close` at C.6 records the English scope as `not_applicable` and refuses a page that still carries a toggle.
+3. **hreflang.** The fa page keeps its standard 3-line hreflang block (`fa`, `fa-IR`, `x-default`) with no `en` alternate. After Push 2 the runner's `D` runs `python3 .github/scripts/inject_hreflang.py`, `python3 tools/noindex_en_mirrors.py --check` (the existing mirrors), `python3 .github/scripts/gen_sitemap.py` and the restamp (module 11, §7).
+4. **Verify.** Phase F row `D en-mirror` reports `SKIP` for a page without an English page and fails a `.lang-btn` toggle on it; for a page that has an English page (an older page, a queue item frozen with its `06`) it runs the full mirror check as before.
+
+**LiteCast and چالش** record their canonical skips: "Phase D: skipped — LiteCast (Hard Rule 10)"; "Phase D: skipped — چالش (Hard Rule 12, RULE 16)".
 
 ## Phase E — Mark the page for the new-article push
 

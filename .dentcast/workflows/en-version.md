@@ -8,8 +8,7 @@ already published.
 **Trigger (registered in `CLAUDE.md`):** **«… رو انگلیسی کن»** — e.g.
 «پرامپتولوژیست ۱ رو انگلیسی کن» or «نسخه‌ی انگلیسیِ متانوت ۳». Any input of
 the form *«<صفحه> رو انگلیسی کن»* / *«نسخه‌ی انگلیسیِ <صفحه>»* enters THIS
-workflow, not the publishing router. (Rename freely — it is a single string
-in `CLAUDE.md`.)
+workflow, not the publishing router (which never runs it: Hard Rule 12).
 
 ---
 
@@ -192,8 +191,9 @@ computed from the current document's own filename — never hardcoded:
 
 - **On the new en page:** target `../{file}.html` (the fa original), label
   «فارسی». (Same relative form as `metanotes/en/meta-1.html` → `../meta-1.html`.)
-- **On the source fa page:** add the toggle (if absent) pointing to
-  `en/{file}.html` (the en version), label «English». Match the fa-side
+- **On the source fa page:** add the toggle (in place of a
+  `<!-- dc-lang-toggle:off -->`) pointing to
+  `en/{file}.html`, label «English». Match the fa-side
   `.lang-btn` placement/markup precedent from `metanotes/meta-1.html`.
 
 Each toggle must land on **this** document's true counterpart. Verify the two
@@ -273,9 +273,7 @@ The fa page keeps its standard 3-line hreflang block (fa-IR/fa/x-default)
 normalizes this.
 
 ### 7. hreflang / noindex machinery
-**Inside a page publication (module 12 Phase D) steps 7, 8 and the integrity check of step 9 are the
-post-cut2 runner's; the agent only authors the mirror before C.6.** On the standalone English route,
-run both enforcement scripts as part of the publish:
+Run both enforcement scripts as part of the publish:
 
 ```bash
 python3 .github/scripts/inject_hreflang.py    # en page: hreflang stripped; fa page: 3-line block, no en alternate

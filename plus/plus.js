@@ -2,34 +2,34 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=263';
-import { currentUser, api } from './js/api.js?v=263';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=263';
-import { openCollectionPicker } from './js/collections.js?v=263';
-import { el, faNum } from './js/util.js?v=263';
-import { initHomeCard } from './js/home-card.js?v=263';
-import { initHomeFeatures } from './js/home-features.js?v=263';
-import { initPremiumPanel } from './js/premium-panel.js?v=263';
-import { initHomeBundles } from './js/home-bundles.js?v=263';
-import { initHomeUpboard } from './js/home-upboard.js?v=263';
-import { initDesTool } from './js/des-scorer.js?v=263';
-import { initHeader } from './js/header.js?v=263';
-import { initTourAutostart } from './js/tour.js?v=263';
-import { initReadingTracker, flushPendingReads } from './js/reading.js?v=263';
-import { armLateReading } from './js/late-reading.js?v=263';
-import { initListeningTracker } from './js/listening.js?v=263';
-import { initShareScoring, buildShareButton } from './js/share.js?v=263';
-import { initHeart, buildHeartChip } from './js/votes.js?v=263';
-import { mountClipControl, landOnClip } from './js/clips.js?v=263';
-import { mountArticleThreads } from './js/article-threads.js?v=263';
-import { mountChallenge } from './js/challenge.js?v=263';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=263';
-import { mountDes } from './js/des.js?v=263';
-import { mountPresentation } from './js/presentation.js?v=263';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=263';
-import { initAudioHub } from './js/audio-hub.js?v=263';
-import { initAudioFallback } from './js/audio-fallback.js?v=263';
-import { getModel, freshFolders } from './js/content-index.js?v=263';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=266';
+import { currentUser, api } from './js/api.js?v=266';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=266';
+import { openCollectionPicker } from './js/collections.js?v=266';
+import { el, faNum } from './js/util.js?v=266';
+import { initHomeCard } from './js/home-card.js?v=266';
+import { initHomeFeatures } from './js/home-features.js?v=266';
+import { initPremiumPanel } from './js/premium-panel.js?v=266';
+import { initHomeBundles } from './js/home-bundles.js?v=266';
+import { initHomeUpboard } from './js/home-upboard.js?v=266';
+import { initDesTool } from './js/des-scorer.js?v=266';
+import { initHeader } from './js/header.js?v=266';
+import { initTourAutostart } from './js/tour.js?v=266';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=266';
+import { armLateReading } from './js/late-reading.js?v=266';
+import { initListeningTracker } from './js/listening.js?v=266';
+import { initShareScoring, buildShareButton } from './js/share.js?v=266';
+import { initHeart, buildHeartChip } from './js/votes.js?v=266';
+import { mountClipControl, landOnClip } from './js/clips.js?v=266';
+import { mountArticleThreads } from './js/article-threads.js?v=266';
+import { mountChallenge } from './js/challenge.js?v=266';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=266';
+import { mountDes } from './js/des.js?v=266';
+import { mountPresentation } from './js/presentation.js?v=266';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=266';
+import { initAudioHub } from './js/audio-hub.js?v=266';
+import { initAudioFallback } from './js/audio-fallback.js?v=266';
+import { getModel, freshFolders } from './js/content-index.js?v=266';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -39,7 +39,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=263';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=263').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=266').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -809,7 +809,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=263'), import('./js/premium-cta.js?v=263')])
+  Promise.all([import('./js/sheet.js?v=266'), import('./js/premium-cta.js?v=266')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
@@ -1138,7 +1138,7 @@ function boot() {
   step('article', () => { rowBuilders.push(initArticle()); });
   step('listening', () => initListening()); // episode-page audio → episode_listened
   step('audio-hub', () => initAudioHub()); // one resume record + lock screen + «ادامه‌ی شنیدن» bar for every episode player
-  step('audio-fallback', () => initAudioFallback()); // «پخش شروع نشد؟» → Acast, only after a failed play
+  step('audio-fallback', () => initAudioFallback()); // «پخش شروع نشد؟» → Castbox, only after a failed play
   step('home-card', () => initHomeCard()); // homepage personal card on all viewports (desktop + mobile)
   step('home-features', () => initHomeFeatures()); // homepage premium section, under the ad card (both layouts)
   step('premium-panel', () => initPremiumPanel()); // homepage «پریمیوم» tab: the full catalog, locked or live (both layouts)

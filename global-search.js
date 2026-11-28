@@ -828,13 +828,13 @@ function dcPapersSetWanted(on) {
 function dcPremiumHint() { try { return localStorage.getItem("dcAds.vc") === "premium"; } catch (_) { return false; } }
 /* The answer AND why: "confirmed not premium" and "could not ask" differ. */
 function dcMe() {
-  return import('/plus/js/api.js?v=263')
+  return import('/plus/js/api.js?v=266')
     .then((m) => m.currentUser().then((u) => ({ u, status: m.meStatus() })))
     .catch(() => ({ u: null, status: "error" }));
 }
 /* The library's own gate card (plus/js/library-gate.js), with its own ?from=. */
 function dcPaperGate() {
-  return Promise.all([import('/plus/js/sheet.js?v=263'), import('/plus/js/premium-cta.js?v=263')])
+  return Promise.all([import('/plus/js/sheet.js?v=266'), import('/plus/js/premium-cta.js?v=266')])
     .then(([sheet, cta]) => {
       sheet.openSheet(sheet.gateCard({
         title: "جستجو در مقاله‌های کتابخانه ویژه‌ی پریمیوم است",

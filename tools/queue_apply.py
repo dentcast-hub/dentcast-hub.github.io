@@ -466,13 +466,17 @@ class Linker:
             self.pending.remove(ln)
             self.done.append(ln)
         segs.sort()
-        out, pos = [], 0
+        # The text is formatted whole, with each link held by a placeholder: a
+        # phrase inside a bold run (`**۳. … اوردنچر …:**`) used to cut the run
+        # in two, and each half kept a literal `**` (queue item 35).
+        out, pos, anchors = [], 0, []
         for s, e, href in segs:
-            out.append(inline(raw_text[pos:s]))
-            out.append(f'<a href="{attr(href)}">{inline(raw_text[s:e])}</a>')
+            out.append(raw_text[pos:s])
+            out.append(f"\x01{len(anchors)}\x01")
+            anchors.append(f'<a href="{attr(href)}">{inline(raw_text[s:e])}</a>')
             pos = e
-        out.append(inline(raw_text[pos:]))
-        return "".join(out)
+        out.append(raw_text[pos:])
+        return re.sub("\x01(\\d+)\x01", lambda mm: anchors[int(mm.group(1))], inline("".join(out)))
 
 
 def inside_presentation(t, k, e):
@@ -685,15 +689,86 @@ def render_indented(md, linker, link_class):
 
 # ------------------------------------------------------------------ the page
 
+# Hard Rule 12 (founder, 2026-11-27): a new page ships Persian-only unless its
+# item was prepared with 06-انگلیسی.md. A Persian page without an English page
+# carries TOGGLE_OFF exactly where the fa↔en toggle stood, so the next clone
+# finds the same place: `read_template` puts the section's toggle back before a
+# builder runs (every builder keeps addressing `<a class="lang-btn">`), and
+# `toggle_off` takes it out again when the new page has no English page.
+TOGGLE_OFF = "<!-- dc-lang-toggle:off -->"
+TOGGLE_RE = re.compile(r'<a class="lang-btn"[^>]*>.*?</a>', re.S)
+
+
+def page_number(c, name):
+    mm = re.fullmatch(re.escape(c["stem"]) + r"(\d+)\.html", name)
+    return int(mm.group(1)) if mm else None
+
+
+def read_template(rel):
+    """A template page as the builders expect it. A Persian page published
+    without an English page gets the toggle of the newest older sibling that
+    has one, pointed at its own (absent) English path; the builder then
+    renumbers it like any other clone, and `toggle_off` decides its fate."""
+    doc = (ROOT / rel).read_bytes().decode("utf-8")
+    if "/en/" in rel or TOGGLE_OFF not in doc:
+        return doc
+    if doc.count(TOGGLE_OFF) != 1 or TOGGLE_RE.search(doc):
+        refuse("TEMPLATE_TOGGLE", f"{rel}: expected exactly one {TOGGLE_OFF} and no .lang-btn toggle")
+    c = next(x for x in CATEGORIES.values() if rel.startswith(x["dir"] + "/"))
+    name = rel.rsplit("/", 1)[1]
+    own = page_number(c, name)
+    older = sorted(((k, p) for p in (ROOT / c["dir"]).glob(c["stem"] + "*.html")
+                    if (k := page_number(c, p.name)) is not None and k < own), reverse=True)
+    for k, p in older:
+        mm = TOGGLE_RE.search(p.read_bytes().decode("utf-8"))
+        if mm:
+            a_ = mm.group(0).replace("\r\n", "\n")
+            old = f'href="en/{c["stem"]}{k}.html"'
+            if a_.count(old) != 1:
+                refuse("TEMPLATE_TOGGLE", f"{p.name}: its toggle does not point at en/{c['stem']}{k}.html")
+            a_ = a_.replace(old, f'href="en/{name}"')
+            return doc.replace(TOGGLE_OFF, a_.replace("\n", "\r\n") if "\r\n" in doc else a_)
+    refuse("TEMPLATE_TOGGLE", f"{rel}: no older {c['dir']} page carries a .lang-btn toggle to restore")
+
+
+def toggle_off(page):
+    """The Persian page of an item without English: the toggle becomes TOGGLE_OFF."""
+    if len(TOGGLE_RE.findall(page)) != 1:
+        refuse("TEMPLATE_TOGGLE", "the built page does not carry exactly one .lang-btn toggle to take out")
+    return TOGGLE_RE.sub(lambda _m: TOGGLE_OFF, page, count=1)
+
+
+def english_template_number(cat, n):
+    """The newest English page of the section below `n`: the clone source of an
+    English page (the page before `n` may have been published Persian-only)."""
+    c = CATEGORIES[cat]
+    nums = [k for p in (ROOT / c["dir"] / "en").glob(c["stem"] + "*.html")
+            if (k := page_number(c, p.name)) is not None and k < n
+            and (ROOT / c["dir"] / p.name).is_file()]
+    if not nums:
+        refuse("ENGLISH_TEMPLATE", f"no English {cat} page below {n} to clone")
+    return max(nums)
+
+
 def template_facts(cat, prev_n):
     c = CATEGORIES[cat]
     cid = f"{c['dir']}/{c['stem']}{prev_n}"
-    doc = (ROOT / f"{cid}.html").read_bytes().decode("utf-8")
+    doc = read_template(f"{cid}.html")
     brain = json.loads((ROOT / "dentcast-brain.json").read_text(encoding="utf-8"))
     entry = next((e for e in brain if e.get("type") == c["brain_type"] and str(e.get("id")) == c["brain_id"].format(n=prev_n)), None)
     if entry is None:
         refuse("TEMPLATE_NOT_IN_BRAIN", f"template {cid} has no brain entry")
     return cid, doc, entry
+
+
+def body_end_pattern(doc, body_open):
+    """Where a ShareHub template's body ends: at its paper-credit block or the founder's
+    author-note, or, on a template with neither (sharehub/share-61), where the dialogue and
+    its wrapper close before the related section (fa) or </main> (en). Returns (pattern, bare)."""
+    std = r"\n</div>\n<div class=\"author(?:-note)?\">"
+    if re.search(re.escape(body_open) + r"\n.*?" + std, doc, re.S):
+        return std, False
+    return r"\n</div>\n</div>\n(?=\s*(?:<div class=\"dc-related-section\">|</main>))", True
 
 
 def swap_region(doc, start_pat, end_pat, new, what):
@@ -781,8 +856,16 @@ def build_page(cat, n, prev_n, m, date, item, lang="fa"):
         body += f'\n<h3>{head}</h3>\n<ul class="sh-refs">\n{lis}\n</ul>'
     # the template's body ends at its paper-credit block, or — when the template
     # page itself credited a «منابع» list and so carries no such block
-    # (sharehub/share-42, share-45) — at the founder's author-note
-    doc = swap_region(doc, re.escape(c["body_open"]) + r"\n", r"\n</div>\n<div class=\"author(?:-note)?\">", body, "body")
+    # (sharehub/share-42, share-45) — at the founder's author-note; a template
+    # with neither (sharehub/share-61) ends it where the dialogue and its
+    # wrapper close, just before the related section (fa) or </main> (en)
+    body_end, bare = body_end_pattern(doc, c["body_open"])
+    if bare:
+        if credit["mode"] == "author-doi":
+            # the credit block sits inside the dialogue, right after the body (sharehub/share-60)
+            word = "نویسنده:" if lang == "fa" else "Author:"
+            body += f'\n<div class="author">\n{word}\n<a href="#" target="_blank" rel="noopener noreferrer">x</a></div>'
+    doc = swap_region(doc, re.escape(c["body_open"]) + r"\n", body_end, body, "body")
     # 6. credit block
     if credit["mode"] == "author-doi":
         label = credit["label_fa" if lang == "fa" else "label_en"]
@@ -839,7 +922,7 @@ def parent_audio(n):
 def build_notecast_page(n, prev, m, date, item, lang="fa"):
     c = CATEGORIES["notecast"]
     sub = "en/" if lang == "en" else ""
-    tdoc = (ROOT / f"notecast/{sub}episode-{prev}.html").read_bytes().decode("utf-8")
+    tdoc = read_template(f"notecast/{sub}episode-{prev}.html")
     nl = "\r\n" if "\r\n" in tdoc else "\n"
     doc = tdoc.replace("\r\n", "\n")
     _, _, tentry = template_facts("notecast", prev)
@@ -962,7 +1045,7 @@ def article_section(pillar):
 def build_insight_page(n, prev, m, date, item, lang="fa"):
     c = CATEGORIES["insight"]
     sub = "en/" if lang == "en" else ""
-    tdoc = (ROOT / f"insight/{sub}insight-{prev}.html").read_bytes().decode("utf-8")
+    tdoc = read_template(f"insight/{sub}insight-{prev}.html")
     nl = "\r\n" if "\r\n" in tdoc else "\n"
     doc = tdoc.replace("\r\n", "\n")
     _, _, tentry = template_facts("insight", prev)
@@ -989,7 +1072,7 @@ def build_insight_page(n, prev, m, date, item, lang="fa"):
     doc = doc.replace(f'"articleSection": "{old_sec}"', '"articleSection": ' + json.dumps(
         m.get("article_section") or article_section(m["pillar"]["primary"]), ensure_ascii=False))
     doc = re.sub(r'("healthCondition": \{[^}]*"name": )"[^"]*"', lambda mm: mm.group(1) + json.dumps(
-        m.get("topic_en") or m["title_en"], ensure_ascii=False), doc, flags=re.S)
+        m.get("topic_en") or m.get("title_en") or m["title_fa"], ensure_ascii=False), doc, flags=re.S)
     for k in ("datePublished", "dateModified", "lastReviewed"):
         doc = re.sub(r'("%s": ")\d{4}-\d\d-\d\d(")' % k, r"\g<1>" + date + r"\2", doc)
     doc = re.sub(r'<time datetime="\d{4}-\d\d-\d\d">\d{4}-\d\d-\d\d</time>', f'<time datetime="{date}">{date}</time>', doc)
@@ -1059,7 +1142,7 @@ def render_chairside(md, imgs, img_url, linker, lang):
 def build_chairside_page(n, prev, m, date, item, lang="fa"):
     c = CATEGORIES["chairside"]
     sub = "en/" if lang == "en" else ""
-    tdoc = (ROOT / f"chairside/{sub}chairside-{prev}.html").read_bytes().decode("utf-8")
+    tdoc = read_template(f"chairside/{sub}chairside-{prev}.html")
     nl = "\r\n" if "\r\n" in tdoc else "\n"
     doc = tdoc.replace("\r\n", "\n")
     _, _, tentry = template_facts("chairside", prev)
@@ -1104,6 +1187,11 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
     body_md, tail = split_tail(src)
     linker = Linker(m["links_48"]) if lang == "fa" else None
     body = render_chairside(body_md, imgs, img_url, linker, lang)
+    # A hand-published template may lack the blank line after the toggle or indent
+    # the disclaimer differently (chairside-56/57); the built page is always the
+    # canonical form: toggle, blank line, body, blank line, disclaimer.
+    doc = re.sub(r'(<a class="lang-btn".*?\n  </a>)\n(?!\n)', r"\1\n\n", doc, count=1, flags=re.S)
+    doc = re.sub(r'\n\n[ \t]*(<p class="dc-disclaimer">)', r"\n\n  \1", doc, count=1)
     doc = swap_region(doc, r'<a class="lang-btn".*?\n  </a>\n\n', r'\n\n  <p class="dc-disclaimer">', body, "body")
     explore = []
     if lang == "fa":
@@ -1170,14 +1258,14 @@ def build_metanote_page(n, prev, m, date, item, lang="fa"):
     keywords + the series suffix, dates, articleSection, body, «کاوش بیشتر»."""
     c = CATEGORIES["metanote"]
     sub = "en/" if lang == "en" else ""
-    tdoc = (ROOT / f"metanotes/{sub}meta-{prev}.html").read_bytes().decode("utf-8")
+    tdoc = read_template(f"metanotes/{sub}meta-{prev}.html")
     nl = "\r\n" if "\r\n" in tdoc else "\n"
     doc = tdoc.replace("\r\n", "\n")
     _, _, tentry = template_facts("metanote", prev)
     if m["credit"]["mode"] != "none":
         refuse("METANOTE_CREDIT", "a MetaNote queue item with a paper credit has no page precedent; use the interactive route")
     for k in ("alt_headline_fa", "alt_headline_en", "article_section", "keywords_fa", "keywords_en"):
-        if not m.get(k):
+        if not m.get(k) and not (k.endswith("_en") and lang == "fa" and not m.get("_english", True)):
             refuse("MANIFEST_INCOMPLETE", f"a MetaNote needs the frozen field «{k}»", missing=[k])
     imgs = {}
     for img in m["images"]:
@@ -1404,9 +1492,11 @@ def faq(w, cid, item, m):
         data = m["faq"]
     else:
         refuse("MANIFEST_INCOMPLETE", "the item has no 10-فلش‌کارت-FAQ.json; supply field «faq» (the frozen "
-               "faqPages/definedTermSets node or {\"skip\": reason}) with its origin", missing=["faq"])
+               "faqPages/definedTermSets node) with its origin", missing=["faq"])
     if "skip" in data:
-        return {"skip": data["skip"]}
+        refuse("FAQ_REQUIRED", "10-فلش‌کارت-FAQ.json is a skip object: the FAQ and the flashcards are written on every "
+               "publish with a page (module 07; Phase F rows «4.11 cards» and «4.12 quiz»); the item goes back to "
+               "«در حال آماده‌سازی»")
     url = f"{SITE}/{cid}.html"
     if "faqPages" not in data and isinstance(data.get("faqPage"), dict):
         data = {**data, "faqPages": [data["faqPage"]]}  # one FAQPage written as an object
@@ -1830,7 +1920,11 @@ def draft_assemble(a):
     w = Writes()
     builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page,
                "metanote": build_metanote_page}.get(cat) or (lambda *x: build_page(cat, *x))
+    m["_english"] = qm.has_english(item)
     page, img_files, _info = builder(n, prev, m, date, item, "fa")
+    if not m["_english"]:
+        # the published page will carry no toggle: the draft is cut the same way
+        page = toggle_off(page)
     w.put(f"{a.content_id}.html", page)
     for rel, data in img_files.items():
         w.put(rel, data)
@@ -1880,7 +1974,15 @@ def assemble(a):
     w = Writes()
     builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page,
                "metanote": build_metanote_page}.get(cat) or (lambda *x: build_page(cat, *x))
+    english = not qm.english_off(d)
+    if english != qm.has_english(item):
+        refuse("ENGLISH_STATE", "06-انگلیسی.md and the manifest's English fields disagree (the file is "
+               + ("absent but the manifest holds English text" if english else "present but the manifest's English is null")
+               + "); the item goes back to «در حال آماده‌سازی» (Hard Rule 12)")
+    m["_english"] = english
     page, img_files, page_info = builder(n, prev, m, date, item, "fa")
+    if not english:
+        page = toggle_off(page)
     if page_info["links_not_found"]:
         defaults.append({"rule": "4.8 approved link phrase not in body", "skipped": page_info["links_not_found"]})
     if page_info["tail_removed"]:
@@ -1889,8 +1991,9 @@ def assemble(a):
     w.put(f"{cid}.html", page)
     for rel, data in img_files.items():
         w.put(rel, data)
-    en, _, _ = builder(n, prev, m, date, item, "en")
-    w.put(f"{c['dir']}/en/{c['stem']}{n}.html", en)
+    if english:
+        en, _, _ = builder(n, english_template_number(cat, n), m, date, item, "en")
+        w.put(f"{c['dir']}/en/{c['stem']}{n}.html", en)
     _, _, tentry = template_facts(cat, prev)
     landing_row(w, cat, n, prev, m["title_fa"], tentry["title"])
     if cat == "notecast":
@@ -1926,7 +2029,7 @@ def assemble(a):
     base = {"status": "dry_run" if a.dry_run else "assembled", "content_id": cid, "queue_item": f"queue/{item.name}",
             "date": date, "sums": info["sums"], "status_sha256": info["status_sha256"],
             "manifest_source": d["_source"]["value"], "manual_steps": (d.get("_manual") or {}).get("value") or [],
-            "mechanical_defaults": defaults, "report": report}
+            "mechanical_defaults": defaults, "report": report, "english": english}
     if a.dry_run:
         base["files"] = w.receipt()
         return base

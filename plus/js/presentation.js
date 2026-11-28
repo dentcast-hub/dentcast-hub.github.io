@@ -9,7 +9,7 @@
 // calls it on a standalone page (before first paint, so nothing moves), and
 // buildGlance() here calls it in the desktop shell, where that script is
 // stripped from the fetched article. Both find-or-create `#dcGlance`.
-import { el, faNum } from './util.js?v=263';
+import { el, faNum } from './util.js?v=266';
 
 const LAYER = '[data-dc-presentation]';
 const isEn = (root) => !!(root && root.closest && root.closest('[lang="en"], [dir="ltr"]'))

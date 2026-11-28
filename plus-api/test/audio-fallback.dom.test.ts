@@ -35,7 +35,7 @@ beforeEach(async () => {
 });
 afterEach(() => { vi.useRealTimers(); });
 
-describe('the Acast door under an episode player', () => {
+describe('the fallback door under an episode player', () => {
   it('a file that plays: nothing is ever drawn', () => {
     const a = page(); mod.initAudioFallback();
     setState(a, { paused: false, readyState: 0 });
@@ -46,7 +46,7 @@ describe('the Acast door under an episode player', () => {
     expect(visible()).toBe(false);
   });
 
-  it('nothing started within the patience: the door appears, linking to the show on Acast', () => {
+  it('nothing started within the patience: the door appears, linking to the show on Castbox', () => {
     const a = page(); mod.initAudioFallback();
     setState(a, { paused: false, readyState: 0 });
     a.dispatchEvent(new Event('play'));
@@ -55,7 +55,7 @@ describe('the Acast door under an episode player', () => {
     vi.advanceTimersByTime(200);
     expect(visible()).toBe(true);
     const link = note()!.querySelector('a')!;
-    expect(link.getAttribute('href')).toBe(mod.ACAST_SHOW_URL);
+    expect(link.getAttribute('href')).toBe(mod.ALT_SHOW_URL);
     expect(link.getAttribute('rel')).toContain('noopener');
     expect(note()!.previousElementSibling!.classList.contains('ep-player-wrap'), 'right under the player').toBe(true);
   });

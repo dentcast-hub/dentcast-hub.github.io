@@ -19643,5 +19643,96 @@
       "secondary": [],
       "subtopic": "llm-tools"
     }
+  },
+  {
+    "type": "dentcast",
+    "episode": "164",
+    "title": "Food Impaction in Dentistry: Revisited :part2",
+    "caption": "این قسمت ادامه مستقیم اپیزود ۱۶۳ هست و همون مقاله مروری ۲۰۲۳ درباره فود ایمپکشن رو ادامه می‌دیم.\n\nتوی قسمت قبل گفتیم که فود ایمپکشن همیشه به معنی باز بودن کانتکت نیست. حالا می‌ریم سراغ بقیه علت‌های گیر غذایی که مقاله کنار باز شدن کانتکت مطرح می‌کنه: ناهماهنگی اکلوزالی، نقص در شکل دندان یا ترمیم، موقعیت غیرطبیعی دندان و از دست رفتن پاپیلای بین‌دندانی.\n\nاین بحث در اپیزود ۱۶۵ هم ادامه پیدا می‌کنه.",
+    "hashtags": [
+      "#دنتکست",
+      "#گیر_غذایی",
+      "#تشخیص_افتراقی",
+      "#اکلوژن",
+      "#کانتور_ترمیم",
+      "#پاپیلا",
+      "#کانتکت_پروگزیمال"
+    ],
+    "keywords": [
+      "Food Impaction",
+      "Occlusal Disharmony",
+      "Morphological Deformity",
+      "Positional Abnormality",
+      "Interdental Papilla Loss"
+    ],
+    "audio_url": "https://episodes.s3.ir-central1.arvanstorage.ir/dentcast164%20.mp3?versionId=",
+    "page_url": "/episodes/episode-164.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
+  },
+  {
+    "type": "sharehub",
+    "id": "62",
+    "title": "یکی دو دندان باقی‌مانده در فک ایمپلنتی؛ حفظ کنیم یا بکشیم؟",
+    "caption": "حفظ یکی دو دندان طبیعی در فکی که با ایمپلنت بازسازی می‌شود؛ نقش حس پروپریوسپتیو لیگامان پریودنتال، اسئوپرسپشن ایمپلنت، و هزینه‌هایی مثل باز شدن کانتکت و اختلاف ارتفاع اکلوزال در تصمیم‌گیری.",
+    "author": "دکتر فواد شهابیان",
+    "source": "https://dentcast.org",
+    "hashtags": [
+      "#مرور_منابع",
+      "#حفظ_دندان",
+      "#پروپریوسپشن",
+      "#PDL",
+      "#پلنینگ_ایمپلنت",
+      "#کانتکت_باز",
+      "#اینفرااکلوژن",
+      "#پروگنوز_دندان"
+    ],
+    "keywords": [
+      "حفظ دندان طبیعی در فک ایمپلنتی",
+      "حس پروپریوسپتیو و لیگامان پریودنتال",
+      "کنترل نیروی جویدن و لقمه",
+      "اسئوپرسپشن ایمپلنت",
+      "بازخورد لمسی ایمپلنت در برابر دندان طبیعی",
+      "ایمپلنت در مقابل دندان طبیعی",
+      "باز شدن کانتکت پروگزیمال کنار پروتز ایمپلنتی",
+      "اختلاف ارتفاع اکلوزال دندان و پروتز ایمپلنتی",
+      "پروگنوز دندان باقی‌مانده",
+      "osseoperception"
+    ],
+    "url": "/sharehub/share-62.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "surgical-planning"
+    }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-58",
+    "title": "وقتی برداشتن روکش، قدم اول درمان است",
+    "caption": "بیمار با شکایت گیر غذایی و بوی بد دهان ارجاع شده بود. دندان ۶ روکش داشت و دندان‌های دو طرفش هم به ترمیم نیاز داشتند. در چنین شرایطی، درمان را از کجا شروع کنیم؟",
+    "hashtags": [
+      "#برداشت_ترمیم",
+      "#پروگنوز_دندان",
+      "#توالی_درمان",
+      "#مدیریت_دسترسی"
+    ],
+    "keywords": [
+      "crown removal",
+      "tooth prognosis",
+      "proximal access",
+      "treatment sequence",
+      "root canal treatment",
+      "definitive restoration"
+    ],
+    "page_url": "/chairside/chairside-58.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]

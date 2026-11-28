@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Stamp a publish-queue item before its freeze: provenance, SHA256SUMS, manifest.
 
-publish-queue.md principle 4 and step 7 «گذر پایانی و انجماد»: when both independent
-reviews (principle 13) and the final sweep are closed, three mechanical things remain, always the same,
+publish-queue.md principle 4 and step 5 «بازبینی نهایی و انجماد»: when steps 1 to 4, the single
+independent review and the final sweep are closed, three mechanical things remain, always the same,
 and this tool does them in that order:
 
   1. **Provenance of 11-لینک‌های-گلاسری.md.** The full SHA of the main commit the
@@ -19,7 +19,8 @@ and this tool does them in that order:
   4. **Mechanical cross-file checks** (`checks`, also in --dry-run). Problems:
      05-DES-Fidelity/des.json in its one shape {"scored_at", "sources"} and a
      plan.json the units tool would accept (P3, P4); every RESEARCH source passes the spec-3b
-     rating rule, des_record_guard.py (P5; W6 on an item prepared before 2026-11-07);
+     rating rule, des_record_guard.py (P5; W6 on an item prepared before 2026-11-07); every
+     ALTERED/REVERSED unit of fidelity.json has the founder's answer in تصمیم‌های-3b.md (P6);
      author order per DOI equal in 04-منبع/کاتالوگ.json, 05-DES-Fidelity/des.json
      and 04-منبع/منابع.md; every catalogue and DES DOI present in منابع.md.
      Warnings: a keyword of 09 with no token in 01/02/06; a flashcard
@@ -120,6 +121,9 @@ def verify_manifest(item):
             sv = qm.single_value(qm.section_any(l02, head))
             if sv and m.get(key) is not None and m[key] != sv[1]:
                 problems.append(f"{key}: 12-انتشار.json differs from 02-عنوان-کپشن.md:{sv[0]}")
+    if qm.has_english(item) == qm.english_off(d):
+        problems.append("06-انگلیسی.md and the manifest's English fields disagree: an item either has the file "
+                        "and its English fields, or neither (Hard Rule 12)")
     return {"source": d["_source"]["value"], "checked": len(sums["checked"]), "missing": miss, "problems": problems}
 
 
@@ -367,6 +371,8 @@ def check_des_package(item, problems, warnings=None):
     has no sweep and so no plan.json (publish-queue.md, 05-DES-Fidelity)."""
     p = item / DES
     if not p.is_file():
+        # publish day refuses an item without it (queue_apply.py DES_PACKAGE_MISSING)
+        problems.append(f"P3 {DES}: missing (module 08 Part 4 stores the record here before the freeze)")
         return
     try:
         des = json.loads(p.read_text(encoding="utf-8"))
@@ -433,15 +439,66 @@ def check_pillar(item, problems):
         problems.append("P6 07-ورودی‌ها.md: " + msg)
 
 
+# JSON files publish day reads as they are: a «ندارد» line or another shape there is a
+# traceback on publish day, so the shape is a problem at the freeze. A file with nothing to
+# record is left out (04), or written in its empty form (08 {"questions": []}). 10 always
+# carries the FAQ and the flashcards: module 07 runs on every publish with a page.
+JSON_SHAPES = (("04-منبع/کاتالوگ.json", list, "a list of catalog entries"),
+               ("04-منبع/انریچ.json", list, "the list cabinet_enrich.py freeze writes (several papers: one list)"),
+               ("08-سؤال‌های-آزمون.json", dict, '{"questions": [...]} (no questions: {"questions": []})'),
+               ("10-فلش‌کارت-FAQ.json", dict, '{"definedTermSets": …, "faqPages": …}'))
+
+
+def check_json_shapes(item, problems):
+    """P7: every JSON file of the item parses and has the shape its reader takes."""
+    for rel, kind, shape in JSON_SHAPES:
+        p = item / rel
+        if not p.is_file():
+            continue
+        try:
+            data = json.loads(p.read_text(encoding="utf-8"))
+        except ValueError:
+            problems.append(f"P7 {rel}: not JSON; write {shape}, or leave the file out when there is nothing to record"
+                            if rel.startswith("04") else f"P7 {rel}: not JSON; write {shape}")
+            continue
+        if not isinstance(data, kind) or (rel.startswith("08") and not isinstance(data.get("questions"), list)) \
+                or (rel.startswith("10") and "skip" in data):
+            problems.append(f"P7 {rel}: write {shape}")
+
+
+FID_DIR = "05-DES-Fidelity"
+FID_ANSWER = re.compile(r"«?(اصلاح کن|خودم می‌نویسم|ادامه بده)»?.*تأیید\s*#\s*\d+")
+
+
+def check_fidelity_gate(item, problems):
+    """P6 (module 08 «Scored once» rule 5): every unit that keeps fidelity.json below a full
+    match (ALTERED, REVERSED) has the founder's answer on its own line of
+    05-DES-Fidelity/تصمیم‌های-3b.md: the unit id, «اصلاح کن» / «خودم می‌نویسم» /
+    «ادامه بده», and «تأیید #k» of 00's table."""
+    f = item / FID_DIR / "fidelity.json"
+    if not f.is_file():
+        return
+    import des_fidelity_units as fu  # noqa: PLC0415
+    flagged = fu.founder_report(json.loads(f.read_text(encoding="utf-8")))
+    dec = item / FID_DIR / "تصمیم‌های-3b.md"
+    lines = dec.read_text(encoding="utf-8").splitlines() if dec.is_file() else []
+    for uid, _, why in flagged:
+        if not any(re.search(rf"(?<![\w]){re.escape(uid)}(?!\d)", ln) and FID_ANSWER.search(ln) for ln in lines):
+            problems.append(f"P6 {uid}: {why} — below a full Fidelity match with no founder answer in "
+                            f"{FID_DIR}/تصمیم‌های-3b.md («اصلاح کن» / «خودم می‌نویسم» / «ادامه بده», تأیید #k)")
+
+
 def checks(item):
     """{problems, warnings}: mechanical cross-file errors a human review would otherwise have to catch."""
     problems, warnings, notes = [], [], []
     check_des_package(item, problems, warnings)
+    check_json_shapes(item, problems)
     check_authors(item, problems, notes)
     check_keywords(item, warnings, notes)
     check_cards(item, warnings, notes)
     check_leftovers(item, warnings)
     check_pillar(item, problems)
+    check_fidelity_gate(item, problems)
     return {"problems": problems, "warnings": warnings + notes}
 
 
@@ -471,6 +528,9 @@ def main(argv=None):
             (item / "SHA256SUMS").write_text(sums, encoding="utf-8")
         manifest = verify_manifest(item) if not a.dry_run else None
         chk = checks(item)
+        if a.dry_run and (item / qm.MANIFEST_FILE).exists() and qm.has_english(item) == qm.english_off(qm.draft(item)):
+            # the one manifest check that needs no SHA256SUMS: a dry run reports it too
+            chk["problems"].append("06-انگلیسی.md and the manifest's English fields disagree (Hard Rule 12)")
     except QueueRefusal as e:
         print(json.dumps({"status": "refused", **e.detail}, ensure_ascii=False, indent=1))
         return 2

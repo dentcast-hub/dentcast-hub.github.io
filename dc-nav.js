@@ -7,6 +7,30 @@
 (function () {
   'use strict';
 
+  /* The prose box is not painted until this script has built the row, the ToC
+     and the glance card (dc-theme.css, «dc-nav-built»). The class is set right
+     after they are built; this listener is the same promise kept if anything
+     above that line throws. */
+  var dcBuiltDone = false;
+  function dcNavBuilt() {
+    if (dcBuiltDone) return;
+    dcBuiltDone = true;
+    var show = function () { document.documentElement.classList.add('dc-nav-built'); };
+    /* On a first visit Vazirmatn lands a moment after first paint and re-wraps
+       every line (font-display: swap). The prose waits for it, 300ms at most;
+       with the font in cache this resolves at once. */
+    var fs = document.fonts, face = '1em Vazirmatn';
+    try {
+      if (fs && fs.load && !fs.check(face)) {
+        var t = setTimeout(show, 300);
+        fs.load(face).then(function () { clearTimeout(t); show(); }, show);
+        return;
+      }
+    } catch (e) {}
+    show();
+  }
+  document.addEventListener('DOMContentLoaded', dcNavBuilt);
+
   function dcSvgIcon(name) {
     var icons = {
       menu: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
@@ -330,29 +354,10 @@
 '  </div>' +
 '</div>';
 
-  var DC_RADAR_HTML =
-'<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">' +
-'  <div class="radar-overlay-header">' +
-'    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>' +
-'    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>' +
-'  </div>' +
-'  <div class="radar-overlay-body">' +
-'    <div class="radar-search-box">' +
-'      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">' +
-'    </div>' +
-'    <div id="dcRadarResults" class="radar-results">' +
-'      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>' +
-'    </div>' +
-'  </div>' +
-'</div>';
-
-  /* Radar trigger as a drawer tool button (Change A): the radar used to sit
-     in the top bar; it now lives in the drawer alongside tool-pwa/consult/
-     about. Same sacred id (#btn-radar-topbar) and same delegated wiring to
-     openRadar(true) — only its location changed. Styled like the other
-     drawer tools so it's native and RTL-correct. */
-  var DC_DRAWER_RADAR_BTN =
-'<button class="dc-drawer-tool-seg" type="button" id="btn-radar-topbar" aria-label="رادار"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></span><span class="dc-drawer-tool-txt">رادار</span></button>';
+  /* The radar (DC_RADAR_HTML overlay + its drawer button) was retired on
+     2026-11-28 (founder: nobody used it, and it needed its own marketing).
+     Nothing injects it any more; the RADAR REMOVAL block below strips the
+     copies that ~1200 pages still carry in their static markup. */
 
   /* Theme toggle as a drawer tool button (Change 2): dark/light moved OFF the
      floating control (which is now a persistent Search trigger, see below) and
@@ -690,9 +695,6 @@
     if (!document.getElementById('dcToolbarDrawer')) {
       newHeader.insertAdjacentHTML('afterend', DC_DRAWER_HTML);
     }
-    if (!document.getElementById('dcRadarOverlay')) {
-      document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
-    }
 
     /* 3-pre) «اشتراک» into a static tray that predates it, right after نصب
            (at the start of the tray if نصب is missing). Idempotent. */
@@ -703,15 +705,6 @@
         if (pwaP && trayP.contains(pwaP)) pwaP.insertAdjacentHTML('afterend', DC_DRAWER_SUBSCRIBE_BTN);
         else trayP.insertAdjacentHTML('afterbegin', DC_DRAWER_SUBSCRIBE_BTN);
       }
-    }
-
-    /* 3) Place the radar trigger INSIDE the drawer (Change A). We ONLY add the
-          button to the existing drawer; we never rebuild it or touch the other
-          tool buttons. Idempotent via the id check. The button's delegated
-          handler (further below) is unchanged, so its wiring is preserved. */
-    if (!document.getElementById('btn-radar-topbar')) {
-      var drawerInner = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
-      if (drawerInner) drawerInner.insertAdjacentHTML('beforeend', DC_DRAWER_RADAR_BTN);
     }
 
     /* 3c) Place the THEME toggle INSIDE the drawer (Change 2). Idempotent, same
@@ -1022,6 +1015,7 @@
       dcBuildGlance(dcBoxes, document);
     }
   })();
+  dcNavBuilt();
 
   /* ── THEME (centralized) ──────────────────────────
      Single source of truth for theme behavior. The control lives in the
@@ -1547,7 +1541,7 @@
        «ابزارها همین پایین صفحه هستن»). Install goes last: an installed app
        hides it, and the gap then falls at the very end of the grid. */
     var settings = byId('dcSdSettings');
-    [theme, music, radar, cab].forEach(function (b) { if (b) settings.appendChild(b); });
+    [theme, music, cab].forEach(function (b) { if (b) settings.appendChild(b); });
     settings.insertAdjacentHTML('beforeend',
       '<a class="dc-drawer-tool-seg" href="/plus/support.html"><span class="dc-drawer-tool-ico">' + dcSvgIcon('lifebuoy') +
       '</span><span class="dc-drawer-tool-txt">پشتیبانی</span></a>');
@@ -1671,9 +1665,9 @@
     var drawer = document.getElementById('dcToolbarDrawer');
     var sdOpen = drawer && drawer.classList.contains('dc-sd') && drawer.classList.contains('open');
     if (sdOpen && (t.id === 'dcSdDim' || t.closest('#dcSdClose'))) { toggleToolbarDrawer(); return; }
-    /* A tool that opens on top of this page (the radar overlay, the library's
+    /* A tool that opens on top of this page (the library's
        premium gate) first closes the drawer so it is not left under it. */
-    if (sdOpen && t.closest('#btn-radar-topbar, #btn-cabinet')) toggleToolbarDrawer();
+    if (sdOpen && t.closest('#btn-cabinet')) toggleToolbarDrawer();
     if (t.closest('[data-dc-sd-all]')) { dcSdRecentAll = !dcSdRecentAll; dcSdRenderMine(); return; }
     if (t.closest('[data-dc-sd-login]') || t.closest('[data-dc-sd-account]')) {
       if (sdOpen) toggleToolbarDrawer();
@@ -2552,164 +2546,21 @@
     }
   }, true);
 
-  /* ── RADAR OVERLAY ─────────────────────────────── */
-  var radarOverlay  = document.getElementById('dcRadarOverlay');
-  var radarCloseBtn = document.getElementById('dcCloseRadarOverlay');
-  var radarInput    = document.getElementById('dcRadarInput');
-  var radarResults  = document.getElementById('dcRadarResults');
-  if (!radarOverlay || !radarInput) return;
-
-  var radarData = [];
-  var isRadarLoaded = false;
-
-  /* Persian normaliser — folds Arabic/Persian letter variants, drops
-     diacritics + zero-width chars (nim-fasele) and unifies digits, so a
-     query and an entry reach the same key regardless of how they were
-     typed. Without it a nim-fasele inside the data made the entry
-     unreachable: «نرم افزار» returned nothing while six «نرم‌افزار مطب»
-     entries sat in radar.json. Mirrors the copy inside index.html's
-     inline radar — the two implementations must stay in step. */
-  function dcNorm(s) {
-    return String(s == null ? '' : s)
-      .replace(/[يى]/g, 'ی')             /* ي ى → ی */
-      .replace(/ك/g, 'ک')                     /* ك → ک */
-      .replace(/[آأإٱ]/g, 'ا') /* آ أ إ ٱ → ا */
-      .replace(/[ةۀ]/g, 'ه')             /* ة ۀ → ه */
-      .replace(/ؤ/g, 'و')                     /* ؤ → و */
-      .replace(/[ً-ْـ]/g, '')            /* اعراب و کشیده */
-      .replace(/[​-‏⁠﻿]/g, '')      /* نیم‌فاصله و صفرعرض */
-      .replace(/[۰-۹]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x06F0 + 48); })
-      .replace(/[٠-٩]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x0660 + 48); })
-      .toLowerCase().replace(/\s+/g, ' ').trim();
-  }
-  /* '|' separates the fields so a space-insensitive match can never span
-     two of them. Cached on the item; radarData is replaced wholesale on
-     every load, so the cache can never go stale. */
-  function dcHay(item) {
-    if (item._h === undefined) {
-      item._h  = dcNorm([item.name, item.desc].concat(item.keywords || []).join(' | '));
-      item._hs = item._h.replace(/\s+/g, '');
-    }
-    return item;
-  }
-  /* Two passes: the spaced form first (exact, no false positives), then a
-     whitespace-stripped fallback so «نرم افزار» ↔ «نرم‌افزار» ↔ «نرمافزار»
-     all hit. */
-  function dcMatch(item, q, qs) {
-    dcHay(item);
-    return item._h.indexOf(q) !== -1 || (qs !== '' && item._hs.indexOf(qs) !== -1);
-  }
-
-  function loadRadarData() {
-    fetch('/radar.json?v=13', { cache: 'no-store' })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        radarData = data;
-        isRadarLoaded = true;
-        handleRadarSearch();
-      })
-      .catch(function () {
-        if (radarResults)
-          radarResults.innerHTML = '<div class="radar-no-results">ارتباط با رادار برقرار نشد.</div>';
-      });
-  }
-
-  function openRadar(push) {
-    document.body.classList.add('dc-radar-mode');
-    radarOverlay.setAttribute('aria-hidden', 'false');
-    setTimeout(function () { radarInput.focus(); }, 100);
-    if (push !== false) history.pushState({ dcRadar: true }, '', '#radar');
-    if (!isRadarLoaded) loadRadarData();
-  }
-
-  function closeRadar(fromPop) {
-    document.body.classList.remove('dc-radar-mode');
-    radarOverlay.setAttribute('aria-hidden', 'true');
-    radarInput.value = '';
-    if (radarResults)
-      radarResults.innerHTML = '<div class="radar-initial-msg">برای جستجو تایپ کنید...</div>';
-    if (!fromPop) {
-      if (history.state && history.state.dcRadar) history.back();
-      else if (window.location.hash === '#radar')
-        history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
-  }
-
-  function handleRadarSearch() {
-    var q = dcNorm(radarInput.value);
-    if (!q) {
-      if (radarResults)
-        radarResults.innerHTML =
-          '<div class="radar-initial-msg">برای جستجو تایپ کنید...' +
-          '<div style="font-size:.78rem;color:var(--txt3);margin-top:12px;text-align:center;border-top:1px dashed var(--border2);padding-top:10px;">' +
-          'سایتی مدنظرته؟ <a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener" style="color:var(--ac);font-weight:500;">پیشنهادش کنید</a></div></div>';
-      return;
-    }
-    if (!isRadarLoaded) return;
-    var qs = q.replace(/\s+/g, '');
-    var f = radarData.filter(function (item) { return dcMatch(item, q, qs); });
-    for (var i = f.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = f[i]; f[i] = f[j]; f[j] = tmp;
-    }
-    f.sort(function (a, b) {
-      return Number(a.priority != null ? a.priority : 10) -
-             Number(b.priority != null ? b.priority : 10);
+  /* ── RADAR REMOVAL (2026-11-28) ─────────────────── */
+  /* The radar was retired. Its overlay and trigger still sit in the static
+     markup of ~1200 pages; rewriting every page (and every article hash) for
+     a dead button is not worth it, so they are removed here at run time, the
+     same way global-search.js drops the «مقالات» chip. dc-theme.css hides
+     them before first paint, so nothing flashes. An old #radar link lands on
+     the page itself with the hash cleared. */
+  ['dcRadarOverlay', 'btn-radar-topbar', 'btnOpenRadarMob', 'dcdBtnOpenRadar', 'dcd-hdr-radar']
+    .forEach(function (id) {
+      var n = document.getElementById(id);
+      if (n && n.parentNode) n.parentNode.removeChild(n);
     });
-    renderRadarResults(f);
-  }
-
-  function renderRadarResults(results) {
-    if (!radarResults) return;
-    if (!results.length) {
-      radarResults.innerHTML =
-        '<div class="radar-no-results">نتیجه‌ای یافت نشد. ' +
-        '<a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener" ' +
-        'style="display:block;margin-top:10px;color:var(--ac);">سایت مرتبطی پیشنهاد کنید</a></div>';
-      return;
-    }
-    var h = '';
-    results.forEach(function (item) {
-      var isFeat = item.featured === true || String(item.featured).toLowerCase() === 'true';
-      var isCred = item.credit  === true || String(item.credit).toLowerCase()   === 'true';
-      var fb = isFeat && !isCred
-        ? '<span style="background:rgba(245,162,8,.12);color:#b07d00;font-size:.62rem;padding:2px 5px;border-radius:4px;border:1px solid rgba(245,162,8,.22);margin-right:4px;">⭐ پیشنهاد</span>' : '';
-      var cb = isCred
-        ? '<span style="background:rgba(46,125,50,.10);color:#2e7d32;font-size:.62rem;padding:2px 5px;border-radius:4px;border:1px solid rgba(46,125,50,.18);margin-right:4px;font-weight:700;">🤝 حامی</span>' : '';
-      h += '<a href="' + item.url + '" target="_blank" rel="noopener noreferrer" class="radar-result-item">' +
-           '<div class="radar-item-title"><span>' + item.name + '</span>' + cb + fb + '</div>' +
-           '<div class="radar-item-url">' + item.url + '</div>' +
-           '<div class="radar-item-desc">' + item.desc + '</div></a>';
-    });
-    h += '<div style="font-size:.78rem;color:var(--txt3);margin-top:12px;text-align:center;' +
-         'border-top:1px dashed var(--border2);padding-top:10px;">سایتی جا افتاده؟ ' +
-         '<a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener" ' +
-         'style="color:var(--ac);font-weight:500;">پیشنهادش کنید</a></div>';
-    radarResults.innerHTML = h;
-  }
-
-  /* Radar open button — delegated so it survives header injection/replacement
-     (the button lives in the injected header cluster). This runs only when the
-     radar block was reached, i.e. the overlay is present; the overlay-internal
-     binds below stay direct, as those elements are present by now. */
-  document.addEventListener('click', function (e) {
-    if (e.target && e.target.closest && e.target.closest('#btn-radar-topbar')) openRadar(true);
-  });
-
-  if (radarCloseBtn) {
-    radarCloseBtn.addEventListener('click', function () { closeRadar(false); });
-  }
-
-  radarInput.addEventListener('input', handleRadarSearch);
-
-  window.addEventListener('popstate', function () {
-    if (document.body.classList.contains('dc-radar-mode')) closeRadar(true);
-  });
-
-  if (window.location.hash === '#radar') openRadar(false);
-  window.addEventListener('hashchange', function () {
-    if (window.location.hash === '#radar') openRadar(false);
-  });
+  document.body.classList.remove('dc-radar-mode');
+  if (window.location.hash === '#radar' && history.replaceState)
+    history.replaceState(history.state, '', window.location.pathname + window.location.search);
 
 })();
 
@@ -2993,7 +2844,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '325';
+  var V = '328';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
@@ -3047,7 +2898,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '99';
+  var SPOT_V = '100';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;

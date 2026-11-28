@@ -460,7 +460,7 @@ def run_phase(root: Path, artifact_dir: Path, args):
                 reason = "Canonical Phase D exemption: LiteCast" if litecast else "Canonical Phase D exemption: Challenge"
                 record_step(root, "D", "skipped", reason=reason)
             else:
-                record_step(root, "D", "started", ["English mirror and reciprocal toggles were editorially closed before C.6; technical verification only"])
+                record_step(root, "D", "started", ["Language state was closed before C.6 (Persian-only by default, Hard Rule 12); technical verification only"])
                 run_command(root, artifact_dir, "D-inject-hreflang",
                             ["python3", ".github/scripts/inject_hreflang.py"], logs)
                 run_command(root, artifact_dir, "D-noindex-en-mirrors",
@@ -472,7 +472,7 @@ def run_phase(root: Path, artifact_dir: Path, args):
                 pub, _ = publication(root)
                 verify_scope(root, pub)
                 record_step(root, "D", "completed", [
-                    "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+                    "Technical hreflang, en-noindex, sitemap, and final version checks passed; logs are in the recovery artifact."
                 ], note=(
                     "Reviewed Phase D technical outputs after verify_scope: hreflang, sitemap and version-stamp "
                     "changes are canonical generated publication outputs."

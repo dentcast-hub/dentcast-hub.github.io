@@ -18,7 +18,7 @@
 not executable — no agent available to run it.** This path gets one Persian
 page **live, indexable, and reachable from inside the site**, by hand, with a
 text editor and `git`. Everything else the full workflow does (semantic
-cross-linking, DES scoring, flashcards/quiz, English mirror, learning
+cross-linking, DES scoring, flashcards/quiz, learning
 pathways, hashtag canonicalization, Pulse, homepage counters) is deliberately
 skipped and listed under **Deferred** below. Read **Do not skip** before you
 start — three items in the checklist are the actual difference between
@@ -199,10 +199,8 @@ python3 tools/verify_publish.py <content_id>
 Expected **FAIL** rows on a page built by this minimal path (for a normal,
 non-LiteCast, non-چالش type):
 
-- **`D en-mirror`** — the English mirror at `{type}/en/{file}.html` doesn't
-  exist. This is a **hard FAIL**, not a warn, for every type except LiteCast
-  and چالش — confirmed in the script (`rep.check(exists(en_rel), ...)` with
-  no fallback branch).
+- **`D en-mirror`** — only when the page still carries a `.lang-btn` toggle
+  (no English page exists): replace it with `<!-- dc-lang-toggle:off -->`.
 - **`4.12 quiz`** — no FAQ entry for this `content_id` in
   `plus/faq-corpus.json` (you didn't author one).
 - **`4.11 cards`** — no `DefinedTermSet` block (same reason).
@@ -246,7 +244,7 @@ Your options, without implementing anything:
    nothing surprising is failing.
 3. **A `--minimal` flag** would need to be *added* to `verify_publish.py` to
    suppress the FAIL→WARN reclassification for the specific rows enumerated
-   above (Phase D, 4.11, 4.12, 5.6, 8 plus-index/flashcards/quiz, 2.5, 2.6)
+   above (4.11, 4.12, 5.6, 8 plus-index/flashcards/quiz, 2.5, 2.6)
    when explicitly invoked in that mode. This is not implemented here per
    your instruction — flagging it as the natural fix if this path becomes a
    recurring need.
@@ -258,10 +256,6 @@ Your options, without implementing anything:
 **Breaks / degrades while un-caught-up (all recoverable, none of these ships
 wrong data — they're absences, not errors):**
 
-- **No English mirror / no fa↔en toggle.** An English-speaking or
-  international reader hits a dead end. Recoverable any time by running the
-  en-version workflow later — it operates on the existing fa page,
-  independent of when it was published.
 - **No «کاوش بیشتر» cross-links, no glossary back-link, no in-body
   links.** The page is an island — nothing points to it semantically, and it
   points to nothing. This is the single biggest SEO/topical-authority cost

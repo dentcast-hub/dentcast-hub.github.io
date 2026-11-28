@@ -1,5 +1,5 @@
 ---
-description: Producing the English (en) mirror of an existing DentCast page plus the fa↔en language toggle. Use when the user says «… رو انگلیسی کن» / «نسخهٔ انگلیسیِ …», or when Phase D of a publish needs the English counterpart.
+description: Producing the English (en) mirror of an existing DentCast page plus the fa↔en language toggle. Use when the user says «… رو انگلیسی کن» / «نسخهٔ انگلیسیِ …». Never part of a publication (Hard Rule 12).
 alwaysApply: false
 ---
 
@@ -13,10 +13,8 @@ alwaysApply: false
 
 ## دو مسیر ورود
 
-1. تریگر مستقیم کاربر («… رو انگلیسی کن») — برای صفحه‌های قدیمی که آینهٔ en ندارند.
-2. **فاز D** ورکفلوی انتشار — خودکار در هر publish روی `.org`. در انتشارهای v2، نوشتن
-   و تأیید صفحهٔ en و تاگل دوطرفه پیش از C.6 (Push دوم) انجام می‌شود؛ بعد از Push دوم
-   فاز D فقط کنترل فنی است. همان ماشین، همان قواعد.
+1. تریگر مستقیم کاربر («… رو انگلیسی کن») — فقط برای صفحه‌ای که بنیان‌گذار نام می‌برد.
+2. انتشار عادی این ورکفلو را اجرا نمی‌کند: صفحهٔ جدید فقط فارسی است (Hard Rule 12).
 
 ## نکات که بیشترین اشتباه سرشان رخ می‌دهد
 
@@ -50,4 +48,4 @@ python tools/stamp-version.py                         # آخر
 python3 -c "import re,sys; t=open(sys.argv[1],encoding='utf-8').read(); print([m.group(0) for m in re.finditer(r'\b([A-Za-z][A-Za-z-]{2,30})\s*\(\s*\1\s*\)', t, re.I)])" <en-page>
 ```
 
-**LiteCast استثناست:** فقط `.ir`، بدون hreflang، بدون آینهٔ en و بدون تاگل.
+**LiteCast و چالش استثنا هستند:** بدون آینهٔ en و بدون تاگل (LiteCast فقط `.ir` و بدون hreflang؛ چالش: RULE 16).

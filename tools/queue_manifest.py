@@ -34,6 +34,13 @@ from pathlib import Path
 SCHEMA = "dentcast-queue-manifest/1"
 CATEGORIES = ("sharehub", "notecast", "insight", "chairside", "metanote")
 MANIFEST_FILE = "12-انتشار.json"
+ENGLISH_FILE = "06-انگلیسی.md"
+ENGLISH_MISSING = ENGLISH_FILE + " missing"
+# Hard Rule 12 (founder, 2026-11-27): new publications ship Persian-only. An item
+# prepared without 06-انگلیسی.md has no English page and no fa↔en toggle; an item
+# frozen with its 06 still publishes both, exactly as it was prepared.
+ENGLISH_KEYS = ("title_en", "caption_en", "body_en")
+ENGLISH_EXTRA = ("alt_headline_en", "keywords_en")
 STATUS_FILE = "00-وضعیت.md"
 
 
@@ -208,7 +215,7 @@ def V(value, origin):
 INPUTS_FILE = "07-ورودی‌ها.md"
 
 
-def draft(item):
+def draft(item, from_files=False):
     """The manifest from the frozen files. Fields are {"value","from"}; a field
     whose exact pattern is absent has value None. The legacy path (no
     12-انتشار.json) reads its decisions from 07-ورودی‌ها.md; without that file
@@ -216,7 +223,7 @@ def draft(item):
     named by `missing` (a preparation draft may not have written 07 yet)."""
     item = Path(item)
     mf = item / MANIFEST_FILE
-    if mf.exists():
+    if mf.exists() and not from_files:
         try:
             data = json.loads(mf.read_text(encoding="utf-8"))
         except ValueError as e:
@@ -245,7 +252,7 @@ def draft(item):
     l06 = lines_of(item, "06-انگلیسی.md")
     if l06 is None:
         for k in ("title_en", "caption_en", "body_en"):
-            d[k] = V(None, "06-انگلیسی.md missing")
+            d[k] = V(None, ENGLISH_MISSING)
     else:
         for key, head in (("title_en", "Title"), ("caption_en", "Caption")):
             sv = single_value(section_any(l06, head))
@@ -303,13 +310,16 @@ def draft(item):
     cat_rel = "04-منبع/کاتالوگ.json"
     if (item / cat_rel).exists():
         # The freeze is asserted only once the item claims to be frozen. SHA256SUMS is written by
-        # queue_stamp.py, which runs AFTER 12-انتشار.json is drafted (publish-queue.md step 7), so
+        # queue_stamp.py, which runs AFTER 12-انتشار.json is drafted (publish-queue.md step 5), so
         # demanding it here refused every paper item's own draft (2026-11-06).
         sums = item / "SHA256SUMS"
         if sums.exists() and not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel),
                                            sums.read_text(encoding="utf-8"), re.M):
             raise QueueRefusal("CATALOG_NOT_FROZEN", f"{cat_rel} is not in SHA256SUMS")
-        entries = json.loads((item / cat_rel).read_text(encoding="utf-8"))
+        try:
+            entries = json.loads((item / cat_rel).read_text(encoding="utf-8"))
+        except ValueError:
+            raise QueueRefusal("CATALOG_JSON", f"{cat_rel} is not JSON (an item without a paper has no such file)")
         if not isinstance(entries, list) or not all(isinstance(e, dict) for e in entries):
             raise QueueRefusal("CATALOG_SHAPE", f"{cat_rel} must be a list of catalog entries")
         d["catalog"] = V(entries, cat_rel)
@@ -674,7 +684,8 @@ def draft_credit(item, l07=()):
             kh = next((k for k, h in enumerate(header) if h.strip() == "لینک"), None)
         items = [{"label_fa": cell(r, kfa), "label_en": cell(r, ken), "href": cell(r, kh), "from": f"{rel}:{n}"}
                  for n, r in rows]
-        if items and all(i["label_fa"] and i["label_en"] and (i["href"] or "").startswith("http") for i in items):
+        eng = has_english(item)
+        if items and all(i["label_fa"] and (i["label_en"] or not eng) and (i["href"] or "").startswith("http") for i in items):
             return V({"mode": "references", "items": items}, f"{rel}:{sec_start + 1}")
         return V(None, f"{rel}: «نمایش منابع روی صفحه» table incomplete")
     first = next((l.strip() for l in lines if l.strip() and not l.startswith("#")), "")
@@ -954,11 +965,28 @@ def defaults_of(d):
             for k, v in d.items() if isinstance(v, dict) and is_default(v)]
 
 
+def has_english(item):
+    """The item was prepared with an English text (06-انگلیسی.md is in its folder)."""
+    return (Path(item) / ENGLISH_FILE).is_file()
+
+
+def english_off(d):
+    """A manifest read from an item without 06-انگلیسی.md: Persian-only (Hard
+    Rule 12). True only when all three English texts are null AND say the file
+    is missing; a 06 that is present but incomplete stays a missing field."""
+    return all((d.get(k) or {}).get("value") is None and (d.get(k) or {}).get("from") == ENGLISH_MISSING
+               for k in ENGLISH_KEYS)
+
+
 def missing(d):
     cat = (d.get("category") or {}).get("value")
-    out = [k for k in REQUIRED + REQUIRED_BY_CATEGORY.get(cat, ()) if (d.get(k) or {}).get("value") is None]
+    off = english_off(d)
+    skip = set(ENGLISH_KEYS + ENGLISH_EXTRA) if off else set()
+    out = [k for k in REQUIRED + REQUIRED_BY_CATEGORY.get(cat, ())
+           if k not in skip and (d.get(k) or {}).get("value") is None]
+    img_fields = ("file", "alt_fa", "caption_fa") if off else ("file", "alt_fa", "alt_en", "caption_fa", "caption_en")
     for img in d.get("images", {}).get("value") or []:
-        out += [f"images.{img['n']}.{f}" for f in ("file", "alt_fa", "alt_en", "caption_fa", "caption_en")
+        out += [f"images.{img['n']}.{f}" for f in img_fields
                 if img.get(f, {}).get("value") is None]
     return out
 
@@ -1006,12 +1034,24 @@ def main():
     ap.add_argument("--supplement")
     ap.add_argument("--agent", help="the publishing agent's own lock name")
     ap.add_argument("--write", action="store_true",
-                    help="draft only: write the draft into the item as " + MANIFEST_FILE
-                         + " (schema + the {value,from} fields), overwriting what is there")
+                    help="draft only: derive the draft from the item's files again and write it as "
+                         + MANIFEST_FILE + " (schema + the {value,from} fields); a field the files do not "
+                         "carry keeps the value already in " + MANIFEST_FILE)
     a = ap.parse_args()
     try:
         info = load_item(a.item, agent=a.agent) if a.cmd == "check" else {"path": Path(a.item)}
         d = draft(info["path"])
+        if a.write and a.cmd == "draft" and (info["path"] / MANIFEST_FILE).exists():
+            # --write derives again from the item's files, so a fix in 02, 06, 07, 09 or 11 reaches
+            # 12; a field the files do not carry (MetaNote's five page fields, a hand-closed value)
+            # keeps what 12 already holds.
+            fresh = draft(info["path"], from_files=True)
+            # only a hand-written value is carried (its origin names no file of the item):
+            # a value 12 once took from a file follows that file, even to null
+            d = fresh | {k: v for k, v in d.items() if not k.startswith("_")
+                         and (k not in fresh or fresh[k].get("value") is None)
+                         and isinstance(v, dict) and v.get("value") is not None
+                         and not re.match(r"\d\d-", str(v.get("from") or ""))}
         if a.supplement:
             d = merge_supplement(info["path"], d, json.loads(Path(a.supplement).read_text(encoding="utf-8")))
     except QueueRefusal as e:

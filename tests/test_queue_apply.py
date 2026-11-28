@@ -1,5 +1,6 @@
 """Queue lane: byte-preserving writers, manifest refusals, deterministic pieces."""
 import hashlib
+import re
 import json
 import struct
 import sys
@@ -115,6 +116,16 @@ class TailAndRenderTests(unittest.TestCase):
         with self.assertRaises(qm.QueueRefusal):
             qa.render_body("[[تصویر:02]]", {}, lambda k: "", qa.Linker([]))
 
+    def test_sharehub_body_end_with_and_without_author_block(self):
+        live = (qa.ROOT / "sharehub/share-60.html").read_text(encoding="utf-8").replace("\r\n", "\n")
+        bare_fa = '<div class="sh-dialogue">\n<p>x</p>\n</div>\n</div>\n\n\n<div class="dc-related-section">\n'
+        bare_en = '<div class="sh-dialogue">\n<p>x</p>\n</div>\n</div>\n</main>\n'
+        for name, doc, bare in (("share-60", live, False), ("bare fa", bare_fa, True), ("bare en", bare_en, True)):
+            pat, got = qa.body_end_pattern(doc, '<div class="sh-dialogue">')
+            self.assertEqual(got, bare, name)
+            start = doc.index('<div class="sh-dialogue">\n') + len('<div class="sh-dialogue">\n')
+            self.assertIsNotNone(re.search(pat, doc[start:], re.S), name)
+
     def test_webp_size_vp8x(self):
         data = b"RIFF" + b"\0" * 4 + b"WEBPVP8X" + b"\0" * 8 + (247).to_bytes(3, "little") + (392).to_bytes(3, "little")
         self.assertEqual(qa.webp_size(data), (248, 393))
@@ -186,8 +197,17 @@ class ManifestTests(unittest.TestCase):
     def test_missing_fields_are_named_never_inferred(self):
         d = qm.draft(self.make_item())
         miss = qm.missing(d)
-        for k in ("title_en", "credit", "hashtags", "pillar"):
+        for k in ("credit", "hashtags", "pillar"):
             self.assertIn(k, miss)
+        # Hard Rule 12: an item without 06-انگلیسی.md is Persian-only, its English fields are not owed
+        self.assertTrue(qm.english_off(d))
+        for k in ("title_en", "caption_en", "body_en"):
+            self.assertNotIn(k, miss)
+        # a 06 that is present but incomplete still owes every English field
+        d = qm.draft(self.make_item(extra={"06-انگلیسی.md": "## Caption\nA caption\n"}))
+        self.assertFalse(qm.english_off(d))
+        for k in ("title_en", "body_en"):
+            self.assertIn(k, qm.missing(d))
         self.assertEqual(d["title_fa"]["value"], "عنوان یک")
         # unfrozen 4.7/4.9 and the catalog fall to a recorded mechanical default, never to a guess
         defaults = {x["field"] for x in qm.defaults_of(d)}
@@ -456,6 +476,34 @@ class RenderFixesTests(unittest.TestCase):
         with self.assertRaises(qm.QueueRefusal) as e:
             qa.faq(W(), "sharehub/share-46", d, {})
         self.assertEqual(e.exception.code, "FAQ_PLACEHOLDER")
+
+
+class LinkerAndTemplateTests(unittest.TestCase):
+    def test_link_inside_a_bold_run_keeps_the_bold(self):
+        """queue item 35: `**۳. … اوردنچر …:**` with a 4.8 link on «اوردنچر» left a literal `**` on the page."""
+        ln = qa.Linker([{"phrase": "اوردنچر", "href": "/glossary/overdenture.html"}])
+        html_ = ln.apply("**۳. کانین به عنوان اباتمنت اوردنچر:** کشیدن پرمولر")
+        self.assertNotIn("**", html_)
+        self.assertEqual(html_, '<strong>۳. کانین به عنوان اباتمنت <a href="/glossary/overdenture.html">اوردنچر</a>:</strong> کشیدن پرمولر')
+        self.assertEqual(qa.Linker([{"phrase": "b", "href": "/x.html"}]).apply("a b c"), 'a <a href="/x.html">b</a> c')
+
+    def test_chairside_builds_from_a_hand_published_template(self):
+        """chairside-56/57 have no blank line after the toggle (and en-57 an indented
+        disclaimer); the builder refused every chairside item with TEMPLATE_REGION."""
+        prev = qa.next_number("chairside")[1]
+        item = Path(tempfile.mkdtemp()) / "90-chairside-test"
+        item.mkdir()
+        (item / "01-متن.md").write_text("پاراگراف آغازین این ویزیت آزمایشی است.\n\nپاراگراف دوم.\n", encoding="utf-8")
+        m = {"category": "chairside", "title_fa": "عنوان آزمایشی ویزیت", "caption_fa": "کپشن آزمایشی ویزیت",
+             "title_en": "A test visit title", "caption_en": "A test visit caption", "body_en": "First paragraph.\n\nSecond.",
+             "keywords": ["کلیدواژه"], "credit": {"mode": "none"}, "images": [], "links_48": [],
+             "pillar": {"primary": "treatment-planning", "subtopic": None, "secondary": []}, "explore_49": []}
+        for lang in ("fa", "en"):
+            page, _, _ = qa.build_chairside_page(prev + 1, prev, m, "2026-11-27", item, lang)
+            page = page.replace("\r\n", "\n")
+            self.assertTrue(re.search(r'(?s)<a class="lang-btn".*?\n  </a>\n\n<p>', page), lang)
+            self.assertTrue('\n\n  <p class="dc-disclaimer">' in page, lang)
+            self.assertFalse(f"chairside-{prev}.html" in page, lang)
 
 
 class SwapTextTests(unittest.TestCase):
@@ -850,6 +898,43 @@ class MetaNoteGoldenReplayTests(unittest.TestCase):
     def test_en_page_is_byte_identical(self):
         page, _, _ = qa.build_metanote_page(22, 21, self.m, "2026-10-08", self.item, "en")
         self.assertEqual(page.encode("utf-8"), (ROOT / "metanotes/en/meta-22.html").read_bytes())
+
+    def test_persian_only_template_then_english_item(self):
+        """Hard Rule 12: the page before this one was published Persian-only (its
+        toggle is the TOGGLE_OFF marker and it has no English page). An item that
+        still has its English builds the same Persian page, byte for byte, and
+        clones its English page from the newest English sibling."""
+        import shutil
+        tmp = Path(tempfile.mkdtemp())
+        (tmp / "metanotes/en").mkdir(parents=True)
+        for rel in ("dentcast-brain.json", "metanotes/meta-20.html", "metanotes/meta-21.html",
+                    "metanotes/en/meta-20.html"):
+            shutil.copy(ROOT / rel, tmp / rel)
+        for x in self.m["explore_49"]:  # the builder keeps a capsule only when its page is on disk
+            (tmp / x["href"].lstrip("/")).parent.mkdir(parents=True, exist_ok=True)
+            (tmp / x["href"].lstrip("/")).touch()
+        live21 = (ROOT / "metanotes/meta-21.html").read_bytes().decode("utf-8")
+        off21 = qa.toggle_off(live21)
+        self.assertNotIn('class="lang-btn"', off21)
+        self.assertEqual(off21.count(qa.TOGGLE_OFF), 1)
+        (tmp / "metanotes/meta-21.html").write_bytes(off21.encode("utf-8"))
+        old_root, qa.ROOT = qa.ROOT, tmp
+        try:
+            self.assertEqual(qa.read_template("metanotes/meta-21.html"), live21)
+            page, _, _ = qa.build_metanote_page(22, 21, self.m, "2026-10-08", self.item, "fa")
+            self.assertEqual(page.encode("utf-8"), (ROOT / "metanotes/meta-22.html").read_bytes())
+            self.assertEqual(qa.english_template_number("metanote", 22), 20)
+            en, _, _ = qa.build_metanote_page(22, 20, self.m, "2026-10-08", self.item, "en")
+            self.assertIn('href="../meta-22.html"', en)
+            self.assertNotIn("meta-20", en)
+            # and the Persian-only page of an item without English
+            fa_only, _, _ = qa.build_metanote_page(22, 21, {**self.m, "_english": False, "alt_headline_en": None,
+                                                            "keywords_en": None}, "2026-10-08", self.item, "fa")
+            fa_only = qa.toggle_off(fa_only)
+            self.assertEqual(fa_only, page.replace(qa.TOGGLE_RE.search(page).group(0), qa.TOGGLE_OFF))
+        finally:
+            qa.ROOT = old_root
+            shutil.rmtree(tmp)
 
     def test_landing_row_and_itemlist(self):
         w = qa.Writes()

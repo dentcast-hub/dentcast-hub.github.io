@@ -66715,5 +66715,1607 @@
     "fidelity": [
       null
     ]
+  },
+  "episodes/episode-164": {
+    "scored_at": "2026-11-27",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Food Impaction in Dentistry: Revisited",
+          "authors": "Truong VM, Kim S, Yi YJ, Park YS",
+          "year": 2023,
+          "journal": "Oral Health & Preventive Dentistry",
+          "doi": "10.3290/j.ohpd.b4172837"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "review with a documented single-database search, screening flow and inclusion criteria, no risk-of-bias appraisal and no meta-analysis (ETIOLOGY SR/MA row, 100; its methodological weakness is priced by AMSTAR-2 in Step 3, not by the anchor)",
+          "evidence_quote": "The PubMed database was searched for this review."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absent: read Abstract, Materials and Methods (database → search terms → timespan → screening → inclusion criteria), Results and Acknowledgement; no protocol, registration, PROSPERO or a-priori design wording anywhere in the text"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "Materials and Methods: A search was conducted in PubMed from 1947 to March 28, 2023.",
+              "note": "present but fails the 3b-i threshold: 1 bibliographic database searched (PubMed only), fewer than 2"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "yielded a total of 1293 studies. After screening the title, abstract,",
+              "note": "no list of individually identified excluded full-text studies, but both (a) a screening account with counts (Fig 1: 1293 identified, exclusions by category, 72 included) and (b) explicit inclusion criteria are reported"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absent: no appraisal step in Materials and Methods (database → search terms → timespan → manual screening → inclusion criteria) or Results; no quality, bias, appraisal, critical appraisal or risk-of-bias wording anywhere; the Results remark on heterogeneity and subjectivity of studies describes no appraisal"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absent: no quantitative synthesis, pooling model or heterogeneity statistic described in Materials and Methods or Results; findings are presented narratively"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absent: no funnel plot, Egger test, small-study or publication-bias wording in Materials and Methods, Results or Discussion"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "This work was supported by Seoul National University Foundation in",
+            "note": "funding is disclosed (an academic foundation, not a manufacturer), but no conflict-of-interest statement appears anywhere in the text; the Acknowledgement block and author footnotes were read, no conflict/competing interest/disclosure wording"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "applies to RCTs only"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "the review's own conclusions make no survival or success-rate claim resting on a follow-up duration"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 22,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مقاله ۲۲ از ۱۰۰ است و در باند D (شواهد ضعیف) با نوع سؤال ETIOLOGY قرار می‌گیرد.",
+        "interpretation_fa": "این review جستجوی PubMed و فلوچارت غربالگری دارد، اما فقط یک دیتابیس دارد، protocol ثبت‌شده ندارد و کیفیت مطالعات را ارزیابی نکرده است. به گفته‌ی خود نویسندگان، مطالعات اولیه اغلب anecdotal و غیراستاندارد هستند. ارزشش در نقشه‌ی منظم علل food impaction و درمان متناظر هر علت است. بخش درمان (THERAPY) توصیفی است و اثربخشی روش‌ها را مقایسه نمی‌کند."
+      }
+    ]
+  },
+  "sharehub/share-62": {
+    "scored_at": "2026-11-27",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Sensory and motor function of teeth and dental implants: a basis for osseoperception.",
+          "authors": "Trulsson M",
+          "year": 2005,
+          "journal": "Clinical and experimental pharmacology & physiology",
+          "doi": "10.1111/j.1440-1681.2005.04139.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of human periodontal mechanoreceptor physiology (ETIOLOGY narrative review row, 15)",
+          "evidence_quote": "In the present review, the functional properties of human periodontal mechanoreceptors will be presented, along with a discussion about their likely functional role in the control of human jaw actions."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not mention a protocol or registration; silence is NR under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not describe a literature search or databases; silence is NR under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no screening account, eligibility criteria or excluded-study list in the abstract; NR under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no appraisal of the microneurographic studies described in the abstract; NR under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract reports no pooling or statistical synthesis; NR under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address publication bias; NR under ABSTRACT_ONLY"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "source text makes no survival or success claim and does not address follow-up duration"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع سؤال ETIOLOGY امتیاز DES برابر ۸ و باند E (سطح زمینه و نظر) گرفته و نتیجه بر پایه‌ی abstract مقدماتی است.",
+        "interpretation_fa": "این یک narrative review است که یافته‌های microneurography درباره‌ی periodontal mechanoreceptorها را جمع‌بندی می‌کند و در abstract هیچ روش جستجو یا ارزیابی کیفیتی گزارش نشده است. ارزش بالینی‌اش در توضیح مبنای فیزیولوژیک osseoperception است: چرا بیمار ایمپلنتی کنترل ظریف فک در دستکاری غذا را کمتر دارد. پشتوانه‌ای برای پیامد درمانی مستقیم نیست."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Impaired force control during food holding and biting in subjects with tooth- or implant-supported fixed prostheses.",
+          "authors": "Svensson KG, Trulsson M",
+          "year": 2011,
+          "journal": "Journal of clinical periodontology",
+          "doi": "10.1111/j.1600-051X.2011.01781.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "cross-sectional comparison of three existing groups (natural teeth, tooth-supported bridges, implant-supported bridges) measured in one task session (ETIOLOGY cross-sectional row, 45)",
+          "evidence_quote": "Ten subjects in each of these groups performed a task involving holding and splitting morsels of food with different degrees of hardness (biscuits and peanuts) between a pair of opposing central incisors."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not mention adjustment, matching, restriction or stratification for any confounder (age, sex, prosthesis duration); silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives only the group size (ten per group), which is a sample count and does not address recruitment or eligibility"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "some_concerns",
+              "evidence_quote": "subjects with their natural teeth (natural), bimaxillary tooth-supported bridges (bridge) and bimaxillary implant-supported bridges (implant)",
+              "note": "exposure groups are defined, but how prosthesis status and periodontal condition were ascertained is not described"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives no enrolled vs analysed numbers, losses or exclusions; silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract describes the task but not the force-measurement instrument, calibration or assessor blinding"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: single-session cross-sectional measurement with no survival or longitudinal claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۵ از ۱۰۰ و در باند D (شواهد ضعیف) برای نوع سؤال ETIOLOGY است.",
+        "interpretation_fa": "یک مطالعه‌ی cross-sectional کوچک با ده نفر در هر گروه که فقط abstract آن در دست بود، پس بیشتر حوزه‌های سوگیری قابل ارزیابی نیستند و امتیاز موقت است. یافته‌ی اصلی این است که افراد دارای بریج دندانی یا ایمپلنتی نیروی کم نگه‌داشتن غذا را ظریف کنترل نمی‌کنند. اهمیت آن در برجسته کردن نقش mechanoreceptorهای پریودنتال است و مقایسه‌ی دو نوع بریج جنبه‌ی درمانی فرعی آن است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Motor behavior during the first chewing cycle in subjects with fixed tooth- or implant-supported prostheses.",
+          "authors": "Grigoriadis J, Trulsson M, Svensson KG",
+          "year": 2016,
+          "journal": "Clinical oral implants research",
+          "doi": "10.1111/clr.12559"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "cross-sectional comparison of three dentition groups (ETIOLOGY cross-sectional row, 45)",
+          "evidence_quote": "While 10 subjects with natural dentition, 11 with bimaxillary fixed tooth-supported prostheses (TSP) and 10 with bimaxillary fixed implant-supported prostheses (ISP)"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract describes no adjustment, matching, restriction or stratification; silence under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives group sizes and mean age but no recruitment or eligibility process; group counts do not address selection"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "some_concerns",
+              "evidence_quote": "11 with bimaxillary fixed tooth-supported prostheses (TSP) and 10 with bimaxillary fixed implant-supported prostheses (ISP)",
+              "note": "exposure groups are defined; how prosthesis status was verified is not described"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no statement of enrolled vs analysed numbers, losses or exclusions in the abstract; the analysis sentence reports what was analysed, not missing data"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "their vertical and lateral jaw movements were recorded",
+              "note": "outcome recording stated; recording method, calibration and blinding not described"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "conflict-of-interest / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "applies to RCTs only; this is an observational study"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "cross-sectional measurement of chewing behaviour; no survival or longitudinal claim requiring follow-up"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۵ از ۱۰۰ و در باند D (شواهد ضعیف) برای نوع سؤال ETIOLOGY است و چون بر پایه‌ی چکیده است موقت محسوب می‌شود.",
+        "interpretation_fa": "این یک مطالعه‌ی cross-sectional کوچک با ۳۱ نفر است که رفتار جویدن را بین دندان طبیعی و پروتزهای ثابت دندانی و ایمپلنتی مقایسه می‌کند. نقش PMR فرضیه‌ی نویسندگان است، نه چیزی که اندازه‌گیری شده باشد. چکیده درباره‌ی انتخاب افراد، کنترل confounding و روش اندازه‌گیری توضیحی نمی‌دهد. ارزش بالینی‌اش نشان دادن کنترل ضعیف‌تر غذا در بیماران با پروتز ثابت دوفکی است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Osseoperception following dental implant treatment: A systematic review.",
+          "authors": "Song D, Shujaat S, Politis C, Orhan K, Jacobs R",
+          "year": 2022,
+          "journal": "Journal of oral rehabilitation",
+          "doi": "10.1111/joor.13296"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "Systematic review of human and animal studies, no meta-analysis reported (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "The objective was to systematically review the available literature on the osseoperception phenomenon following dental implant placement"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not mention a protocol or registration (e.g. PROSPERO); silence is not informative under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "A literature search was performed using PubMed, Cochrane, Embase, and Web of Science databases up to June 2021.",
+              "note": "four bibliographic databases, above the 3b-i threshold of 2"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives no list of excluded full-text studies or reasons for exclusion; 3b-iii does not apply under ABSTRACT_ONLY"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "The methodological quality of the included papers was assessed using Cochrane risk of bias for human studies and SYRCLE's risk of bias tool for animal studies."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract reports no pooling, statistical model or heterogeneity assessment"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not mention publication bias, funnel plots or small-study effects"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: RCTs only"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract; the abstract states no follow-up duration and makes no survival claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۵۵ از ۱۰۰ و در باند C (شواهد محدود) با نوع سؤال THERAPY است و چون فقط بر پایه‌ی abstract محاسبه شده، موقت است.",
+        "interpretation_fa": "این systematic review چهار database را جستجو کرده و risk of bias مطالعات را با دو ارزیاب سنجیده است، اما abstract درباره‌ی protocol، دلیل حذف مطالعات و publication bias چیزی نمی‌گوید. مطالعات انسانی و حیوانی کنار هم آمده‌اند و meta-analysis گزارش نشده است. ارزش بالینی‌اش تأیید وجود osseoperception و آستانه‌ی لمسی بالاتر implant نسبت به دندان طبیعی است. جنبه‌ی ثانوی آن، عوامل مؤثر، از نوع ETIOLOGY است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Comparative analysis of active tactile sensibility in single dental implant and natural teeth: A systematic review of clinical studies.",
+          "authors": "Singh A, Pokarram SS, Podder S",
+          "year": 2026,
+          "journal": "The Journal of prosthetic dentistry",
+          "doi": "10.1016/j.prosdent.2025.12.019"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "Systematic review of clinical studies (4 RCTs, 1 prospective cohort, 1 cross-sectional), no meta-analysis reported (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "Six studies were included: 4 randomized controlled trials, 1 prospective cohort, and 1 cross-sectional study."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "PROSPERO registration: CRD420251104655"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Electronic searches of the PubMed, Scopus, and Web of Science databases, supplemented by manual searches"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "ABSTRACT_ONLY: abstract gives inclusion criteria but no screening account and no list of excluded studies; silence is NR, not high"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "ABSTRACT_ONLY: no quality, bias or appraisal wording in the abstract; the data extraction sentence does not address this safeguard"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "ABSTRACT_ONLY: abstract reports no pooling, model or heterogeneity method"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "ABSTRACT_ONLY: abstract does not mention publication bias"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "RCTs only; not applicable to a systematic review, which is itself registered in PROSPERO"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract: no follow-up duration stated, and the outcome is a sensory threshold, not a survival claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۵۵ از ۱۰۰ و در باند C (شواهد محدود) برای سؤال THERAPY است و چون فقط abstract در دست بود، مقدماتی است.",
+        "interpretation_fa": "این مطالعه یک systematic review ثبت‌شده در PROSPERO با جست‌وجو در سه database است، اما abstract درباره‌ی ارزیابی risk of bias مطالعات و روش ترکیب داده‌ها چیزی نمی‌گوید. پایه‌ی آن فقط شش مطالعه با طراحی‌های متفاوت است. ارزش بالینی‌اش این است که نشان می‌دهد ایمپلنت با گذشت زمان حس لمسی فعال پیدا می‌کند، ولی آستانه‌اش از دندان طبیعی بالاتر می‌ماند."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Brain plasticity and cortical correlates of osseoperception revealed by punctate mechanical stimulation of osseointegrated oral implants during fMRI.",
+          "authors": "Habre-Hallage P, Dricot L, Jacobs R, van Steenberghe D, Reychler H, Grandin CB",
+          "year": 2012,
+          "journal": "European journal of oral implantology",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "cross-sectional observational fMRI study comparing implant patients with age-matched controls (ETIOLOGY cross-sectional row, 45)",
+          "evidence_quote": "This was performed in a cross-sectional observational study with 9 volunteering patients and 10 age-matched controls."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "some_concerns",
+              "evidence_quote": "10 age-matched controls",
+              "note": "controls matched on age only; no other confounder adjustment reported in the abstract"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "9 volunteering patients",
+              "note": "volunteer recruitment stated; eligibility criteria and recruitment source not given in the abstract"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "A block design paradigm was used to stimulate, in 9 patients, maxillary left central incisor implants (I21-p) and maxillary left canines (T23-p).",
+              "note": "exposure groups (implant vs natural tooth, patient vs control) explicitly defined by stimulated site"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address enrolled vs analysed numbers, exclusions or losses; not assessable from an abstract"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Random effect group analyses were performed for each stimulated site",
+              "note": "fMRI outcome and analysis described; assessor blinding and preprocessing not reported in the abstract"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: observational study, not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: cross-sectional study making no survival or success claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۵ و در باند D (شواهد ضعیف) برای سؤال ETIOLOGY است و چون فقط abstract در دسترس بود، مقدماتی است.",
+        "interpretation_fa": "این یک مطالعه‌ی cross-sectional با fMRI روی ۹ بیمار و ۱۰ کنترل است و فقط از روی abstract ارزیابی شده، پس چند حوزه‌ی روش‌شناسی قابل قضاوت نبود. ارزشش بیشتر در توضیح مکانیسم osseoperception و احتمال plasticity مغزی پس از جایگزینی دندان با ایمپلنت است. برای درک حس لمسی ایمپلنت مفید است ولی پشتوانه‌ی مستقیمی برای تصمیم درمانی نیست."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Tactile sensibility of single-tooth implants and natural teeth under local anesthesia of the natural antagonistic teeth.",
+          "authors": "Enkling N, Heussner S, Nicolay C, Bayer S, Mericske-Stern R, Utz KH",
+          "year": 2012,
+          "journal": "Clinical implant dentistry and related research",
+          "doi": "10.1111/j.1708-8208.2009.00252.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "within-participant split-mouth cross-sectional comparison of tactile sensibility, implant vs natural tooth, measured in one session (ETIOLOGY cross-sectional row, 45)",
+          "evidence_quote": "clinical, single-blind, split-mouth study"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "split-mouth study",
+              "note": "within-participant design: each participant's contralateral natural tooth pair is the control"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Thirty-two subjects with single-tooth implants with natural opposing teeth were included",
+              "note": "one inclusion criterion stated; recruitment and other eligibility criteria not described in the abstract"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "between the single-tooth implant and the natural opposing tooth, and between the contralateral pair of natural opposing teeth",
+              "note": ""
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives no enrolled vs analysed numbers, losses or exclusions; silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "according to the psychophysical method of constant stimuli and evaluate it statistically by the Weibull distribution",
+              "note": "standardized, randomized stimulus presentation described; who was blinded under 'single-blind' is not stated, and the outcome is self-reported"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract; abstract reports power >80% for the equivalence test, no flaw affirmatively shown"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: single-session threshold measurement, no survival or success claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "این مقاله امتیاز ۲۵ و باند D (شواهد ضعیف) در نوع سؤال ETIOLOGY گرفته و امتیازش مقدماتی است چون فقط abstract در دست بود.",
+        "interpretation_fa": "طراحی split-mouth با مقایسه‌ی ایمپلنت و دندان طبیعی قرینه در همان فرد، مقایسه‌ی منصفانه‌ای از آستانه‌ی حس لامسه می‌دهد، اما با ۳۲ نفر انجام شده و جزئیات انتخاب بیماران و ریزش در abstract نیامده. یافته‌ی برابری آستانه با بی‌حسی دندان مقابل، شاهدی مکانیستی برای osseoperception است، نه پیامد بالینی مستقیم."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Prevalence of proximal contact loss between implant-supported prostheses and adjacent natural teeth: A systematic review and meta-analysis",
+          "authors": "Bento VAA, Gomes JML, Lemos CAA, Limirio JPJO, Rosa CDDRD, Pellizzer EP",
+          "year": 2023,
+          "journal": "The Journal of prosthetic dentistry",
+          "doi": "10.1016/j.prosdent.2021.05.025"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of proportion (prevalence of a complication); designs of the included studies not stated in the abstract (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "The purpose of this systematic review and meta-analysis was to assess the proportion of reported proximal contact loss between implant-supported prostheses and adjacent natural teeth."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "was registered on the international prospective register of systematic reviews (PROSPERO) platform (CRD42021225138)"
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The electronic search was conducted by using the PubMed/MEDLINE, Embase, and Cochrane Library databases to September 2020.",
+              "note": "3 bibliographic databases (PubMed/MEDLINE counted once), meets the 3b-i threshold of 2"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not report excluded full-text studies, a screening flow or eligibility criteria; silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no appraisal of included studies mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "A single-arm meta-analysis of proportion was performed to evaluate the cumulative prevalence of survival and complication rates.",
+              "note": "pooling method named, but the statistical model and handling of heterogeneity are not described"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no publication-bias assessment mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "source text does not address follow-up duration; not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۵۵ است، در باند C (شواهد محدود) برای نوع سؤال THERAPY، و چون فقط بر پایه‌ی چکیده است موقت محسوب می‌شود.",
+        "interpretation_fa": "این مرور سیستماتیک ثبت‌شده با جست‌وجوی چندپایگاهی است، اما چکیده درباره‌ی نحوه‌ی ارزیابی کیفیت مطالعات و انتخاب آن‌ها چیزی نمی‌گوید. heterogeneity بسیار بالا (I² برابر ۹۸٪) دقت عدد ۴۱٪ را محدود می‌کند. ارزش بالینی اصلی آن نشان‌دادن این است که باز شدن تماس پروگزیمال کنار ایمپلنت عارضه‌ای شایع است، به‌ویژه در سمت مزیال و فک پایین."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Frequency of infraposition and missing contact points in implant-supported restorations within natural dentitions over time: A systematic review with meta-analysis.",
+          "authors": "Papageorgiou SN, Eliades T, Hämmerle CHF",
+          "year": 2018,
+          "journal": "Clinical oral implants research",
+          "doi": "10.1111/clr.13291"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis of 27 nonrandomized clinical studies (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "The aim of this systematic review was to assess clinical evidence on adverse effects of osseointegrated implants placed among natural teeth of a residual dentition."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "The abstract does not mention protocol registration or a protocol written in advance. Silence here is NR under ABSTRACT_ONLY."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Seven databases were searched without restrictions up to January 2018"
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "The abstract has no screening account, no list of excluded studies and no eligibility criteria. Under ABSTRACT_ONLY, 3b-iii does not apply and the rating stays NR."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "risk of bias assessment according to the Cochrane guidelines"
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "random-effects meta-analyses of odds ratios (OR) or mean differences (MD) and their 95% confidence intervals (CI) were performed, followed by meta-regression and sensitivity analyses"
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "The abstract does not mention publication bias, small-study effects or funnel plots. Silence here is NR under ABSTRACT_ONLY."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "applies to RCTs only; this is a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "followed up to 18.5 years after implant placement",
+            "note": "The stated follow-up of up to 18.5 years suits a long-term adverse-effect claim. The abstract shows no short-follow-up flaw."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۵۵ از ۱۰۰ و در باند C (شواهد محدود) برای سؤال THERAPY است و چون فقط بر پایه‌ی چکیده است، موقت حساب می‌شود.",
+        "interpretation_fa": "این systematic review با meta-analysis، شیوع infraposition ایمپلنت و از دست رفتن proximal contact کنار دندان‌های طبیعی را در حدود نیمی از موارد نشان می‌دهد. پایه‌ی آن ۲۷ مطالعه‌ی nonrandomized است و خود نویسندگان کیفیت شواهد را به دلیل bias بسیار پایین می‌دانند. ارزش بالینی آن شناخت این عوارض بلندمدت در پیگیری بیماران است. ثبت پروتکل و publication bias در چکیده گزارش نشده است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Occlusal Migration of Teeth Adjacent to Implant Prostheses in Adults: A Long-Term Study.",
+          "authors": "Polymeri A, Li Q, Laine ML, Loos BG, Wang HL",
+          "year": 2020,
+          "journal": "The International journal of oral & maxillofacial implants",
+          "doi": "10.11607/jomi.7784"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 50,
+          "anchor": "cohort of treated patients whose existing radiographs at crown placement and follow-up were analysed; the abstract does not use the word retrospective, but analysing existing radiographs is a retrospective cohort design (THERAPY retrospective cohort row, 50)",
+          "evidence_quote": "Radiographs obtained at crown placement and follow-up examinations from 1 to 15 years postloading were analyzed"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not describe adjustment, matching, restriction or stratification for confounders; silence in an abstract is NR"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Seventy-six patients (age: 21 to 78 years) treated with single-implant-supported restorations in the esthetic zone were included.",
+              "note": "the included population is defined, but recruitment method, consecutiveness and the remaining eligibility criteria are not described"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "how immediate versus delayed placement and other exposures were classified is not described in the abstract"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no statement of enrolled versus analysed numbers, losses or exclusions in the abstract; the variable 1 to 15 year follow-up range is not a statement about missing data"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Radiographs obtained at crown placement and follow-up examinations from 1 to 15 years postloading were analyzed with regard to vertical incisal plane changes of the implant-supported crown relative to adjacent teeth.",
+              "note": "the outcome measure is described, but examiner blinding, calibration and reliability are not reported"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement, or manufacturer funding of a tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "from 1 to 15 years postloading",
+            "note": "follow-up extends to 15 years for a time-dependent outcome; the abstract does not affirmatively show inadequate follow-up"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 28,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۸ از ۱۰۰ است، در باند D (شواهد ضعیف) برای نوع سؤال THERAPY، و چون فقط بر پایه‌ی abstract است موقت است.",
+        "interpretation_fa": "این مطالعه یک cohort با پیگیری رادیوگرافیک تا ۱۵ سال است که infraocclusion ایمپلنت‌های تکی قدامی ماگزیلا را به‌صورت کمّی گزارش می‌کند. abstract درباره‌ی کنترل confounding، ریزش بیماران و blinding اندازه‌گیری چیزی نمی‌گوید و به همین دلیل روش‌شناسی امتیاز پایینی گرفته است. ارزش بالینی‌اش جهت یافته است: جابه‌جایی کند ولی پیوسته‌ی دندان‌های مجاور، که در بیماران جوان‌تر و در کاشت تأخیری بیشتر است."
+      }
+    ],
+    "fidelity": {
+      "des_version": "3.7",
+      "mode": "FIDELITY",
+      "scope": "POOLED",
+      "text_basis": "ABSTRACT_ONLY",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "یکی دو دندان باقی‌مانده در فک ایمپلنتی؛ حفظ کنیم یا بکشیم؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "English",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "link label"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "فرض کنید قرار است تقریباً تمام یک فک با ایمپلنت بازسازی شود و فقط یکی دو دندان طبیعی باقی مانده‌اند.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "hypothetical scenario that announces the topic; asserts nothing about the source or the world"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "آیا بهتر است این دندان‌ها را حفظ کنیم یا برای رسیدن به یک پروتز کاملاً ایمپلنتی، آن‌ها را هم خارج کنیم؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question with no answer in it"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "یکی از دلایل رایج برای حفظ این دندان‌ها، وجود حس پروپریوسپتیو است؛ حسی که به کمک گیرنده‌های موجود در لیگامان پریودنتال (PDL) ایجاد می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In contrast with osseointegrated dental implants, natural teeth are equipped with periodontal mechanoreceptors that signal information about tooth loads.",
+          "source_ref": "S1",
+          "note": "the half about the sense arising from PDL receptors is stated; the half that it is a common reason for retaining teeth is not addressed in the abstract (NOT_ASSESSABLE); other sources: S5: MATCHES"
+        },
+        {
+          "id": "u6",
+          "claim_quote": "اما سؤال اینجاست که این حس واقعاً چقدر در عملکرد جویدن اهمیت دارد و آیا وزنی که برای آن قائل می‌شوند واقعی است یا بزرگ‌نمایی شده.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "announces the topic as a question"
+        },
+        {
+          "id": "u7",
+          "claim_quote": "نقش دندان طبیعی در کنترل نیروی جویدن",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u8",
+          "claim_quote": "گیرنده‌های لیگامان پریودنتال به نیروهای بسیار کم حساس‌اند؛ حتی نیروهایی که در اولین تماس دندان با لقمه ایجاد می‌شوند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Most receptors exhibit a markedly curved relationship between discharge rate and force amplitude, featuring the highest sensitivity to changes in tooth load at surprisingly low forces (below 1 N for anterior teeth and 4 N for posterior teeth).",
+          "source_ref": "S1",
+          "note": "the first-contact half is also stated: 'periodontal receptors efficiently encode tooth load when subjects first contact, hold and gently manipulate food by the teeth'"
+        },
+        {
+          "id": "u9",
+          "claim_quote": "مغز با استفاده از این اطلاعات می‌تواند موقعیت لقمه و میزان نیروی لازم برای گاز زدن را تنظیم کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "It is concluded that humans use periodontal afferent signals to control jaw actions associated with intra-oral manipulation of food rather than exertion of jaw power actions.",
+          "source_ref": "S1",
+          "note": "می‌تواند here states a capability, not a hedge; the source also notes only a minority of receptors encode the strong force increase when biting through food, which concerns power, not the fine adjustment claimed; other sources: S2: MATCHES, S3: MATCHES"
+        },
+        {
+          "id": "u10",
+          "claim_quote": "به بیان ساده، این گیرنده‌ها کمک می‌کنند از همان ابتدای تماس، نیروی جویدن متناسب با جنس و مقاومت غذا باشد؛ نه آن‌قدر زیاد که لقمه بیش از حد فشرده شود و نه آن‌قدر کم که کنترل آن از دست برود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These findings demonstrate that individuals with bimaxillary tooth- or implant-supported bridges (in whom sensory information provided by the periodontal mechanoreceptors is impaired or missing) are unable to apply low-hold forces at the levels of individuals with natural teeth or to adapt the rate of the split force to the hardness of the food.",
+          "source_ref": "S2",
+          "note": "the abstract does not address over-compression of the bolus or loss of control"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "به همین دلیل، نقش اصلی این گیرنده‌ها را باید در تنظیم دقیق نیرو دانست، نه افزایش قدرت جویدن [1].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "It is concluded that humans use periodontal afferent signals to control jaw actions associated with intra-oral manipulation of food rather than exertion of jaw power actions.",
+          "source_ref": "S1",
+          "note": "inference judged on its conclusion, which the source states"
+        },
+        {
+          "id": "u12",
+          "claim_quote": "در بیمارانی که هر دو فک با پروتزهای ثابت ایمپلنتی بازسازی شده‌اند، این بازخورد طبیعی وجود ندارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In contrast with osseointegrated dental implants, natural teeth are equipped with periodontal mechanoreceptors that signal information about tooth loads.",
+          "source_ref": "S1",
+          "note": "narrowing to fully implant-restored patients is within the source's implant population; other sources: S2: MATCHES, S3: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "مطالعات نشان داده‌اند که این بیماران برای نگه داشتن لقمه از نیروی بیشتری استفاده می‌کنند و در شروع جویدن، احتمال لغزش لقمه بین دندان‌ها بیشتر است [2, 3].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The hold force employed by the implant group was significantly higher and more variable than the corresponding force exerted by the bridge group, whereas the natural group used lowest and least variable force.",
+          "source_ref": "S2",
+          "note": "the bolus-slip half is not addressed by the abstract (NOT_ASSESSABLE); other sources: S3: MATCHES"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "آیا ایمپلنت هم می‌تواند حس داشته باشد؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u15",
+          "claim_quote": "البته ایمپلنت یک ساختار کاملاً بی‌حس نیست.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "When dental implants are loaded mechanically, a sensation, often referred to as osseoperception, is evoked.",
+          "source_ref": "S1",
+          "note": "other sources: S4: MATCHES, S5: MATCHES, S6: MATCHES, S7: MATCHES"
+        },
+        {
+          "id": "u16",
+          "claim_quote": "پس از اسئواینتگریشن، نوعی بازخورد حسی به نام اسئوپرسپشن (Osseoperception) ایجاد می‌شود که بخشی از اطلاعات لمسی را به سیستم عصبی منتقل می‌کند [4].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "When dental implants are loaded mechanically, a sensation, often referred to as osseoperception, is evoked.",
+          "source_ref": "S1",
+          "note": "other sources: S4: MATCHES, S5: MATCHES, S6: MATCHES, S7: MATCHES"
+        },
+        {
+          "id": "u17",
+          "claim_quote": "این بازخورد با گذشت زمان و قرار گرفتن ایمپلنت تحت بارگذاری فانکشنال بهتر می‌شود [5].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Longitudinal studies reported progressive improvement in ATS with functional loading.",
+          "source_ref": "S5",
+          "note": "other sources: S4: ALTERED"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "به نظر می‌رسد سیستم عصبی نیز خودش را با شرایط جدید تطبیق می‌دهد [6].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The neurophysiological evidence from three studies indicated cortical plasticity following dental implant placement, measured via trigeminal nerve evoked potentials and functional magnetic resonance imaging.",
+          "source_ref": "S4",
+          "note": "hedged generalization of a stated finding (F2-ii rule 1): cortical plasticity after implant placement stated as a possibility that the nervous system adapts; «به نظر می‌رسد» keeps the wider wording faithful; other sources: S6: MATCHES"
+        },
+        {
+          "id": "u19",
+          "claim_quote": "حتی وقتی دندان مقابل ایمپلنت بی‌حس شده باشد، بیمار همچنان می‌تواند از طریق ایمپلنت تماس را حس کند [7].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The average tactile sensibility of the implants with anesthetized antagonists at the 50% value calculated by means of the Weibull distribution was 20 ± 11 µm with a support area (90%-10% value) of 77 ± 89 µm.",
+          "source_ref": "S7"
+        },
+        {
+          "id": "u20",
+          "claim_quote": "با این حال، اسئوپرسپشن جایگزین کامل حس ناشی از لیگامان پریودنتال نیست.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The sensory signals underlying this phenomenon are qualitatively different from the signals evoked when loading a natural tooth.",
+          "source_ref": "S1",
+          "note": "other sources: S4: MATCHES, S5: MATCHES"
+        },
+        {
+          "id": "u21",
+          "claim_quote": "دقت و کیفیت بازخورد حسی ایمپلنت همچنان پایین‌تر از دندان طبیعی است [4, 5].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Psychophysical evidence from 14 studies indicated a lower tactile function of implants, where active and passive threshold levels were found to be 5 and 50 times higher for implants compared to natural teeth, respectively.",
+          "source_ref": "S4",
+          "note": "other sources: S5: MATCHES, S7: REVERSED"
+        },
+        {
+          "id": "u22",
+          "claim_quote": "نکته مهم همین‌جاست: بود و نبود دندان طبیعی یک وضعیت صفر و صد نیست.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "When dental implants are loaded mechanically, a sensation, often referred to as osseoperception, is evoked.",
+          "source_ref": "S1",
+          "note": "the unit states its own proposition after the signpost opener: losing natural teeth does not mean losing all sensation; other sources: S5: MATCHES"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "بیماری که دندان‌هایش را از دست داده و ایمپلنت گرفته، حس خود را به‌طور کامل از دست نمی‌دهد؛ بخشی از آن از طریق اسئوپرسپشن برمی‌گردد و با ادامه فانکشن بهتر هم می‌شود [5].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "When dental implants are loaded mechanically, a sensation, often referred to as osseoperception, is evoked.",
+          "source_ref": "S1",
+          "note": "the half about improvement with continued function is not addressed in the abstract (NOT_ASSESSABLE); other sources: S4: ALTERED, S5: MATCHES, S6: MATCHES, S7: MATCHES"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "بنابراین چیزی که با حفظ یکی دو دندان به دست می‌آید کل حس پروپریوسپتیو نیست، بلکه فاصله‌ای است که بین حس دندان طبیعی و حس ایمپلنت باقی می‌ماند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "آیا حفظ یک دندان طبیعی می‌تواند این کمبود را جبران کند؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "اینجا یک یافته جالب وجود دارد: ایمپلنتی که در مقابل دندان طبیعی قرار دارد، بازخورد لمسی بهتری نسبت به ایمپلنتی نشان می‌دهد که در مقابل یک ایمپلنت دیگر قرار گرفته است [5].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Implant-supported prostheses opposing natural teeth exhibited better tactile sensibility than implant-supported prostheses occluding against other implant-supported prostheses.",
+          "source_ref": "S5"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "بنابراین، اگر دندان طبیعی باقی‌مانده با پروتز ایمپلنتی فک مقابل در تماس اکلوژنی باشد، ممکن است به بهبود بازخورد حسی بیمار کمک کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Implant-supported prostheses opposing natural teeth exhibited better tactile sensibility than implant-supported prostheses occluding against other implant-supported prostheses.",
+          "source_ref": "S5",
+          "note": "hedged generalization from a stated finding (F2-ii item 1); other sources: S7: MATCHES"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "اما نباید از این یافته نتیجه گرفت که وجود حتی یک دندان طبیعی الزاماً عملکرد جویدن را بهتر می‌کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u29",
+          "claim_quote": "مطالعات نشان داده‌اند بیمارانی که در هر دو فک بریج ثابت متکی بر دندان دارند نیز در کنترل لقمه و تنظیم نیرو با مشکل مواجه می‌شوند [2, 3].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These findings demonstrate that individuals with bimaxillary tooth- or implant-supported bridges (in whom sensory information provided by the periodontal mechanoreceptors is impaired or missing) are unable to apply low-hold forces at the levels of individuals with natural teeth or to adapt the rate of the split force to the hardness of the food.",
+          "source_ref": "S2",
+          "note": "«مطالعات نشان داده‌اند» states a finding, not a relation between sources. The claim is judged on that finding, and its direction, scope and hedge level agree with the source.; other sources: S3: MATCHES"
+        },
+        {
+          "id": "u30",
+          "claim_quote": "پس صرف وجود لیگامان پریودنتال برای تضمین عملکرد بهتر کافی نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u31",
+          "claim_quote": "روی دیگر ماجرا؛ هزینه حفظ دندان چیست؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u32",
+          "claim_quote": "در کنار مزیت احتمالی حسی، حفظ دندان طبیعی در مجاورت پروتز ایمپلنتی می‌تواند مشکلاتی ایجاد کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Proximal contact loss between implant-supported prostheses and adjacent natural teeth is a complication that has been reported in clinical practice.",
+          "source_ref": "S8",
+          "note": "hedged generalization of a stated complication; the sensory half is not addressed by the abstract; other sources: S9: MATCHES, S10: MATCHES"
+        },
+        {
+          "id": "u33",
+          "claim_quote": "دندان طبیعی در طول زمان به حرکت و رویش تدریجی خود ادامه می‌دهد، در حالی که ایمپلنت در استخوان ثابت باقی می‌ماند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Infraocclusion increased over time by 0.08 ± 0.02 mm/year.",
+          "source_ref": "S10",
+          "note": "the source frames the vertical change of the implant crown relative to adjacent teeth as the effect of continuous tooth eruption (Purpose)"
+        },
+        {
+          "id": "u34",
+          "claim_quote": "این تفاوت رفتاری می‌تواند به‌مرور باعث باز شدن کانتکت بین دندان طبیعی و پروتز ایمپلنتی شود.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u35",
+          "claim_quote": "این پدیده در مطالعات مربوط به پروتزهای ایمپلنتی مجاور دندان طبیعی، در ۴۱ درصد موارد گزارش شده و در ناحیه مزیال شایع‌تر است [8].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In the general analysis, the open proximal contact showed a cumulative proportion of 41% (confidence interval: 30% to 53%; heterogeneity: I^2^=98%; t^2^=0.578; P<.01).",
+          "source_ref": "S8",
+          "note": "mesial half also matches the subanalysis sentence (mesial contact 47%, higher prevalence); other sources: S9: ALTERED"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "از طرف دیگر، سطح اکلوزال دندان طبیعی و پروتز ایمپلنتی نیز ممکن است به‌مرور دچار اختلاف ارتفاع شود [9, 10].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "CONCLUSIONS: Patients and doctors need to be aware that long-term adverse effects of dental implants among natural teeth can be observed in terms of IIP and PCP loss to the adjacent teeth.",
+          "source_ref": "S9",
+          "note": "hedged restatement of long-term implant infraposition; the abstract also gives a pooled IIP prevalence of 50.5%; other sources: S10: MATCHES"
+        },
+        {
+          "id": "u37",
+          "claim_quote": "گذشته از این موارد، دندان باقی‌مانده همچنان در معرض مشکلات پریودنتال و اندودنتیک قرار دارد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u38",
+          "claim_quote": "اگر چنین دندانی پس از تحویل پروتز از دست برود، اصلاح پروتز موجود ممکن است پیچیده و پرهزینه باشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u39",
+          "claim_quote": "در نهایت، دندان را نگه داریم یا نه؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u40",
+          "claim_quote": "سؤال اصلی این نیست که آیا دندان طبیعی از نظر حسی بهتر از ایمپلنت است؛ پاسخ این سؤال تا حد زیادی مشخص است.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_A_CLAIM, S3: NOT_ASSESSABLE, S4: NOT_A_CLAIM, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u41",
+          "claim_quote": "سؤال مهم‌تر این است که آیا حفظ یکی دو دندان طبیعی در یک فک ایمپلنتی، بهبود فانکشنال قابل اندازه‌گیری و معناداری برای بیمار ایجاد می‌کند یا خیر.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "announces the topic as a question"
+        },
+        {
+          "id": "u42",
+          "claim_quote": "در جستجوی انجام‌شده، مطالعه‌ای که این دو وضعیت را مستقیماً با هم مقایسه کرده باشد پیدا نشد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u43",
+          "claim_quote": "بنابراین نمی‌توان صرفاً بر اساس مزیت پروپریوسپتیو، حفظ دندان را به‌عنوان یک اصل قطعی توصیه کرد.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "به نظر می‌رسد تصمیم نهایی باید بر اساس سه عامل گرفته شود:",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost ending in a colon that introduces the following units"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "پروگنوز دندان: آیا دندان از نظر پریودنتال، اندودنتیک و ساختاری پیش‌آگهی قابل قبولی دارد؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question with no answer in it"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "موقعیت اکلوژنی: آیا دندان در تماس با پروتز ایمپلنتی فک مقابل قرار می‌گیرد و می‌تواند در بازخورد حسی نقش داشته باشد؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question with no answer in it"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "پیامدهای پروتزی: آیا حفظ دندان، طراحی، ساخت و نگهداری پروتز را پیچیده‌تر می‌کند؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "question with no answer in it"
+        },
+        {
+          "id": "u48",
+          "claim_quote": "در واقع، حفظ دندان طبیعی زمانی منطقی‌تر است که علاوه بر برخورداری از پروگنوز مناسب، مزیت فانکشنال یا پروتزی مشخصی هم ایجاد کند.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u49",
+          "claim_quote": "حس پروپریوسپتیو یک امتیاز واقعی است، اما بخشی از آن با اسئوپرسپشن جبران می‌شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Consequently, patients who lack information from periodontal receptors show an impaired fine motor control of the mandible.",
+          "source_ref": "S1",
+          "note": "the half that part of the sense is compensated by osseoperception is not addressed in the abstract (NOT_ASSESSABLE); other sources: S2: MATCHES, S3: MATCHES, S4: MATCHES, S5: MATCHES, S6: MATCHES, S7: MATCHES"
+        },
+        {
+          "id": "u50",
+          "claim_quote": "به همین دلیل این حس به‌تنهایی برای توجیه حفظ هر دندان باقی‌مانده کافی نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE, S5: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE"
+        }
+      ],
+      "counts": {
+        "matches": 24,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 11,
+        "author_view": 0,
+        "not_a_claim": 15
+      },
+      "assessable": 24,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": true,
+      "source_conclusion": "[S1] Consequently, patients who lack information from periodontal receptors show an impaired fine motor control of the mandible.\n[S2] We thus conclude that adequate sensory information from periodontal mechanoreceptors is essential for normal control of both low contact and high biting forces.\n[S3] We propose that these differences are due to impairment or absence of sensory signaling from PMRs in these individuals.\n[S4] Further studies are required to identify factors that might further assist physiological integration of the oral implants in the human body as such to approach natural oral function.\n[S5] Immediate loading and occlusion against natural antagonists accelerate neuroplasticity.\n[S6] This cortical activation may represent the underlying mechanism of osseoperception.\n[S7] This could support the hypothesis according to which the implant may have a tactile sensibility of its own.\n[S8] Significant differences were not found in relation to sex or between the posterior and anterior regions.\n[S9] CONCLUSIONS: Patients and doctors need to be aware that long-term adverse effects of dental implants among natural teeth can be observed in terms of IIP and PCP loss to the adjacent teeth.\n[S10] Greater infraocclusion occurs in delayed implant placement and in younger individuals.",
+      "fact_fa": "از ۲۴ ادعایی که منابع به آن پرداخته‌اند، ۲۴ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+    }
+  },
+  "chairside/chairside-58": {
+    "scored_at": "2026-11-28",
+    "sources": [
+      {
+        "des_version": "3.6",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "وقتی برداشتن روکش، قدم اول درمان است",
+          "authors": "فؤاد شهابیان",
+          "year": null,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "با برداشتن روکش، دیواره‌ها مستقیم دیده می‌شوند و می‌توان درباره‌ی پیش‌آگهی دندان تصمیم گرفت."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن نسبت تصمیم بالینی را با شواهد منتشرشده بیان نمی‌کند."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "وقتی وضعیت دندان زیر یک روکش قدیمی مشخص نیست، خارج کردن روکش هم پیش‌آگهی دندان را روشن می‌کند و هم دسترسی برای درمان دندان‌های مجاور را بهتر می‌کند."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+            "note": "اعلانِ سطحِ بخش، از chairside/index.html"
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "در این روایت بالینی، پس از برداشتن روکش دندان ۶، دیواره‌های باقی‌مانده قابل قبول ارزیابی شدند و دسترسی به سطوح پروگزیمال دندان‌های ۵ و ۷ بهتر شد.",
+        "interpretation_fa": "ترتیب درمان در این بیمار دو هدف داشت: ارزیابی مستقیم دیواره‌های دندان ۶ پیش از تصمیم به نگهداری آن و بهبود دسترسی برای ترمیم دندان‌های مجاور."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }

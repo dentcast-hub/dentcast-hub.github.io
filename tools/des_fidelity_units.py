@@ -725,6 +725,39 @@ def merge_pooled(parts, basis):
 FLAGGED = ("ALTERED", "REVERSED")
 
 
+def founder_report(fidelity):
+    """Every sentence that keeps the page below a full match (founder, 2026-11-27,
+    after sharehub/share-62): the reference addresses it and the page says it
+    differently — ALTERED (firmer, broader, another number…) or REVERSED. A sentence
+    one reference confirms is a match; one no reference addresses is not reported.
+    Each one waits for the founder's answer (message M3b): the C.6 close refuses until it
+    is recorded as a fidelity_founder_decision_v1 decision. Returns [(id, quote, why)]."""
+    if isinstance(fidelity, dict) and "claims" not in fidelity:
+        fidelity = list(fidelity.values())  # {"src<k>": object}
+    objs = fidelity if isinstance(fidelity, list) else [fidelity]
+    out = []
+    for f in objs:
+        if not isinstance(f, dict):
+            continue
+        for c in f.get("claims") or []:
+            v = c.get("verdict")
+            if v == "REVERSED":
+                why = "منبع برعکسش را می‌گوید"
+            elif v == "ALTERED":
+                why = f"با منبع فرق دارد ({c.get('change_kind')})"
+            else:
+                continue
+            out.append((c.get("id"), c.get("claim_quote") or "", why))
+    return out
+
+
+def print_founder_report(fidelity):
+    rows = founder_report(fidelity)
+    print(f"FOUNDER REPORT — message M3b, the publication waits for his answer ({len(rows)} sentence(s)):", file=sys.stderr)
+    for uid, quote, why in rows:
+        print(f"  {uid}: «{quote}» — {why}", file=sys.stderr)
+
+
 def vote_source(runs, adjudicated=None, reviewed=None, overruled=None):
     """Majority vote over repeated SOURCE-scope runs of ONE source (workflow
     step 4.13 Part 2c). runs[0] and runs[1] are the two FULL runs; runs[2]
@@ -1314,6 +1347,7 @@ def main():
             return
         print("ACCEPTED — the result is this page's and checks out mechanically; no receipt, model id or "
               "re-run is owed (module 08, «Acceptance is mechanical»)")
+        print_founder_report(fid)
         if a.install:
             if not packet:
                 sys.exit("--install takes a packet (--pack's file)")
@@ -1349,6 +1383,7 @@ def main():
         merged = merge_pooled(parts, weakest([p.get("text_basis") for p in parts.values()]))
         (d / "pooled.json").write_text(json.dumps(merged, ensure_ascii=False, indent=1), encoding="utf-8")
         print(d / "pooled.json", merged["fidelity_score"], merged["level"])
+        print_founder_report(merged)
         return
     if a.judge:
         if mode == "POOLED":
