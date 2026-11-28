@@ -11,6 +11,7 @@ glossary-publish back-link) are skipped by `advance` itself with their canonical
 """
 import copy
 import json
+import re
 from pathlib import Path
 
 import dentcast_publish_handoff as h
@@ -126,10 +127,20 @@ def close(root, expected, lead, lead_ref=None, title_from="founder", caption_fro
     en_path = None if (litecast or challenge) else cid.rsplit("/", 1)[0] + "/en/" + cid.rsplit("/", 1)[1] + ".html"
     if en_path and not (root / en_path).is_file():
         en_path = None
-        fa_page = (root / (cid + ".html")).read_text(encoding="utf-8")
-        h.require('class="lang-btn"' not in fa_page,
+    fa_file = root / (cid + ".html")
+    if en_path is None and fa_file.is_file():
+        h.require(not re.search(r'class="[^"]*\blang-btn\b', fa_file.read_text(encoding="utf-8")),
                   "CLOSE_LANG_TOGGLE_WITHOUT_ENGLISH: " + cid + ".html carries a .lang-btn toggle but no English "
                   "page exists; replace the toggle with <!-- dc-lang-toggle:off --> (Hard Rule 12)")
+    des_row = rows.get("C.4.13") or {}
+    if des_row.get("status") == "skipped" and not (litecast or challenge):
+        # A skipped DES passes only with the founder's recorded, page-bound exemption
+        # (module 08; verify_publish row «4.13 DES»): refuse here, before Push 2.
+        ex = root / ".dentcast/des-exemptions.json"
+        reg = json.loads(ex.read_text(encoding="utf-8")) if ex.is_file() else {}
+        h.require(isinstance(reg, dict) and isinstance(reg.get(cid), dict),
+                  "CLOSE_DES_SKIPPED_WITHOUT_EXEMPTION: C.4.13 is skipped but .dentcast/des-exemptions.json has no "
+                  "entry for " + cid + "; run step 4.13 or record the founder's scoped exemption (module 08)")
     if en_path:
         p["target_paths"] = sorted(set(p["target_paths"]) | {en_path})
     index = (root / "index.html").read_text(encoding="utf-8")
