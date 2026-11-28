@@ -475,11 +475,7 @@ class StampCheckTests(unittest.TestCase):
                 self.assertEqual(qs.main([str(item), "--dry-run", "--strict"]), 4)
             self.assertEqual(len(json.loads(buf.getvalue())["checks"]["problems"]), 4)
 
-    def test_skip_object_and_absent_files_are_notes(self):
-        with tempfile.TemporaryDirectory() as t:
-            out = qs.checks(self.item(t, **{"10-فلش‌کارت-FAQ.json": {"skip": "no glossary terms"}}))
-            self.assertEqual(out["problems"], [])
-            self.assertEqual(out["warnings"], ["skipped: 10-فلش‌کارت-FAQ.json is a skip object"])
+    def test_absent_files_are_notes(self):
         with tempfile.TemporaryDirectory() as t:
             out = qs.checks(make_item(t))   # the minimal item: no 04, 09, 10
             self.assertEqual(out["problems"], [])
@@ -675,7 +671,8 @@ class StampShapeTests(unittest.TestCase):
             self.assertTrue(any(p.startswith("P3 05-DES-Fidelity/des.json: missing") for p in problems), problems)
             self.assertTrue(any(p.startswith("P7 04-منبع/کاتالوگ.json") for p in problems), problems)
             self.assertTrue(any(p.startswith("P7 08-") for p in problems), problems)
-            self.assertFalse(any("10-" in p for p in problems), problems)
+            # module 07: the FAQ and the flashcards are never skipped
+            self.assertTrue(any(p.startswith("P7 10-") for p in problems), problems)
 
     def test_draft_write_derives_again_and_keeps_hand_fields(self):
         with tempfile.TemporaryDirectory() as d:
