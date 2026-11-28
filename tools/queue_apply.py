@@ -1492,9 +1492,11 @@ def faq(w, cid, item, m):
         data = m["faq"]
     else:
         refuse("MANIFEST_INCOMPLETE", "the item has no 10-فلش‌کارت-FAQ.json; supply field «faq» (the frozen "
-               "faqPages/definedTermSets node or {\"skip\": reason}) with its origin", missing=["faq"])
+               "faqPages/definedTermSets node) with its origin", missing=["faq"])
     if "skip" in data:
-        return {"skip": data["skip"]}
+        refuse("FAQ_REQUIRED", "10-فلش‌کارت-FAQ.json is a skip object: the FAQ and the flashcards are written on every "
+               "publish with a page (module 07; Phase F rows «4.11 cards» and «4.12 quiz»); the item goes back to "
+               "«در حال آماده‌سازی»")
     url = f"{SITE}/{cid}.html"
     if "faqPages" not in data and isinstance(data.get("faqPage"), dict):
         data = {**data, "faqPages": [data["faqPage"]]}  # one FAQPage written as an object

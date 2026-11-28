@@ -441,11 +441,12 @@ def check_pillar(item, problems):
 
 # JSON files publish day reads as they are: a «ندارد» line or another shape there is a
 # traceback on publish day, so the shape is a problem at the freeze. A file with nothing to
-# record is left out (04), or written in its empty form (08 {"questions": []}, 10 {"skip": …}).
+# record is left out (04), or written in its empty form (08 {"questions": []}). 10 always
+# carries the FAQ and the flashcards: module 07 runs on every publish with a page.
 JSON_SHAPES = (("04-منبع/کاتالوگ.json", list, "a list of catalog entries"),
                ("04-منبع/انریچ.json", list, "the list cabinet_enrich.py freeze writes (several papers: one list)"),
                ("08-سؤال‌های-آزمون.json", dict, '{"questions": [...]} (no questions: {"questions": []})'),
-               ("10-فلش‌کارت-FAQ.json", dict, '{"definedTermSets": …, "faqPages": …} or {"skip": "<reason>"}'))
+               ("10-فلش‌کارت-FAQ.json", dict, '{"definedTermSets": …, "faqPages": …}'))
 
 
 def check_json_shapes(item, problems):
@@ -460,7 +461,8 @@ def check_json_shapes(item, problems):
             problems.append(f"P7 {rel}: not JSON; write {shape}, or leave the file out when there is nothing to record"
                             if rel.startswith("04") else f"P7 {rel}: not JSON; write {shape}")
             continue
-        if not isinstance(data, kind) or (rel.startswith("08") and not isinstance(data.get("questions"), list)):
+        if not isinstance(data, kind) or (rel.startswith("08") and not isinstance(data.get("questions"), list)) \
+                or (rel.startswith("10") and "skip" in data):
             problems.append(f"P7 {rel}: write {shape}")
 
 
