@@ -215,12 +215,12 @@
   "claims": [
    {
     "id": "u22",
-    "claim_quote": "اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح بیرونی آن هم آلوده است و حتی با پیوند، استخوان جدید به آن نمی‌چسبد [9].",
+    "claim_quote": "اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح بیرونی آن هم آلوده است و حتی پس از دبریدمان، استخوان جدید به آن نمی‌چسبد [9].",
     "verdict": "NOT_ASSESSABLE",
     "change_kind": null,
     "source_quote": "",
     "source_ref": null,
-    "note": "The bone resorption is only the condition of the sentence and is not compared on its own; the abstract does mention alveolar bone resorption around the fixture. The two claims are that the fragment surface is contaminated and that new bone will not attach even after grafting. The abstract says nothing about surface contamination of the fragment, grafting, or bone reattachment (it covers fracture causes, galvanic corrosion, nickel leaching, bone resorption and metal fatigue). Silence in an abstract carries no information."
+    "note": "The unit asserts two things: if bone around the retained fragment has resorbed, its outer surface is contaminated, and new bone will not attach to it even after debridement. The abstract reports bone resorption around the fixture in this case only as a radiographic finding ('The radiographs show alveolar bone resorption around the fixture'). It says nothing about contamination of the implant surface, debridement, or re-osseointegration. The 'if' clause is a condition, not an assertion, so the asserted halves are silent in the abstract. The unit's own markers [8] and [9] point to other references."
    }
   ],
   "counts": {
@@ -248,17 +248,17 @@
   "claims": [
    {
     "id": "u22",
-    "claim_quote": "اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح بیرونی آن هم آلوده است و حتی با پیوند، استخوان جدید به آن نمی‌چسبد [9].",
-    "verdict": "ALTERED",
-    "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+    "claim_quote": "اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح بیرونی آن هم آلوده است و حتی پس از دبریدمان، استخوان جدید به آن نمی‌چسبد [9].",
+    "verdict": "MATCHES",
+    "change_kind": null,
     "source_quote": "It was demonstrated that re-osseointegration failed to occur to implant surfaces (standard) exposed to bacterial contamination, but did consistently occur at sites where a pristine implant component was placed in the bone defect following surgical debridement.",
     "source_ref": null,
-    "note": "The source agrees on the contamination half: surfaces exposed during experimental peri-implantitis bone loss were bacterially contaminated. It also agrees on the direction: re-osseointegration failed on contaminated surfaces. The claim applies this to a grafting condition («حتی با پیوند») that the source did not test. The treatment was antibiotics, surgical debridement, mechanical cleaning and submerged healing, with no graft."
+    "note": "Same direction, no hedge on either side: the Results sentence states the failure plainly. The hedged Conclusion is about surface quality in general and does not govern. The source tested an exposed, contaminated, debrided implant surface after peri-implantitis bone loss, which is the claim's own condition. The unit names no species, so nothing is widened."
    }
   ],
   "counts": {
-   "matches": 0,
-   "altered": 1,
+   "matches": 1,
+   "altered": 0,
    "reversed": 0,
    "not_in_source": 0,
    "not_assessable": 0,
@@ -266,12 +266,12 @@
    "not_a_claim": 0
   },
   "assessable": 1,
-  "fidelity_score": 50,
-  "level": "LOW",
+  "fidelity_score": 100,
+  "level": "HIGH",
   "provisional": true,
   "source_conclusion": "CONCLUSION: The above findings seem to imply that the quality of the titanium surface is of decisive importance for both osseointegration and re-osseointegration.",
-  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۰ مورد مطابق است، ۱ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق پایین.",
-  "interpretation_fa": "موارد تغییریافته یا برعکس: «اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح ب…» (دامنه گسترده‌تر از منبع)."
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
  },
  {
   "des_version": "3.7",
