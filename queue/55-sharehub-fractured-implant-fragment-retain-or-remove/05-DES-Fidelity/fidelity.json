@@ -1,0 +1,361 @@
+[
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u7",
+    "claim_quote": "نگه داشتن قطعه و دفن کامل آن زیر بافت نرم (Submergence) در منابع علمی به‌عنوان یکی از گزینه‌های ممکن ذکر شده است [1].",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "The claim is attributed to the source through «در منابع علمی … [1]» and carries no opinion marker. The abstract was read in full: background on implant survival, complications, biological healing and risk factors, then the aim sentence. It never mentions submergence, burying a retained fragment under soft tissue, or any specific management option for a failed or fractured implant. It says only that the article will «discuss frequent complications of implant failure and its management», which is a topic sentence and not a statement of what that content is (F2 item 1). Under ABSTRACT_ONLY this silence is NOT_ASSESSABLE."
+   }
+  ],
+  "counts": {
+   "matches": 0,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 1,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 0,
+  "fidelity_score": null,
+  "level": "INSUFFICIENT_CLAIMS",
+  "provisional": true,
+  "source_conclusion": "The aim of this article is to discuss frequent complications of implant failure and its management and help clinicians in placing and restoring implants less painfully and vicariously receive some valuable experience.",
+  "fact_fa": "از ۰ ادعایی که منبع به آن پرداخته‌اند، ۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u8",
+    "claim_quote": "دلیل اصلی آن این است که خارج کردن فیکسچر شکسته ممکن است با از دست رفتن قابل‌توجه استخوان همراه باشد [2].",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "The unit's predicate is a ranking: bone loss is called «دلیل اصلی», the main reason. Under F2 item 3 and F3 (v2.9) a ranking is one claim and is stated only by a source sentence that ranks the same reasons. The abstract gives two reasons for retaining the fixture: no infection and adequate remaining length, then bone loss introduced by «In addition». No sentence ranks them, so the ranking is silence under ABSTRACT_ONLY. Noted, not scored: the premise, that removal could cause significant bone loss, appears in «In addition, complete removal of the implant could have resulted in significant bone loss at the site.» Its hedge («could») corresponds to «ممکن است»."
+   }
+  ],
+  "counts": {
+   "matches": 0,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 1,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 0,
+  "fidelity_score": null,
+  "level": "INSUFFICIENT_CLAIMS",
+  "provisional": true,
+  "source_conclusion": "In addition, complete removal of the implant could have resulted in significant bone loss at the site.",
+  "fact_fa": "از ۰ ادعایی که منبع به آن پرداخته‌اند، ۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u9",
+    "claim_quote": "از طرف دیگر، مطالعات نشان داده‌اند ایمپلنت‌هایی که بدون دریافت بار فانکشنال زیر مخاط دفن شده‌اند، می‌توانند در طولانی‌مدت استخوان اطراف خود را حفظ کنند [3، 4].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "However, sleeping implants lost on average 0.16 mm only.",
+    "source_ref": null,
+    "note": "The claim is a hedged generalization («می‌توانند») of a finding the source states: submerged (sleeping) implants that never retained the overdenture lost on average 0.16 mm of marginal bone over 10 years. That makes it MATCHES under F2-ii item 1. The quoted sentence carries the preservation through «only». The earlier sentence «None of the non-sleeping or sleeping implants lost… more than 1.6 and 0.7 mm» gives an upper bound and does not by itself state that bone was kept. «مطالعات» names the studies cited; the predicate is the finding, not a relation between sources."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "Surgical trauma at the abutment connection is believed to be the most plausible cause of marginal bone loss around non-sleeping implants.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u9",
+    "claim_quote": "از طرف دیگر، مطالعات نشان داده‌اند ایمپلنت‌هایی که بدون دریافت بار فانکشنال زیر مخاط دفن شده‌اند، می‌توانند در طولانی‌مدت استخوان اطراف خود را حفظ کنند [3، 4].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "At each observation, compared with abutment connection, the submerged non-loaded implants showed less bone loss (P-values: 1st year 0.007, 3 years 0.000, 5 years 0.002, 8 years 0.007, 12 years 0.000) than their neighbouring functional implants.",
+    "source_ref": null,
+    "note": "Hedged generalization of a stated finding (F2-ii item 1): «می‌توانند» states a possibility that the source's long-term result (up to 12 years) shows. The source reports less bone loss than in loaded neighbours, not zero bone loss. The plural «مطالعات» names a finding, not a relation between sources, so the unit is judged on what this source says (F6)."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "This initial difference might be explained by the adaptation of the surrounding bone to the loaded implant.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u10",
+    "claim_quote": "حفظ ریج زیر پونتیک با باقی گذاشتن ریشه‌ی دندان و پوشاندن آن با بافت نرم نیز در منابع گزارش شده است [5].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "RESULTS: The submerged roots at the pontic sites preserved the surrounding periodontium without any periapical pathology.",
+    "source_ref": null,
+    "note": "The source reports the method (decoronation at crestal bone, soft tissue closure, pontic over the submerged root) and states plainly that the periodontium at the pontic site was preserved. The claim gives the same direction with no hedge."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "CONCLUSIONS: The results of this clinical report indicate that a root submergence technique can be successfully applied in pontic site development with fixed dental prostheses, especially in the maxillary anterior esthetic zone.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u3",
+    "claim_quote": "درباره‌ی بخش اپیکالی که در استخوان ثابت مانده، انتخاب روتین خارج کردن آن همراه با پیوند فوری استخوان است.",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "The unit's predicate is that removal with immediate grafting is the routine choice. The abstract never says what is routine or standard practice. It only describes this procedure in eight patients and calls it 'a viable treatment option'. That shares the subject but has a different predicate, so it is a neighbouring proposition (F2 item 2) and counts as silence under ABSTRACT_ONLY."
+   },
+   {
+    "id": "u16",
+    "claim_quote": "اما حجم استخوان را می‌توان با خارج کردن قطعه و پیوند فوری هم بازسازی کرد [6].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In conclusion, immediate reconstruction of the hard tissue after removal of a fractured dental implant is a viable treatment option.",
+    "source_ref": null,
+    "note": "«می‌توان» states a capability, not a hedge (F2-ii, like «can»), and the source shows that capability. The source also says sufficient bone was present after 4 months of healing. The claim names no site, while the source tested the posterior mandible. A 'can' statement that this finding demonstrates is not a scope change (F2-ii item 1)."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 1,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "This approach facilitates rehabilitation, reduces morbidity, and leads to favourable aesthetic outcomes.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ null,
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u22",
+    "claim_quote": "اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح بیرونی آن هم آلوده است و حتی با پیوند، استخوان جدید به آن نمی‌چسبد [9].",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "The bone resorption is only the condition of the sentence and is not compared on its own; the abstract does mention alveolar bone resorption around the fixture. The two claims are that the fragment surface is contaminated and that new bone will not attach even after grafting. The abstract says nothing about surface contamination of the fragment, grafting, or bone reattachment (it covers fracture causes, galvanic corrosion, nickel leaching, bone resorption and metal fatigue). Silence in an abstract carries no information."
+   }
+  ],
+  "counts": {
+   "matches": 0,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 1,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 0,
+  "fidelity_score": null,
+  "level": "INSUFFICIENT_CLAIMS",
+  "provisional": true,
+  "source_conclusion": "Furthermore, the use of nonprecious metal alloy for the crown's infrastructure had further contribution to the chain of events that led to the implant's fracture.",
+  "fact_fa": "از ۰ ادعایی که منبع به آن پرداخته‌اند، ۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق ادعای کافی ندارد.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u22",
+    "claim_quote": "اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح بیرونی آن هم آلوده است و حتی با پیوند، استخوان جدید به آن نمی‌چسبد [9].",
+    "verdict": "ALTERED",
+    "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+    "source_quote": "It was demonstrated that re-osseointegration failed to occur to implant surfaces (standard) exposed to bacterial contamination, but did consistently occur at sites where a pristine implant component was placed in the bone defect following surgical debridement.",
+    "source_ref": null,
+    "note": "The source agrees on the contamination half: surfaces exposed during experimental peri-implantitis bone loss were bacterially contaminated. It also agrees on the direction: re-osseointegration failed on contaminated surfaces. The claim applies this to a grafting condition («حتی با پیوند») that the source did not test. The treatment was antibiotics, surgical debridement, mechanical cleaning and submerged healing, with no graft."
+   }
+  ],
+  "counts": {
+   "matches": 0,
+   "altered": 1,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 50,
+  "level": "LOW",
+  "provisional": true,
+  "source_conclusion": "CONCLUSION: The above findings seem to imply that the quality of the titanium surface is of decisive importance for both osseointegration and re-osseointegration.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۰ مورد مطابق است، ۱ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق پایین.",
+  "interpretation_fa": "موارد تغییریافته یا برعکس: «اگر دور قطعه هم استخوان تحلیل رفته باشد [8]، سطح ب…» (دامنه گسترده‌تر از منبع)."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u21",
+    "claim_quote": "باکتری‌ها از طریق ریزفاصله‌ی اتصال فیکسچر و اباتمنت وارد فضای داخلی ایمپلنت می‌شوند و در آنجا یک مخزن باکتریایی تشکیل می‌دهند [10].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Microbial penetration inside the implants internal cavity produces a bacterial reservoir that is associated with an area of inflamed connective tissue facing the fixture-abutment junction.",
+    "source_ref": null,
+    "note": "F3 precedence: the half on penetration into the internal cavity and formation of a bacterial reservoir is stated in this sentence; the half naming the entry route (the fixture-abutment microgap) is not addressed by the abstract (NOT_ASSESSABLE) and does not decide the verdict."
+   },
+   {
+    "id": "u39",
+    "claim_quote": "در مطالعات مربوط به ایمپلنت‌های فانکشنال، استفاده از ژل کلرهگزیدین توانسته بار باکتریایی فضای داخلی ایمپلنت را کاهش دهد [10].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "From baseline to the 3-month examination, the total bacterial counts underwent a significant reduction only in the TG.",
+    "source_ref": null,
+    "note": "The Results sentence states the reduction plainly and comes before the hedged conclusion («appears to be an effective method»), so the unhedged past-tense claim matches it (F2-ii). The plural «در مطالعات» is read as attribution to the cited work. No relation between several sources is asserted."
+   }
+  ],
+  "counts": {
+   "matches": 2,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 2,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "The administration of a 1% chlorhexidine gel appears to be an effective method for the reduction of bacterial colonization of the implant cavity and for safeguarding the health status of peri-implant tissue over a 3-month administration period.",
+  "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ null,
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u40",
+    "claim_quote": "همچنین مطالعات آزمایشگاهی نشان داده‌اند مواد ضدعفونی‌کننده می‌توانند آلودگی میکروبی را کاهش دهند، اما قادر به حذف کامل آن نیستند [12].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "No pretreatment could hinder bacterial leakage in all cases, but all applied agents could reduce bacterial burden significantly (P < .05).",
+    "source_ref": null,
+    "note": "Both halves are stated in one Results sentence. The reduction half keeps the source's modal: «could» is on F2-ii's hedge list and «می‌توانند» repeats it. The incomplete-elimination half matches «No pretreatment could hinder bacterial leakage in all cases». Limiting the finding to the disinfectant is a narrowing to a subset the source tested: the source names chlorhexidine gel as its disinfectant agent, alongside two sealants. Narrowing is not a change (F2-i)."
+   },
+   {
+    "id": "u41",
+    "claim_quote": "اثر این اقدامات روی قطعات شکسته‌ای که به‌صورت ساب‌مرج باقی گذاشته می‌شوند، مستقیماً بررسی نشده است.",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "This is a claim about the literature as a whole: that the effect on broken fragments left submerged has not been studied. It cannot be decided from one source (F2 item 4). The abstract also does not mention fractured or submerged implant parts; it addresses intact implant-abutment assemblies only. Silence under ABSTRACT_ONLY."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 1,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "CONCLUSION: The application of products to reduce bacterial invasion can help reduce bacterial load to a minimum and therefore can be helpful in minimizing the cofactors that contribute to the development of peri-implantitis.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ }
+]

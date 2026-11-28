@@ -1,0 +1,76 @@
+{
+ "S1": {
+  "markers": [
+   "[1]"
+  ],
+  "disambiguators": []
+ },
+ "S2": {
+  "markers": [
+   "[2]"
+  ],
+  "disambiguators": []
+ },
+ "S3": {
+  "markers": [
+   "[3]",
+   "[3،"
+  ],
+  "disambiguators": []
+ },
+ "S4": {
+  "markers": [
+   "[4]",
+   "4]"
+  ],
+  "disambiguators": []
+ },
+ "S5": {
+  "markers": [
+   "[5]"
+  ],
+  "disambiguators": []
+ },
+ "S6": {
+  "markers": [
+   "[6]"
+  ],
+  "disambiguators": []
+ },
+ "S7": {
+  "markers": [
+   "[7]"
+  ],
+  "disambiguators": []
+ },
+ "S8": {
+  "markers": [
+   "[8]"
+  ],
+  "disambiguators": []
+ },
+ "S9": {
+  "markers": [
+   "[9]"
+  ],
+  "disambiguators": []
+ },
+ "S10": {
+  "markers": [
+   "[10]"
+  ],
+  "disambiguators": []
+ },
+ "S11": {
+  "markers": [
+   "[11]"
+  ],
+  "disambiguators": []
+ },
+ "S12": {
+  "markers": [
+   "[12]"
+  ],
+  "disambiguators": []
+ }
+}

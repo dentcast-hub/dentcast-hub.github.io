@@ -1,0 +1,961 @@
+{
+ "scored_at": "2026-11-28",
+ "sources": [
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "The Etiology and Management of Dental Implant Failure: A Review.",
+    "authors": "Kochar SP, Reche A, Paul P",
+    "year": 2022,
+    "journal": "Cureus",
+    "doi": "10.7759/cureus.30455"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 15,
+    "anchor": "narrative review of implant complications and failure management (THERAPY narrative review row, 15)",
+    "evidence_quote": "The aim of this article is to discuss frequent complications of implant failure and its management"
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "not addressed in the abstract; silence under ABSTRACT_ONLY is NR"
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no search strategy or databases mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no screening account or eligibility criteria in the abstract; silence under ABSTRACT_ONLY is NR"
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no appraisal of included studies mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no synthesis or pooling method mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "not addressed in the abstract; silence under ABSTRACT_ONLY is NR"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract; no follow-up duration is stated for the survival claim"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 8,
+   "band": "E",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۸ از ۱۰۰ و در باند E (سطح زمینه و نظر) برای پرسش از نوع THERAPY است و چون فقط abstract در دست بود، نتیجه مقدماتی است.",
+   "interpretation_fa": "این مقاله یک narrative review است و abstract آن هیچ روش جست‌وجو، معیار انتخاب یا ارزیابی کیفیت مطالعات را گزارش نمی‌کند، پس سقف طراحی آن پایین است. جنبه‌ی ETIOLOGY شکست ایمپلنت هم در کنار management بررسی شده است. ارزش عملی آن در حد مرور مقدماتی عوامل خطر و عوارض ایمپلنت است، نه مبنای تصمیم درمانی."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Managing a fractured implant: A clinical report.",
+    "authors": "Oh SL, Barnes D",
+    "year": 2016,
+    "journal": "The Journal of prosthetic dentistry",
+    "doi": "10.1016/j.prosdent.2015.08.027"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 30,
+    "anchor": "single-patient clinical report (THERAPY case series / case report row, 30)",
+    "evidence_quote": "A custom-made prosthetic post was made to connect the remaining implant fixture and the implant-retained crown"
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not address confounding; single case with no comparison group; ABSTRACT_ONLY, so silence is NR"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract states why this fixture was retained (no infection, adequate length), which is the indication for the technique, not an account of how the patient was selected; ABSTRACT_ONLY, so NR"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "low",
+      "evidence_quote": "A custom-made prosthetic post was made to connect the remaining implant fixture and the implant-retained crown",
+      "note": "the single intervention is explicitly described"
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no statement of losses or follow-up completeness in the abstract; ABSTRACT_ONLY, so NR"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no outcome, outcome measure or follow-up assessment reported in the abstract; ABSTRACT_ONLY, so NR"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract; single-patient report"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract: no follow-up duration or outcome claim stated"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 17,
+   "band": "E",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۱۷ و در باند E (سطح پس‌زمینه و نظر) با نوع سؤال THERAPY است.",
+   "interpretation_fa": "این یک گزارش بالینی تک‌بیمار است و چکیده هیچ پیامد یا مدت follow-up گزارش نمی‌کند، پس امتیاز پایین و مقدماتی است. ارزش عملی آن معرفی یک ایده‌ی درمانی است: حفظ fixture شکسته با یک post سفارشی وقتی عفونت نیست و طول کافی باقی مانده. شاهدی برای موفقیت بلندمدت این روش نیست."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Bone behavior around sleeping and non-sleeping implants retaining a mandibular hinging overdenture.",
+    "authors": "Naert I, Gizani S, van Steenberghe D",
+    "year": 1999,
+    "journal": "Clinical oral implants research",
+    "doi": "10.1034/j.1600-0501.1999.100209.x"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 50,
+    "anchor": "retrospective within-patient cohort, 10-year recall of a 1984-1987 treated group (THERAPY retrospective cohort row, 50)",
+    "evidence_quote": "Ten years later half of the patients could still be traced."
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "some_concerns",
+      "evidence_quote": "Between 1984 and 1987 20 completely edentulous patients were provided with 3 implants (Brånemark system), where from 2 were used to retain a hinging overdenture.",
+      "note": "within-patient design compares both implant types in the same patients; no adjustment for implant position (sleeping implant always in the middle, non-sleeping on the sides) is described"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives no eligibility or recruitment criteria; not assessable from an abstract"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "low",
+      "evidence_quote": "Because this technique was unknown at that time 1 extra implant was installed in between the 2 others and was left submerged (sleeping).",
+      "note": "exposure groups defined by the treatment itself at placement"
+     },
+     {
+      "domain": "missing data",
+      "rating": "some_concerns",
+      "evidence_quote": "Ten years later half of the patients could still be traced.",
+      "note": "losses stated (50% of patients); no handling of missing data or comparison of traced vs untraced patients described"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "Retroalveolar radiographs were made at the abutment installation and after 10 years.",
+      "note": "radiographic method and timing described; no examiner blinding, calibration or standardisation of projection reported"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "Retroalveolar radiographs were made at the abutment installation and after 10 years.",
+     "note": "10-year follow-up is adequate for marginal bone change"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 28,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۲۸ از ۱۰۰ و در باند D (شواهد ضعیف) برای سؤال THERAPY است و چون فقط چکیده در دست بود، مقدماتی است.",
+   "interpretation_fa": "این گزارش یک cohort گذشته‌نگر کوچک است که در همان بیماران، ایمپلنت‌های sleeping را با ایمپلنت‌های بارگذاری‌شده مقایسه کرده است. از دست رفتن نیمی از بیماران در ۱۰ سال و نبود توضیح درباره‌ی blinding یا اثر موقعیت ایمپلنت، اطمینان به تفاوت را کم می‌کند. ارزش بالینی آن در حد یک مشاهده‌ی بلندمدت است، با تفاوت‌هایی زیر یک میلی‌متر."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Sleeping vs. loaded implants, long-term observations via a retrospective analysis.",
+    "authors": "Marcelis K, Vercruyssen M, Nicu E, Naert I, Quirynen M",
+    "year": 2012,
+    "journal": "Clinical oral implants research",
+    "doi": "10.1111/j.1600-0501.2011.02263.x"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 50,
+    "anchor": "retrospective split-mouth cohort comparison of loaded vs sleeping implants (THERAPY retrospective cohort row, 50); retrospective design stated in the supplied metadata title",
+    "evidence_quote": "This study compared the long-term outcome (up to 12 years) of sleeping with loaded implants in the mandible via a split-mouth concept."
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "some_concerns",
+      "evidence_quote": "via a split-mouth concept",
+      "note": "within-patient comparison controls patient-level confounders, but loaded and sleeping implants sat in different positions (33/43 vs mostly 31/41) and no adjustment for position is described"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives only the number enrolled; no eligibility or selection criteria reported"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "low",
+      "evidence_quote": "They presented with 28 loaded (position 33/43) and 14 sleeping implants (mostly position 31/41).",
+      "note": ""
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no statement of numbers analysed against enrolled, losses or dropouts across 12 years; sample size alone does not address the domain"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "At several follow-up visits, intra-oral radiographs (long-cone principle) were taken to observe marginal bone level changes.",
+      "note": "standardised radiographic technique described; examiner blinding and calibration not reported"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "up to 12 years",
+     "note": "12-year follow-up is adequate for marginal bone level change"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 28,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۲۸ از ۱۰۰ و در باند D (شواهد ضعیف) برای سؤال THERAPY است و چون فقط چکیده بررسی شده، مقدماتی است.",
+   "interpretation_fa": "طراحی split-mouth گذشته‌نگر با ۱۴ بیمار، مقایسه را درون هر بیمار انجام می‌دهد اما موقعیت ایمپلنت‌های loaded و sleeping یکسان نیست و انتخاب بیماران، ریزش و blinding گزارش نشده است. پیگیری ۱۲ ساله نقطه‌ی قوت آن است. یافته‌ی اصلی، یعنی تمرکز تحلیل استخوان در سال اول بارگذاری، برای درک الگوی bone remodeling در overdenture مندیبل ارزش توضیحی دارد، نه اثبات علّی."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "A root submergence technique for pontic site development in fixed dental prostheses in the maxillary anterior esthetic zone.",
+    "authors": "Choi S, Yeo IS, Kim SH, Lee JB, Cheong CW, Han JS",
+    "year": 2015,
+    "journal": "Journal of periodontal & implant science",
+    "doi": "10.5051/jpis.2015.45.4.152"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 30,
+    "anchor": "case report (THERAPY case series/case report row, 30)",
+    "evidence_quote": "This case report discusses the effect of a root submergence technique"
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "single-arm case report, no comparative analysis; the abstract does not address confounding"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "some_concerns",
+      "evidence_quote": "Teeth with less than ideal structural support for fixed retainer abutments were decoronated at the crestal bone level.",
+      "note": "a selection criterion is stated, but not how or from what pool the cases were chosen"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "low",
+      "evidence_quote": "After soft tissue closure, the final fixed dental prostheses were placed with the pontics over the submerged root area."
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no number of patients or sites, and no statement of losses, in the abstract"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "Radiographic and clinical observations at the pontic sites were documented.",
+      "note": "outcome assessment is described, but no criteria, timing or assessor details are given"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract: no follow-up duration is stated"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 17,
+   "band": "E",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۱۷ از ۱۰۰ و باند E برای سؤال از نوع THERAPY است. این امتیاز مقدماتی است و بر پایه‌ی abstract محاسبه شده است.",
+   "interpretation_fa": "این یک case report بدون گروه کنترل است. abstract تعداد بیماران، مدت follow-up و معیارهای ارزیابی را گزارش نمی‌کند، پس امتیاز در سطح پایه می‌ماند. ارزش بالینی آن در معرفی تکنیک root submergence برای حفظ ridge و کانتور لثه زیر pontic در ناحیه‌ی زیبایی قدامی است و پیش‌بینی‌پذیری یا برتری آن را نشان نمی‌دهد."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Immediate repair of bony defects in the posterior mandibular region following removal of a fractured implant: a feasible treatment?",
+    "authors": "Raghoebar GM, Meijer HJA, Vissink A",
+    "year": 2024,
+    "journal": "International journal of oral and maxillofacial surgery",
+    "doi": "10.1016/j.ijom.2023.11.007"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 30,
+    "anchor": "single-arm case series of 8 consecutive patients (THERAPY case series row, 30)",
+    "evidence_quote": "Eight consecutive patients with a fractured implant neck were included."
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "Single-arm series with no comparison group; the abstract does not address confounding. Critical flaw (no control group where the question requires one): the conclusion draws a comparative claim, 'This approach facilitates rehabilitation, reduces morbidity', from a single arm with no comparator. This forces the multiplier to 0.30."
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "low",
+      "evidence_quote": "Eight consecutive patients with a fractured implant neck were included."
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "low",
+      "evidence_quote": "The implant was removed via osteotomy, following which the site was immediately repaired with a mixture of autogenous bone and bone substitute."
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "The abstract gives no enrolled-versus-analysed count, no losses or withdrawals and no flow statement. Outcome statements covering all patients are results, not a statement about missing data."
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "Patient satisfaction, the aesthetic outcome, complications, and postoperative morbidity were assessed using standardized clinical and radiographic examinations up to 5 years after crown placement.",
+      "note": "Standardized examinations are described. Assessor blinding and calibration are not stated, and satisfaction is self-reported."
+     }
+    ],
+    "multiplier": 0.3
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "The mean marginal bone level change at the 5-year follow-up was - 0.17 ± 0.46 mm.",
+     "note": "5-year follow-up is adequate for the survival and bone-level claims"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 9,
+   "band": "E",
+   "provisional": true,
+   "fact_fa": "این مقاله با امتیاز ۹ در باند E (سطح پس‌زمینه) برای پرسش THERAPY قرار می‌گیرد و این امتیاز مقدماتی و بر پایه‌ی abstract است.",
+   "interpretation_fa": "این یک case series تک‌گروهی با هشت بیمار است که نتیجه‌ی مقایسه‌ای (کاهش morbidity) را بدون گروه کنترل مطرح می‌کند. نتایج پنج‌ساله‌ی خوب نشان می‌دهد بازسازی فوری استخوان پس از خارج کردن implant شکسته در مندیبل خلفی قابل اجراست. این شواهد برتری این روش را نسبت به ترمیم تأخیری ثابت نمی‌کند."
+  },
+  {
+   "des_version": "3.7",
+   "error": "INSUFFICIENT_TEXT"
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "ETIOLOGY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Fracture of dental implants: literature review and report of a case.",
+    "authors": "Tagger Green N, Machtei EE, Horwitz J, Peled M",
+    "year": 2002,
+    "journal": "Implant dentistry",
+    "doi": "10.1097/00008505-200204000-00014"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 30,
+    "anchor": "single case report with an accompanying narrative literature review; scored as a write-up of the case, which carries the paper's new finding (ETIOLOGY case series row, 30; the ETIOLOGY table has no separate case-report row, and THERAPY prices case series and case report on the same row)",
+    "evidence_quote": "This is illustrated by the case of a titanium implant restored with a non-precious porcelain-fused-to-metal cemented crown that fractured 4 years after loading."
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "NR",
+      "evidence_quote": "the use of nonprecious metal alloy for the crown's infrastructure had further contribution to the chain of events that led to the implant's fracture",
+      "note": "Not addressed in the abstract. The 3b-i confounding threshold does not apply because no comparative analysis is reported. Critical flaw (Step 3c): this is a causal claim (the alloy contributed to the fracture) drawn from one case, with no control group. The multiplier is therefore forced to 0.30."
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "The abstract does not address how the case was selected or identified."
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "some_concerns",
+      "evidence_quote": "the crown metal, a nickel-chromium-molybdenum alloy, exhibited corrosion",
+      "note": "The metallurgical analysis identifies the exposure (the crown alloy), but the abstract gives no method for that identification."
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "The abstract does not address missing data."
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "Metallurgical analysis of the implant indicated that the fracture was caused by metal fatigue",
+      "note": "The outcome mechanism was established by metallurgical analysis, but the abstract does not describe the analysis protocol or blinding."
+     }
+    ],
+    "multiplier": 0.3
+   },
+   "penalties": [
+    {
+     "item": "conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract; a single case report has no sample to power"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "no survival or success-rate claim is made; the fracture occurred at 4 years and is the event being reported"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 9,
+   "band": "E",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۹ از ۱۰۰ و در باند E (سطح پس‌زمینه و نظر) برای پرسش ETIOLOGY است و چون فقط بر پایه‌ی چکیده است، موقت است.",
+   "interpretation_fa": "این مقاله یک مرور روایی همراه با یک گزارش مورد است. فرضیه‌ی نقش galvanic corrosion و یون‌های nickel در شکست implant را از همین یک مورد بیرون می‌کشد. نتیجه‌گیری علّی از یک مورد بدون گروه کنترل، ارزش آن را به سطح ایجاد فرضیه محدود می‌کند. ارزش بالینی‌اش طرح یک ریسک احتمالی در ترکیب base metal alloy با titanium است، نه اثبات آن."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Osseintegration following treatment of peri-implantitis and replacement of implant components. An experimental study in the dog.",
+    "authors": "Persson LG, Ericsson I, Berglundh T, Lindhe J",
+    "year": 2001,
+    "journal": "Journal of clinical periodontology",
+    "doi": "10.1034/j.1600-051x.2001.028003258.x"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 65,
+    "anchor": "controlled experimental animal study in dogs, non-randomized, within-animal comparison of standard vs test fixtures (THERAPY prospective cohort / non-randomized trial row, 65)",
+    "evidence_quote": "2 Labrador dogs were used."
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "some_concerns",
+      "evidence_quote": "1 standard fixture and 3, 2-part \"test fixtures\" were installed in each side of the mandible.",
+      "note": "both fixture types placed in the same animals and the same side, so animal-level factors are shared; no explicit statement on other confounders"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not describe how animals or implant sites were selected; the animal count alone does not address this domain"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "low",
+      "evidence_quote": "A pristine, coronal fixture part was via the connecting screw attached to the apical fixture part of each text fixture."
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no statement of fixtures placed vs analysed, losses or exclusions in the abstract"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "After 4 months, biopsies of the implant sites were dissected and prepared for ground sectioning and analysis.",
+      "note": "histological method described; assessor blinding not reported"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "conflict-of-interest / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "outcome is histological re-osseointegration at 4 months, not a survival claim; no flaw affirmatively shown"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 36,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۳۶ از ۱۰۰ و باند D (شواهد ضعیف) در نوع سؤال THERAPY است و چون بر پایه‌ی abstract است، موقت محسوب می‌شود.",
+   "interpretation_fa": "این یک مطالعه‌ی حیوانی روی دو سگ است که به ردیف non-randomized trial ارجاع شده و ترجمه‌ی بالینی آن محدود است. سطح تیتانیومِ آلوده پس از دبریدمان re-osseointegration نشان نداد، اما جزء تازه‌ی جایگزین‌شده نشان داد. ارزشش در پشتوانه‌ی بیولوژیک اهمیت کیفیت سطح است، نه در پیش‌بینی نتیجه‌ی درمان peri-implantitis در بیمار."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Microbiological and biochemical effectiveness of an antiseptic gel on the bacterial contamination of the inner space of dental implants: a 3-month human longitudinal study.",
+    "authors": "D'Ercole S, Tetè S, Catamo G, Sammartino G, Femminella B, Tripodi D, Spoto G, Paolantonio M",
+    "year": 2009,
+    "journal": "International journal of immunopathology and pharmacology",
+    "doi": "10.1177/039463200902200417"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 65,
+    "anchor": "non-randomized controlled clinical trial; the abstract states no randomization (THERAPY prospective cohort / non-randomized trial row, 65)",
+    "evidence_quote": "The patients were then divided into two groups: the control (CG; n=10) and test (TG; n=15) groups."
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not address adjustment, matching, restriction or baseline comparability between groups; silence under ABSTRACT_ONLY"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no eligibility criteria or selection process described; the patient count and age range alone do not address the domain"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "low",
+      "evidence_quote": "In contrast, before the abutment placement and screw tightening, the TG had the internal part of the fixture filled with a 1 percent chlorhexidine gel.",
+      "note": "intervention and control procedures are defined explicitly and applied at the time of abutment placement"
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no statement of losses, withdrawals, or enrolled vs analysed numbers; group sizes alone do not address the domain"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "Three months later, the same clinical, microbiological and biochemical procedures were repeated in both groups.",
+      "note": "identical measurement procedures in both groups are described; assessor blinding is not mentioned"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "applies to RCTs only; design scored as non-randomized trial"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "over a 3-month administration period",
+     "note": "the claim is explicitly bounded to the 3-month period studied; no survival or long-term claim is made"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 36,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۳۶ است، در باند D (شواهد ضعیف) برای پرسش THERAPY، و چون فقط چکیده در دسترس بود نتیجه مقدماتی است.",
+   "interpretation_fa": "این کارآزمایی بالینی کوچک (۲۵ بیمار، یک ایمپلنت برای هر نفر) در چکیده تخصیص تصادفی گروه‌ها را گزارش نمی‌کند و پیگیری‌اش سه ماه است. کاهش بار باکتریایی internal cavity با ژل chlorhexidine یک درصد از نظر زیستی معقول است، اما پیامد بالینی مثل peri-implantitis سنجیده نشده. ارزشش در حد یک سیگنال اولیه است."
+  },
+  {
+   "des_version": "3.7",
+   "error": "INSUFFICIENT_TEXT"
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "MATERIAL",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Transfer of Bacteria into the Internal Cavity of Dental Implants After Application of Disinfectant or Sealant Agents In Vitro.",
+    "authors": "Podhorsky A, Biscoping S, Rehmann P, Streckbein P, Domann E, Wöstmann B",
+    "year": 2016,
+    "journal": "The International journal of oral & maxillofacial implants",
+    "doi": "10.11607/jomi.4408"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 65,
+    "anchor": "in-vitro bacterial leakage study of two implant systems with four pretreatment groups, thermocycling in half the specimens and qPCR quantification; no standard or established method is named and no specimen count is given (MATERIAL in-vitro non-standard but described protocol row, 65)",
+    "evidence_quote": "Before the corresponding abutments were fixed, the internal cavities were pretreated in four different ways (application of a 0.2% chlorhexidine gel, a special silicone, or a sealing grease, or no pretreatment). Half of the specimens were subjected to thermocycling."
+   },
+   "q_method": {
+    "tool": "QUIN",
+    "domains": [
+     {
+      "domain": "clearly stated aims",
+      "rating": "low",
+      "evidence_quote": "The aim of this in vitro study was to analyze the bacterial colonization of the implant lumen of two implant systems",
+      "note": ""
+     },
+     {
+      "domain": "sample size justification",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives no specimen count and no sample size calculation or stated reason for the count; silence under ABSTRACT_ONLY"
+     },
+     {
+      "domain": "randomization / allocation of specimens",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not state how specimens were allocated to the four pretreatment groups or to thermocycling"
+     },
+     {
+      "domain": "operator and assessor blinding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not mention blinding of operators or of the PCR assessment"
+     },
+     {
+      "domain": "appropriate statistical analysis",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract names no statistical test or analysis method; P values in Results report results and do not address the domain (3b-ii)"
+     },
+     {
+      "domain": "conflict of interest / funding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no funding or conflict-of-interest statement in the abstract; not assessable from an abstract"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: RCTs only, this is an in-vitro study"
+    },
+    {
+     "item": "specimen count per group <10 with no justification",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract: specimen count per group not reported"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: in-vitro bench study makes no clinical survival claim"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 36,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۳۶ است، در band D (شواهد ضعیف) برای question type از نوع MATERIAL، و چون فقط abstract در دست بود موقت است.",
+   "interpretation_fa": "طراحی in-vitro برای این سؤال مناسب است، اما abstract تعداد نمونه، نحوه‌ی تخصیص، blinding و روش آماری را گزارش نمی‌کند و امتیاز را پایین نگه می‌دارد. یافته‌ی اصلی این است که chlorhexidine gel و sealantها بار باکتریایی داخل implant را کم کردند ولی هیچ‌کدام نفوذ را کامل متوقف نکرد. مدل تک‌گونه‌ای E. coli است و ارتباطش با peri-implantitis در بیمار نشان داده نشده است."
+  }
+ ]
+}
