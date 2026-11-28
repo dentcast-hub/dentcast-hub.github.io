@@ -5,7 +5,7 @@
    "des_version": "3.7",
    "content_type": "RESEARCH",
    "question_type": "THERAPY",
-   "text_basis": "ABSTRACT_ONLY",
+   "text_basis": "FULL_TEXT",
    "citation": {
     "title": "The Etiology and Management of Dental Implant Failure: A Review.",
     "authors": "Kochar SP, Reche A, Paul P",
@@ -19,7 +19,7 @@
    },
    "s_design": {
     "value": 15,
-    "anchor": "narrative review of implant complications and failure management (THERAPY narrative review row, 15)",
+    "anchor": "narrative review (THERAPY narrative review row, 15)",
     "evidence_quote": "The aim of this article is to discuss frequent complications of implant failure and its management"
    },
    "q_method": {
@@ -27,53 +27,53 @@
     "domains": [
      {
       "domain": "protocol registered before commencement",
-      "rating": "NR",
+      "rating": "high",
       "evidence_quote": "",
-      "note": "not addressed in the abstract; silence under ABSTRACT_ONLY is NR"
+      "note": "no protocol or registration (PROSPERO or otherwise) anywhere; read Abstract, Introduction and background, every Review subsection, Conclusions; no Methods section exists; no protocol/registration/registered wording in the text"
      },
      {
       "domain": "adequacy of the literature search",
-      "rating": "NR",
+      "rating": "high",
       "evidence_quote": "",
-      "note": "no search strategy or databases mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+      "note": "no search strategy reported; no database named (no PubMed/MEDLINE/Embase/Cochrane/Scopus wording), no search terms, dates or limits; the text has no Methods section, only topical Review subsections citing references [1]-[61]"
      },
      {
       "domain": "justification for excluding individual studies",
-      "rating": "NR",
+      "rating": "high",
       "evidence_quote": "",
-      "note": "no screening account or eligibility criteria in the abstract; silence under ABSTRACT_ONLY is NR"
+      "note": "3b-iii line 3: neither (a) a screening account with counts nor (b) inclusion/exclusion criteria; no PRISMA diagram, no records screened/full texts assessed/included counts, no eligibility criteria in Abstract, Introduction, Review or Conclusions"
      },
      {
       "domain": "risk of bias assessment of included studies",
-      "rating": "NR",
+      "rating": "high",
       "evidence_quote": "",
-      "note": "no appraisal of included studies mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+      "note": "no appraisal step anywhere; no quality/bias/appraisal/risk of bias/critical appraisal wording in any section; cited studies are reported without assessment"
      },
      {
       "domain": "appropriateness of meta-analytical methods",
-      "rating": "NR",
+      "rating": "high",
       "evidence_quote": "",
-      "note": "no synthesis or pooling method mentioned in the abstract; silence under ABSTRACT_ONLY is NR"
+      "note": "no quantitative synthesis or statistical methods described anywhere; no pooling, model, heterogeneity or meta-analysis wording; findings are narrated per reference"
      },
      {
       "domain": "assessment of publication bias",
-      "rating": "NR",
+      "rating": "high",
       "evidence_quote": "",
-      "note": "not addressed in the abstract; silence under ABSTRACT_ONLY is NR"
+      "note": "no publication bias assessment (no funnel plot, Egger test or small-study wording) in any section of the text"
      }
     ],
-    "multiplier": 0.55
+    "multiplier": 0.3
    },
    "penalties": [
     {
      "item": "no conflict-of-interest statement / manufacturer funding",
      "base_points": 8,
-     "points": 0,
+     "points": 1,
      "evidence_quote": "",
-     "note": "not assessable in abstract"
+     "note": "read the whole text including the end after Conclusions: no conflict-of-interest, disclosure, funding or acknowledgment block and no such wording (also checked for ligature forms such as Conﬂict); fires, scaled max(1, round_half_up(8×15/100)) = 1"
     },
     {
-     "item": "clinical trial not prospectively registered",
+     "item": "clinical trial not prospectively registered (RCTs only)",
      "base_points": 5,
      "points": 0,
      "evidence_quote": "",
@@ -87,19 +87,19 @@
      "note": "not applicable to a secondary study"
     },
     {
-     "item": "follow-up shorter than the outcome requires",
+     "item": "follow-up shorter than the outcome plausibly requires",
      "base_points": 3,
      "points": 0,
-     "evidence_quote": "",
-     "note": "not assessable in abstract; no follow-up duration is stated for the survival claim"
+     "evidence_quote": "From 4.3% after five years to 26.4% after 10 years, the frequency of connection-related problems (screw loosening or fracture) increased.",
+     "note": "the survival/complication figures the text reports rest on 5 to 10 year follow-up, not short relative to the claims; does not fire"
     }
    ],
    "commentary_checklist": null,
-   "des_score": 8,
+   "des_score": 4,
    "band": "E",
-   "provisional": true,
-   "fact_fa": "امتیاز DES این مقاله ۸ از ۱۰۰ و در باند E (سطح زمینه و نظر) برای پرسش از نوع THERAPY است و چون فقط abstract در دست بود، نتیجه مقدماتی است.",
-   "interpretation_fa": "این مقاله یک narrative review است و abstract آن هیچ روش جست‌وجو، معیار انتخاب یا ارزیابی کیفیت مطالعات را گزارش نمی‌کند، پس سقف طراحی آن پایین است. جنبه‌ی ETIOLOGY شکست ایمپلنت هم در کنار management بررسی شده است. ارزش عملی آن در حد مرور مقدماتی عوامل خطر و عوارض ایمپلنت است، نه مبنای تصمیم درمانی."
+   "provisional": false,
+   "fact_fa": "امتیاز DES این مقاله ۴ از ۱۰۰ و در باند E (سطح پیش‌زمینه و نظر) برای پرسشی از نوع THERAPY است.",
+   "interpretation_fa": "این متن یک narrative review بدون بخش Methods است؛ جست‌وجوی منابع، معیار انتخاب و ارزیابی کیفیت مطالعات در آن گزارش نشده و هر ادعا به یک ارجاع منفرد تکیه دارد. ارزش بالینی‌اش در مرور مرتب علل early و late failure و فهرست گزینه‌های مدیریت مثل CTRT، درمان peri-implantitis و مدیریت membrane exposure است. نقش آن نقشه‌ی راه موضوع است، نه شاهد برای تصمیم درمانی."
   },
   {
    "des_version": "3.7",
