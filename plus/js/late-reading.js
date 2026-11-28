@@ -1,4 +1,4 @@
-import { currentUser, meStatus } from './api.js?v=265';
+import { currentUser, meStatus } from './api.js?v=266';
 
 // Late start for the reading tracker (plus.js setupWorkbench).
 //

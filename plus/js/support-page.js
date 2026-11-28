@@ -8,12 +8,12 @@
 // «پشتیبانی و مشاوره» left the form (services/support.ts FORM_KINDS — the
 // premium question path is now «گفت‌وگوی زیر مطلب», under an article), no kind
 // this form offers is ever locked, so there is nothing left to grey out here.
-import { el, faNum } from './util.js?v=265';
-import { currentUser, meStatus, api } from './api.js?v=265';
-import { unreachableGate } from './premium-cta.js?v=265';
-import { openLoginModal } from './login-modal.js?v=265';
-import { registerSW } from './pwa.js?v=265';
-import { wirePageBack } from './page-back.js?v=265';
+import { el, faNum } from './util.js?v=266';
+import { currentUser, meStatus, api } from './api.js?v=266';
+import { unreachableGate } from './premium-cta.js?v=266';
+import { openLoginModal } from './login-modal.js?v=266';
+import { registerSW } from './pwa.js?v=266';
+import { wirePageBack } from './page-back.js?v=266';
 
 // The session can end under an open page — a logout in another tab, an expiry.
 // The API then answers 401, and the page used to print «ورود لازم است.» under
