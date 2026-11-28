@@ -264,7 +264,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 137,
+   "count": 138,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -402,7 +402,8 @@
     "insight/insight-117",
     "insight/insight-119",
     "insight/insight-120",
-    "insight/insight-121"
+    "insight/insight-121",
+    "insight/insight-122"
    ]
   },
   {
@@ -4496,6 +4497,44 @@
    ]
   },
   {
+   "key": "گیر_غذایی",
+   "tag": "#گیر_غذایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
+   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
+   "aliases": [
+    "food impaction",
+    "گیر کردن غذا",
+    "ایمپکشن غذا",
+    "فود ایمپکشن",
+    "ایمپکشن غذایی",
+    "گیر مواد غذایی",
+    "food trapping",
+    "فودایمپکشن"
+   ],
+   "variants": [
+    "#Food_Impaction"
+   ],
+   "co_tags": [
+    "#Food_Impaction"
+   ],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "insight/insight-7",
+    "episodes/episode-159",
+    "chairside/chairside-28",
+    "chairside/chairside-37",
+    "insight/insight-73",
+    "chairside/chairside-50",
+    "episodes/episode-163",
+    "chairside/chairside-55",
+    "episodes/episode-164",
+    "insight/insight-122"
+   ]
+  },
+  {
    "key": "github",
    "tag": "#GitHub",
    "domain": "ai",
@@ -4737,40 +4776,39 @@
    ]
   },
   {
-   "key": "گیر_غذایی",
-   "tag": "#گیر_غذایی",
+   "key": "کانتکت_باز",
+   "tag": "#کانتکت_باز",
    "domain": "clinical",
    "words": 2,
-   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
-   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
+   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
+   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
    "aliases": [
-    "food impaction",
-    "گیر کردن غذا",
-    "ایمپکشن غذا",
-    "فود ایمپکشن",
-    "ایمپکشن غذایی",
-    "گیر مواد غذایی",
-    "food trapping",
-    "فودایمپکشن"
+    "open contact",
+    "تماس باز پروگزیمال",
+    "باز بودن تماس",
+    "اپن کانتکت",
+    "loose contact",
+    "کانتکت لوز",
+    "open proximal contact"
    ],
    "variants": [
-    "#Food_Impaction"
+    "#تماس_باز"
    ],
    "co_tags": [
-    "#Food_Impaction"
+    "#تماس_باز"
    ],
    "count": 10,
    "content_ids": [
     "episodes/episode-121-1",
-    "insight/insight-7",
-    "episodes/episode-159",
-    "chairside/chairside-28",
-    "chairside/chairside-37",
-    "insight/insight-73",
-    "chairside/chairside-50",
+    "photocast/episode-1",
+    "insight/insight-29",
+    "metanotes/meta-12",
+    "insight/insight-69",
+    "insight/insight-80",
     "episodes/episode-163",
-    "chairside/chairside-55",
-    "episodes/episode-164"
+    "insight/insight-115",
+    "sharehub/share-62",
+    "insight/insight-122"
    ]
   },
   {
@@ -5036,41 +5074,6 @@
     "metanotes/meta-8",
     "insight/insight-48",
     "chairside/chairside-38"
-   ]
-  },
-  {
-   "key": "کانتکت_باز",
-   "tag": "#کانتکت_باز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
-   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
-   "aliases": [
-    "open contact",
-    "تماس باز پروگزیمال",
-    "باز بودن تماس",
-    "اپن کانتکت",
-    "loose contact",
-    "کانتکت لوز",
-    "open proximal contact"
-   ],
-   "variants": [
-    "#تماس_باز"
-   ],
-   "co_tags": [
-    "#تماس_باز"
-   ],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "photocast/episode-1",
-    "insight/insight-29",
-    "metanotes/meta-12",
-    "insight/insight-69",
-    "insight/insight-80",
-    "episodes/episode-163",
-    "insight/insight-115",
-    "sharehub/share-62"
    ]
   },
   {
@@ -5653,6 +5656,42 @@
    ]
   },
   {
+   "key": "پوسیدگی",
+   "tag": "#پوسیدگی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "caries",
+    "کاریز",
+    "پوسیدگی دندان",
+    "Dental Caries",
+    "tooth decay",
+    "carious lesion",
+    "ضایعه پوسیدگی",
+    "کرم خوردگی دندان"
+   ],
+   "variants": [
+    "#پوسیدگی_دندان",
+    "#Dental_Caries"
+   ],
+   "co_tags": [
+    "#Dental_Caries"
+   ],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-134",
+    "episodes/episode-135",
+    "dentai/dentai-3",
+    "dentai/dentai-12",
+    "sharehub/share-7",
+    "sharehub/share-50",
+    "insight/insight-118",
+    "insight/insight-122"
+   ]
+  },
+  {
    "key": "کانین_رایز",
    "tag": "#کانین_رایز",
    "domain": "clinical",
@@ -5748,6 +5787,33 @@
     "insight/insight-108",
     "insight/insight-113",
     "sharehub/share-55"
+   ]
+  },
+  {
+   "key": "امبراژور",
+   "tag": "#امبراژور",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "فضای مثلثیِ زیر کانتکت، که جراحی بازترش می‌کند.",
+   "use_when": "مقاله امبراژور را عاملِ بهداشت یا گیر غذایی بداند.",
+   "aliases": [
+    "embrasure",
+    "امبرژور",
+    "فضای امبراژور",
+    "امبریژر",
+    "امبراژر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-7",
+    "insight/insight-16",
+    "insight/insight-32",
+    "insight/insight-61",
+    "insight/insight-79",
+    "chairside/chairside-50",
+    "insight/insight-122"
    ]
   },
   {
@@ -6335,41 +6401,6 @@
    ]
   },
   {
-   "key": "پوسیدگی",
-   "tag": "#پوسیدگی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "caries",
-    "کاریز",
-    "پوسیدگی دندان",
-    "Dental Caries",
-    "tooth decay",
-    "carious lesion",
-    "ضایعه پوسیدگی",
-    "کرم خوردگی دندان"
-   ],
-   "variants": [
-    "#پوسیدگی_دندان",
-    "#Dental_Caries"
-   ],
-   "co_tags": [
-    "#Dental_Caries"
-   ],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-134",
-    "episodes/episode-135",
-    "dentai/dentai-3",
-    "dentai/dentai-12",
-    "sharehub/share-7",
-    "sharehub/share-50",
-    "insight/insight-118"
-   ]
-  },
-  {
    "key": "کتاب_لینکویچیوس",
    "tag": "#کتاب_لینکویچیوس",
    "domain": "clinical",
@@ -6581,32 +6612,6 @@
     "notecast/episode-31",
     "insight/insight-47",
     "insight/insight-86"
-   ]
-  },
-  {
-   "key": "امبراژور",
-   "tag": "#امبراژور",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "فضای مثلثیِ زیر کانتکت، که جراحی بازترش می‌کند.",
-   "use_when": "مقاله امبراژور را عاملِ بهداشت یا گیر غذایی بداند.",
-   "aliases": [
-    "embrasure",
-    "امبرژور",
-    "فضای امبراژور",
-    "امبریژر",
-    "امبراژر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-7",
-    "insight/insight-16",
-    "insight/insight-32",
-    "insight/insight-61",
-    "insight/insight-79",
-    "chairside/chairside-50"
    ]
   },
   {
@@ -9713,6 +9718,30 @@
    ]
   },
   {
+   "key": "فالوآپ_ایمپلنت",
+   "tag": "#فالوآپ_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "implant follow up",
+    "پیگیری ایمپلنت",
+    "فالو آپ ایمپلنت",
+    "implant recall",
+    "ریکال ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST19",
+    "sharehub/share-13",
+    "insight/insight-122"
+   ]
+  },
+  {
    "key": "فرم_رزیستنس",
    "tag": "#فرم_رزیستنس",
    "domain": "clinical",
@@ -11812,29 +11841,6 @@
    ]
   },
   {
-   "key": "فالوآپ_ایمپلنت",
-   "tag": "#فالوآپ_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "implant follow up",
-    "پیگیری ایمپلنت",
-    "فالو آپ ایمپلنت",
-    "implant recall",
-    "ریکال ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST19",
-    "sharehub/share-13"
-   ]
-  },
-  {
    "key": "فوتوکست",
    "tag": "#فوتوکست",
    "domain": "brand",
@@ -12619,6 +12625,28 @@
    "content_ids": [
     "dentai/promptologist/prompt1-5",
     "dentai/promptologist/prompt7-2"
+   ]
+  },
+  {
+   "key": "adjacent_tooth",
+   "tag": "#Adjacent_Tooth",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دندان طبیعیِ مجاور ایمپلنت — طرفِ متحرکِ رابطه‌ای که ایمپلنت در آن ثابت است.",
+   "use_when": "مقاله رفتار دندان مجاور را عاملِ یک پیامد بداند.",
+   "aliases": [
+    "دندان مجاور",
+    "دندان کناری ایمپلنت",
+    "adjacent teeth",
+    "دندان های مجاور",
+    "neighboring tooth"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-159",
+    "insight/insight-122"
    ]
   },
   {
@@ -15798,27 +15826,6 @@
    "content_ids": [
     "dentai/promptologist/prompt3-1",
     "dentai/promptologist/prompt6-5"
-   ]
-  },
-  {
-   "key": "adjacent_tooth",
-   "tag": "#Adjacent_Tooth",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دندان طبیعیِ مجاور ایمپلنت — طرفِ متحرکِ رابطه‌ای که ایمپلنت در آن ثابت است.",
-   "use_when": "مقاله رفتار دندان مجاور را عاملِ یک پیامد بداند.",
-   "aliases": [
-    "دندان مجاور",
-    "دندان کناری ایمپلنت",
-    "adjacent teeth",
-    "دندان های مجاور",
-    "neighboring tooth"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-159"
    ]
   },
   {
