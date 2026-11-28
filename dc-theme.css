@@ -38,6 +38,14 @@ body.dc-content-only .ep-back,
 body.dc-content-only [data-dc-back] {
   display: none !important;
 }
+
+/* Radar retired (2026-11-28). ~1200 pages still carry its overlay and
+   trigger in static markup; dc-nav.js removes them, and this hides them
+   before first paint so nothing flashes in between. */
+#dcRadarOverlay,
+#btn-radar-topbar {
+  display: none !important;
+}
 body.dc-content-only {
   padding-top: 0 !important;
   margin-top: 0 !important;
